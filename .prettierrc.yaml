@@ -1,0 +1,9 @@
+# @format
+
+tabWidth: 4
+singleQuote: true
+jsxSingleQuote: true
+printWidth: 80
+semi: false
+trailingComma: es5
+insertPragma: true
