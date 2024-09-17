@@ -87,7 +87,7 @@ export default function Home() {
     return (
         <div className='grid grid-cols-6 min-h-screen h-screen gap-8 p-2 font-[family-name:var(--font-geist-sans)]'>
             <div
-                className='bg-red-400 col-span-4 h-full grid grid-cols-4 gap-2 p-2'
+                className='bg-red-400 col-span-4 h-full grid grid-cols-4 grid-rows-4 gap-2 p-2'
                 onDragOver={handleDragOver}
                 onDrop={handleDrop}
             >
