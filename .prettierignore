@@ -2,3 +2,5 @@
 **/.svn
 **/.hg
 **/node_modules
+
+*.md
