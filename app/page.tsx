@@ -5,7 +5,7 @@ export default function Layout() {
         <div>
             {/* <header>This is header</header> */}
             <div>
-                <div className='flex flex-row justify-center p-10'>
+                <div className='flex flex-row justify-center px-10'>
                     <h1 className='group'>
                         <div className='w-full flex flex-row content-around py-5'>
                             <div>
