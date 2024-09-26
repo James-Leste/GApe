@@ -1,6 +1,5 @@
 /** @format */
 import RoutingButton from '@/components/ui/routingButton'
-import TypeoutParagraph from '@/components/ui/typeout'
 export default function Layout() {
     return (
         <div className='h-full w-full flex items-center justify-center '>
