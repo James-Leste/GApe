@@ -5,10 +5,12 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import RoutingButton from '@/components/ui/routingButton'
 
 export default function LoginPage() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+
     const router = useRouter()
 
     const handleSubmit = async (event: React.FormEvent) => {
@@ -29,18 +31,25 @@ export default function LoginPage() {
         <div className='h-screen flex items-center justify-center'>
             <form
                 onSubmit={handleSubmit}
-                className='bg-white p-8 rounded-2xl shadow-md max-w-sm w-full'
+                className='bg-slate-50 p-8 rounded-2xl shadow-md max-w-sm w-full'
             >
+                <div className='flex flex-row justify-start'>
+                    <RoutingButton
+                        routing='/'
+                        displayName='Go Back'
+                        className='w-fit text-sm bg-green-300 hover:bg-slate-100 border border-black border-solid px-1'
+                    ></RoutingButton>
+                    {/* <button className='w-fit text-sm bg-green-300 hover:bg-slate-100 border border-black border-solid'>
+                        Go back
+                    </button> */}
+                </div>
                 <div className='flex flex-row items-center justify-center'>
                     <h1 className=' text-2xl mb-6 w-fit px-1'>Login</h1>
                 </div>
 
                 {/* Email Input */}
                 <div className='mb-4'>
-                    <label
-                        htmlFor='email'
-                        className='block mb-2 text-sm border border-black border-solid w-fit bg-green-300 px-1'
-                    >
+                    <label htmlFor='email' className='block mb-2 text-sm w-fit'>
                         Email
                     </label>
                     <input
@@ -48,7 +57,7 @@ export default function LoginPage() {
                         id='email'
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        className='w-full p-2 outline-black border border-slate-100 '
+                        className='w-full p-2 outline-black border border-slate-100 text-sm'
                         placeholder='Enter your email'
                         required
                     />
@@ -56,10 +65,7 @@ export default function LoginPage() {
 
                 {/* Password Input */}
                 <div className='mb-6'>
-                    <label
-                        htmlFor='password'
-                        className='block mb-2 text-sm border border-black border-solid w-fit bg-green-300 px-1'
-                    >
+                    <label htmlFor='password' className='block mb-2 text-sm '>
                         Password
                     </label>
                     <input
@@ -67,7 +73,7 @@ export default function LoginPage() {
                         id='password'
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        className='w-full p-2 outline-black border border-slate-100'
+                        className='w-full p-2 outline-black border border-slate-100 text-sm'
                         placeholder='Enter your password'
                         required
                     />
