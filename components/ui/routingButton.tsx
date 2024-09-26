@@ -5,9 +5,11 @@ import { useRouter } from 'next/navigation'
 export default function RoutingButton({
     routing,
     displayName,
+    className,
 }: {
     routing: string
     displayName: string
+    className: string
 }) {
     const router = useRouter()
     const click = () => {
@@ -15,7 +17,7 @@ export default function RoutingButton({
         router.push(routing)
     }
     return (
-        <button className='' onClick={click}>
+        <button className={className} onClick={click}>
             {displayName}
         </button>
     )
