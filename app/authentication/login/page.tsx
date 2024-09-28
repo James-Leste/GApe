@@ -4,15 +4,12 @@
 'use client' // Since we're handling form inputs on the client-side
 
 import { useState } from 'react'
-import { useRouter } from 'next/navigation'
 import RoutingButton from '@/components/ui/routingButton'
 import { login } from '../actions'
 
 export default function LoginPage() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-
-    const router = useRouter()
 
     // const handleSubmit = async (event: React.FormEvent) => {
     //     event.preventDefault()

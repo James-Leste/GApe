@@ -8,7 +8,7 @@ export default function RoutingButton({
     displayName = 'A button',
     className = '',
 }: {
-    onClick?: Function
+    onClick?: () => void
     routing?: string
     displayName?: string
     className?: string

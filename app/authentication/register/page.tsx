@@ -3,19 +3,14 @@
 'use client' // Since we're handling form inputs on the client-side
 
 import { useState } from 'react'
-import { useRouter } from 'next/navigation'
+
 import RoutingButton from '@/components/ui/routingButton'
-import { login, signup } from '../actions'
+import { signup } from '../actions'
 
 export default function RegisterPage() {
-    const [email, setEmail]: [email: string, setEmail: Function] = useState('')
-    const [password, setPassword]: [password: string, setPassword: Function] =
-        useState('')
-    const [confirmPassword, setConfirmPassword]: [
-        confirmPassword: string,
-        setConfirmPassword: Function,
-    ] = useState('')
-    const router = useRouter()
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const [confirmPassword, setConfirmPassword] = useState('')
 
     return (
         <div className='h-screen flex items-center justify-center'>
