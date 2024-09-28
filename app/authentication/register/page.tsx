@@ -39,6 +39,7 @@ export default function RegisterPage() {
                     <input
                         type='email'
                         id='email'
+                        name='email'
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         className='w-full p-2 outline-black border border-slate-100 text-sm'
@@ -58,6 +59,7 @@ export default function RegisterPage() {
                     <input
                         type='password'
                         id='password'
+                        name='password'
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         className='w-full p-2 outline-black border border-slate-100 text-sm'
@@ -76,6 +78,7 @@ export default function RegisterPage() {
                     <input
                         type='password'
                         id='confirmpassword'
+                        name='confirmpassword'
                         value={confirmPassword}
                         onChange={(e) => setConfirmPassword(e.target.value)}
                         className='w-full p-2 outline-black border border-slate-100 text-sm'
