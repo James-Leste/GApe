@@ -5,33 +5,21 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import RoutingButton from '@/components/ui/routingButton'
+import { login, signup } from '../actions'
 
 export default function RegisterPage() {
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
-    const [confirmPassword, setConfirmPassword] = useState('')
+    const [email, setEmail]: [email: string, setEmail: Function] = useState('')
+    const [password, setPassword]: [password: string, setPassword: Function] =
+        useState('')
+    const [confirmPassword, setConfirmPassword]: [
+        confirmPassword: string,
+        setConfirmPassword: Function,
+    ] = useState('')
     const router = useRouter()
-
-    const handleSubmit = async (event: React.FormEvent) => {
-        event.preventDefault()
-
-        // Here you can implement login logic (e.g., API call)
-        console.log({ email, password })
-
-        // Example login simulation: route to a dashboard page on success
-        if (email === 'test@example.com' && password === 'password') {
-            router.push('/dashboard')
-        } else {
-            alert('Invalid credentials')
-        }
-    }
 
     return (
         <div className='h-screen flex items-center justify-center'>
-            <form
-                onSubmit={handleSubmit}
-                className='bg-slate-50 p-8 rounded-2xl shadow-md max-w-sm w-full'
-            >
+            <form className='bg-slate-50 p-8 rounded-2xl shadow-md max-w-sm w-full'>
                 <div className='flex flex-row justify-start'>
                     <RoutingButton
                         routing='/'
@@ -53,7 +41,7 @@ export default function RegisterPage() {
                         id='email'
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        className='w-full p-2 outline-black border border-slate-100 '
+                        className='w-full p-2 outline-black border border-slate-100 text-sm'
                         placeholder='Enter your email'
                         required
                     />
@@ -72,7 +60,7 @@ export default function RegisterPage() {
                         id='password'
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        className='w-full p-2 outline-black border border-slate-100'
+                        className='w-full p-2 outline-black border border-slate-100 text-sm'
                         placeholder='Enter your password'
                         required
                     />
@@ -98,7 +86,7 @@ export default function RegisterPage() {
 
                 {/* Submit Button */}
                 <button
-                    type='submit'
+                    formAction={signup}
                     className='w-full bg-green-300 p-2 hover:bg-slate-200 transition border border-solid border-black'
                 >
                     Login

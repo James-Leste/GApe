@@ -6,6 +6,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import RoutingButton from '@/components/ui/routingButton'
+import { login } from '../actions'
 
 export default function LoginPage() {
     const [email, setEmail] = useState('')
@@ -13,26 +14,23 @@ export default function LoginPage() {
 
     const router = useRouter()
 
-    const handleSubmit = async (event: React.FormEvent) => {
-        event.preventDefault()
+    // const handleSubmit = async (event: React.FormEvent) => {
+    //     event.preventDefault()
 
-        // Here you can implement login logic (e.g., API call)
-        console.log({ email, password })
+    //     // Here you can implement login logic (e.g., API call)
+    //     console.log({ email, password })
 
-        // Example login simulation: route to a dashboard page on success
-        if (email === 'test@example.com' && password === 'password') {
-            router.push('/dashboard')
-        } else {
-            alert('Invalid credentials')
-        }
-    }
+    //     // Example login simulation: route to a dashboard page on success
+    //     if (email === 'test@example.com' && password === 'password') {
+    //         router.push('/dashboard')
+    //     } else {
+    //         alert('Invalid credentials')
+    //     }
+    // }
 
     return (
         <div className='h-screen flex items-center justify-center'>
-            <form
-                onSubmit={handleSubmit}
-                className='bg-slate-50 p-8 rounded-2xl shadow-md max-w-sm w-full'
-            >
+            <form className='bg-slate-50 p-8 rounded-2xl shadow-md max-w-sm w-full'>
                 <div className='flex flex-row justify-start'>
                     <RoutingButton
                         routing='/'
@@ -55,6 +53,8 @@ export default function LoginPage() {
                     <input
                         type='email'
                         id='email'
+                        // link to the formData.get(name)
+                        name='email'
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         className='w-full p-2 outline-black border border-slate-100 text-sm'
@@ -71,6 +71,8 @@ export default function LoginPage() {
                     <input
                         type='password'
                         id='password'
+                        // link to the formData.get(name)
+                        name='password'
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         className='w-full p-2 outline-black border border-slate-100 text-sm'
@@ -81,7 +83,7 @@ export default function LoginPage() {
 
                 {/* Submit Button */}
                 <button
-                    type='submit'
+                    formAction={login}
                     className='w-full bg-green-300 p-2  hover:bg-slate-200 transition border border-solid border-black'
                 >
                     Login
