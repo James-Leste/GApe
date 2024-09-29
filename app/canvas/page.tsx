@@ -1,6 +1,5 @@
 /** @format */
 'use client'
-// import Image from 'next/image'
 import React, { useState } from 'react'
 
 interface BlockItem {
@@ -85,23 +84,24 @@ export default function Home() {
     }
 
     return (
-        <div className='grid grid-cols-6 min-h-screen h-screen gap-8 p-2 font-[family-name:var(--font-geist-sans)]'>
-            <div
-                className='bg-red-400 col-span-4 h-full grid grid-cols-4 grid-rows-4 gap-2 p-2'
-                onDragOver={handleDragOver}
-                onDrop={handleDrop}
-            >
-                
-                {canvasBlocks.map((block, index) => (
-                    <Block block={block} key={index} />
-                ))}
-            </div>
-            <div className='bg-green-400 p-2 col-span-2 flex flex-col gap-2'>
-                <div className='bg-green-700 p-1'>search</div>
-                <div className='h-full grid grid-cols-2 gap-2'>
-                    {BlockList.map((block, index) => (
+        <div className='flex flex-col'>
+            <div className='grid grid-cols-6 min-h-screen h-screen gap-8 p-2 font-[family-name:var(--font-geist-sans)]'>
+                <div
+                    className='bg-red-400 col-span-4 h-full grid grid-cols-4 grid-rows-4 gap-2 p-2'
+                    onDragOver={handleDragOver}
+                    onDrop={handleDrop}
+                >
+                    {canvasBlocks.map((block, index) => (
                         <Block block={block} key={index} />
                     ))}
+                </div>
+                <div className='bg-green-400 p-2 col-span-2 flex flex-col gap-2'>
+                    <div className='bg-green-700 p-1'>search</div>
+                    <div className='h-full grid grid-cols-2 gap-2'>
+                        {BlockList.map((block, index) => (
+                            <Block block={block} key={index} />
+                        ))}
+                    </div>
                 </div>
             </div>
         </div>
