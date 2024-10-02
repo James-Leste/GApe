@@ -4,12 +4,16 @@
 'use client' // Since we're handling form inputs on the client-side
 
 import { useState } from 'react'
-import RoutingButton from '@/components/ui/routingButton'
-import { login } from '../actions'
+
+import { emailLogin } from '../actions'
+import { Button } from '@/components/ui/button'
+import { useRouter } from 'next/navigation'
 
 export default function LoginPage() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+
+    const router = useRouter()
 
     // const handleSubmit = async (event: React.FormEvent) => {
     //     event.preventDefault()
@@ -29,11 +33,16 @@ export default function LoginPage() {
         <div className='h-screen flex items-center justify-center'>
             <form className='bg-slate-50 p-8 rounded-2xl shadow-md max-w-sm w-full'>
                 <div className='flex flex-row justify-start'>
-                    <RoutingButton
-                        routing='/'
-                        displayName='Go Back'
-                        className='w-fit text-sm bg-green-300 hover:bg-slate-100 border border-black border-solid px-1'
-                    ></RoutingButton>
+                    <Button
+                        className='p-0 text-secondary-foreground'
+                        variant={'link'}
+                        onClick={() => {
+                            console.log('/')
+                            router.push('/')
+                        }}
+                    >
+                        Go back
+                    </Button>
                     {/* <button className='w-fit text-sm bg-green-300 hover:bg-slate-100 border border-black border-solid'>
                         Go back
                     </button> */}
@@ -79,8 +88,12 @@ export default function LoginPage() {
                 </div>
 
                 {/* Submit Button */}
+                {/* <AsyncButton
+                    
+                    displayName='Login'
+                ></AsyncButton> */}
                 <button
-                    formAction={login}
+                    formAction={emailLogin}
                     className='w-full bg-green-300 p-2  hover:bg-slate-200 transition border border-solid border-black'
                 >
                     Login

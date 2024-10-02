@@ -1,56 +1,108 @@
 /** @format */
-import RoutingButton from '@/components/ui/routingButton'
+'use client'
+
+import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card'
+
+import {
+    HoverCard,
+    HoverCardContent,
+    HoverCardTrigger,
+} from '@/components/ui/hover-card'
+
+import Link from 'next/link'
+
+import { useRouter } from 'next/navigation'
+
 export default function Layout() {
+    const router = useRouter()
     return (
         <div className='flex flex-col flex-grow items-center justify-center'>
             <div className='h-screen w-full flex items-center justify-center py-10'>
                 {/* <header>This is header</header> */}
-                <div className='h-fit w-fit p-10 rounded-3xl bg-slate-50 shadow-md'>
-                    <div className='flex flex-row justify-center px-10'>
-                        <h1 className='group'>
-                            <div className='flex flex-row content-around my-5'>
-                                <div>
-                                    <span className='group-hover:hidden m-0 p-0'>
-                                        G A p e
-                                    </span>
+                <Card className='shadow-md rounded-3xl h-fit w-fit bg-slate-50 p-5 border-hidden'>
+                    <CardHeader>
+                        <HoverCard>
+                            <HoverCardTrigger asChild className='mt-5 mb-0'>
+                                <Button
+                                    asChild
+                                    variant={'link'}
+                                    className='text-xl text-secondary-foreground font-bold'
+                                >
+                                    <Link href='https://github.com/James-Leste/GApe'>
+                                        @GApe
+                                    </Link>
+                                </Button>
+                            </HoverCardTrigger>
+                            <HoverCardContent side='top'>
+                                <div className='flex justify-between space-x-4'>
+                                    {/* <Avatar>
+                                        <AvatarImage src='https://github.com/vercel.png' />
+                                        <AvatarFallback>VC</AvatarFallback>
+                                    </Avatar> */}
+                                    <div className='space-y-1'>
+                                        <h4 className='text-xl font-semibold'>
+                                            @GApe
+                                        </h4>
+                                        <p className='text-sm'>
+                                            An Interactive Tool for generating
+                                            One-Page Content
+                                        </p>
+                                        <div className='flex items-center pt-2'>
+                                            <span className='text-xs text-muted-foreground'>
+                                                Joined October 2024
+                                            </span>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div>
-                                    <span className='m-0 p-0 hidden group-hover:inline bg-green-300'>
-                                        Get A Page Easily
-                                    </span>
-                                </div>
-                            </div>
-                        </h1>
-                        {/* <h1>Opening Page For GApe</h1> */}
-                    </div>
+                            </HoverCardContent>
+                        </HoverCard>
+                    </CardHeader>
+                    <CardContent>
+                        <div className='flex flex-row item-center justify-center'>
+                            <Button
+                                className='mx-5 border border-solid border-secondary-foreground'
+                                onClick={() => {
+                                    console.log('/authentication/login')
+                                    router.push('/authentication/login')
+                                }}
+                            >
+                                Login
+                            </Button>
 
-                    <div className='flex flex-row content-center justify-center'>
-                        <div className='border p-1 mx-5 border-solid border-black bg-green-300 hover:bg-slate-200 rounded-ls '>
-                            <RoutingButton
-                                displayName='Login'
-                                routing='/authentication/login'
-                                className=''
-                            />
+                            <Button
+                                className='mx-5 border border-solid border-secondary-foreground'
+                                variant={'outline'}
+                                onClick={() => {
+                                    console.log('/authentication/register')
+                                    router.push('/authentication/register')
+                                }}
+                            >
+                                Register
+                            </Button>
+
+                            <Button
+                                className='mx-5 border border-solid border-secondary-foreground'
+                                variant={'outline'}
+                                onClick={() => {
+                                    console.log('/canvas')
+                                    router.push('/canvas')
+                                }}
+                            >
+                                Canvas
+                            </Button>
                         </div>
-                        <div className='border p-1 mx-5 border-solid border-black bg-green-300 hover:bg-slate-200 rounded-ls'>
-                            <RoutingButton
-                                displayName='Register'
-                                routing='/authentication/register'
-                                className=''
-                            />
-                        </div>
-                        <div className='border p-1 mx-5 border-solid border-black bg-green-300 hover:bg-slate-200 rounded-ls'>
-                            <RoutingButton
-                                displayName='Canvas'
-                                routing='/canvas'
-                                className=''
-                            />
-                        </div>
-                    </div>
-                </div>
+                    </CardContent>
+                    <CardFooter className='flex flex-row content-center justify-start mx-5'>
+                        <a href='#intro' className='text-muted-foreground'>
+                            About
+                        </a>
+                        {/* <p className='text-muted-foreground'>About</p> */}
+                    </CardFooter>
+                </Card>
             </div>
             <div className='h-screen w-full flex flex-col items-center justify-center bg-green-300'>
-                <h1>Introduction</h1>
+                <h1 id='intro'>Introduction</h1>
             </div>
         </div>
     )

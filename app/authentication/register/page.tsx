@@ -3,24 +3,29 @@
 'use client' // Since we're handling form inputs on the client-side
 
 import { useState } from 'react'
-
-import RoutingButton from '@/components/ui/routingButton'
-import { signup } from '../actions'
+import { emailSignup } from '../actions'
+import { Button } from '@/components/ui/button'
+import { useRouter } from 'next/navigation'
 
 export default function RegisterPage() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
-
+    const router = useRouter()
     return (
         <div className='h-screen flex items-center justify-center'>
             <form className='bg-slate-50 p-8 rounded-2xl shadow-md max-w-sm w-full'>
                 <div className='flex flex-row justify-start'>
-                    <RoutingButton
-                        routing='/'
-                        displayName='Go Back'
-                        className='w-fit text-sm bg-green-300 hover:bg-slate-100 border border-black border-solid px-1'
-                    ></RoutingButton>
+                    <Button
+                        className='p-0 text-secondary-foreground'
+                        variant={'link'}
+                        onClick={() => {
+                            console.log('/')
+                            router.push('/')
+                        }}
+                    >
+                        Go back
+                    </Button>
                 </div>
                 <div className='flex flex-row items-center justify-center'>
                     <h1 className=' text-2xl mb-6 w-fit px-1'>Register</h1>
@@ -83,9 +88,21 @@ export default function RegisterPage() {
                 </div>
 
                 {/* Submit Button */}
+                {/* <AsyncButton
+                    func={async () => {
+                        if (password !== confirmPassword) {
+                            router.push('/authentication/error')
+                            return
+                        }
+
+                        await emailSignup(email, password)
+                        router.push('/')
+                    }}
+                    displayName='Login'
+                ></AsyncButton> */}
                 <button
-                    formAction={signup}
-                    className='w-full bg-green-300 p-2 hover:bg-slate-200 transition border border-solid border-black'
+                    formAction={emailSignup}
+                    className='w-full bg-green-300 p-2  hover:bg-slate-200 transition border border-solid border-black'
                 >
                     Login
                 </button>
