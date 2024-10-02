@@ -9,15 +9,19 @@
         "lint": "next lint"
     },
     "dependencies": {
+        "@radix-ui/react-avatar": "^1.1.1",
+        "@radix-ui/react-hover-card": "^1.1.2",
         "@radix-ui/react-slot": "^1.1.0",
         "@supabase/ssr": "^0.5.1",
         "@supabase/supabase-js": "^2.45.4",
         "class-variance-authority": "^0.7.0",
         "clsx": "^2.1.1",
+        "date-fns": "^3.6.0",
         "lucide-react": "^0.439.0",
         "next": ">=14.2.10",
         "prettier": "^3.3.3",
         "react": "^18",
+        "react-day-picker": "^8.10.1",
         "react-dom": "^18",
         "tailwind-merge": "^2.5.2",
         "tailwindcss-animate": "^1.0.7"

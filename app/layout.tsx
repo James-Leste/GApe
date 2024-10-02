@@ -4,8 +4,8 @@ import type { Metadata } from 'next'
 import localFont from 'next/font/local'
 import './globals.css'
 import UserInfo from '@/components/ui/userInfo'
-import RoutingButton from '@/components/ui/routingButton'
 import { signout } from './authentication/actions'
+import AsyncButton from '@/components/ui/asyncButton'
 
 const geistSans = localFont({
     src: './fonts/GeistVF.woff',
@@ -33,12 +33,9 @@ export default function RootLayout({
             <body
                 className={`${geistSans.variable} ${geistMono.variable} antialiased w-full h-full`}
             >
-                <div className='flex flex-row fixed z-10 items-center bg-green-400 w-full py-3'>
-                    <div className='border p-1 mx-5 border-solid border-black bg-green-300 hover:bg-slate-200 rounded-ls'>
-                        <RoutingButton
-                            displayName='Log out'
-                            onClick={signout}
-                        ></RoutingButton>
+                <div className='flex flex-row fixed z-10 items-center bg-slate-50 w-full py-3'>
+                    <div className='p-1 mx-5'>
+                        <AsyncButton func={signout} displayName='Sign out' />
                     </div>
                     <div>
                         <UserInfo></UserInfo>
@@ -46,21 +43,6 @@ export default function RootLayout({
                 </div>
 
                 {children}
-
-                {/* <div className='flex flex-col min-h-screen'>
-                    <div className='flex flex-row justify-between items-center p-5 bg-gray-100'>
-                        <div className='border p-1 mx-5 border-solid border-black bg-green-300 hover:bg-slate-200 rounded-ls'>
-                            <RoutingButton displayName='Log out'></RoutingButton>
-                        </div>
-                        <div>
-                            <UserInfo></UserInfo>
-                        </div>
-                    </div>
-
-                    <div className='flex-grow flex justify-center items-center mb-20'>
-                        {children}
-                    </div>
-                </div> */}
             </body>
         </html>
     )
