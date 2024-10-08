@@ -91,6 +91,16 @@ export default function Layout() {
                             >
                                 Canvas
                             </Button>
+                            <Button
+                                className='mx-5 border border-solid border-secondary-foreground'
+                                variant={'outline'}
+                                onClick={() => {
+                                    console.log('/canvas/experiment')
+                                    router.push('/canvas/experiment')
+                                }}
+                            >
+                                TestCanvas
+                            </Button>
                         </div>
                     </CardContent>
                     <CardFooter className='flex flex-row content-center justify-start mx-5'>

@@ -10,6 +10,7 @@
     },
     "dependencies": {
         "@radix-ui/react-avatar": "^1.1.1",
+        "@radix-ui/react-dialog": "^1.1.2",
         "@radix-ui/react-hover-card": "^1.1.2",
         "@radix-ui/react-slot": "^1.1.0",
         "@supabase/ssr": "^0.5.1",
@@ -25,7 +26,8 @@
         "react-day-picker": "^8.10.1",
         "react-dom": "^18",
         "tailwind-merge": "^2.5.2",
-        "tailwindcss-animate": "^1.0.7"
+        "tailwindcss-animate": "^1.0.7",
+        "vaul": "^1.0.0"
     },
     "devDependencies": {
         "@types/node": "^20",
