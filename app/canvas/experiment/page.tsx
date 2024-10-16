@@ -21,7 +21,9 @@ interface Block {
 export default function ExperimentCanvas() {
     return (
         <div className='pt-16 h-[calc(100vh-1rem)] bg-slate-400 flex flex-col'>
-            <div className='bg-slate-200 h-full'>hi</div>
+            <div className='bg-slate-200 h-full'>
+                <DraggableList></DraggableList>
+            </div>
 
             <div className='text-center'>
                 <Drawer modal={false}>
