@@ -10,40 +10,13 @@ import {
     DrawerTitle,
     DrawerTrigger,
 } from '@/components/ui/drawer'
+import DraggableList from './draggableList'
 
 interface Block {
     id: number
     title: string
     content: string
 }
-
-const blocks: Block[] = [
-    {
-        id: 1,
-        title: 'first',
-        content: 'random',
-    },
-    {
-        id: 2,
-        title: 'second',
-        content: 'random',
-    },
-    {
-        id: 3,
-        title: 'third',
-        content: 'random',
-    },
-    {
-        id: 4,
-        title: 'forth',
-        content: 'random',
-    },
-    {
-        id: 5,
-        title: 'last',
-        content: 'random',
-    },
-]
 
 export default function ExperimentCanvas() {
     return (
@@ -64,30 +37,9 @@ export default function ExperimentCanvas() {
                                 </DrawerDescription>
                             </DrawerHeader>
                             <div className='p-4 pb-0 h-[120px]'>
-                                <div className='grid grid-cols-10 gap-4'>
-                                    {/* <div className='flex-1 text-center'>
-                                        <div className='text-[0.70rem] uppercase text-muted-foreground'>
-                                            Calories/day
-                                        </div>
-                                    </div> */}
-
-                                    {/* <span className='sr-only'>Increase</span> */}
-                                    <div className='bg-slate-100 w-1/3 h-[60px] '>
-                                        1
-                                    </div>
-                                    <div className='bg-slate-100 w-1/3 h-[60px]'>
-                                        2
-                                    </div>
-                                    <div className='bg-slate-100 w-1/3 h-[60px]'>
-                                        3
-                                    </div>
-                                    <div className='bg-slate-100 w-1/3 h-[60px]'>
-                                        4
-                                    </div>
-                                </div>
+                                <DraggableList></DraggableList>
                             </div>
                             <DrawerFooter>
-                                <Button>Submit</Button>
                                 <DrawerClose asChild>
                                     <Button variant='outline'>Cancel</Button>
                                 </DrawerClose>
