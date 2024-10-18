@@ -93,6 +93,6 @@ export default function DraggableList() {
     return data.columnOrder.map((columnId) => {
         const column = data.columns[columnId]
         const tasks = column.taskIds.map((taskId) => data.tasks[taskId])
-        return tasks.map((task) => <div>{task.content}</div>)
+        return tasks.map((task) => <div key={task.id}>{task.content}</div>)
     })
 }
