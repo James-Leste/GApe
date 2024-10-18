@@ -1,16 +1,19 @@
 /** @format */
+'use client'
 import { Button } from '@/components/ui/button'
-import {
-    Drawer,
-    DrawerClose,
-    DrawerContent,
-    DrawerDescription,
-    DrawerFooter,
-    DrawerHeader,
-    DrawerTitle,
-    DrawerTrigger,
-} from '@/components/ui/drawer'
+// import {
+//     Drawer,
+//     DrawerClose,
+//     DrawerContent,
+//     DrawerDescription,
+//     DrawerFooter,
+//     DrawerHeader,
+//     DrawerTitle,
+//     DrawerTrigger,
+// } from '@/components/ui/drawer'
 import DraggableList from './draggableList'
+import Drawer from '@mui/material/Drawer'
+import { useState } from 'react'
 
 interface Block {
     id: number
@@ -19,37 +22,48 @@ interface Block {
 }
 
 export default function ExperimentCanvas() {
+    const [open, setOpen] = useState(false)
+
+    const toggleDrawer = (newOpen: boolean) => () => {
+        setOpen(newOpen)
+    }
     return (
         <div className='pt-16 h-[calc(100vh-1rem)] bg-slate-400 flex flex-col'>
             <div className='bg-slate-200 h-full'>
-                <DraggableList></DraggableList>
-            </div>
+                <Button onClick={toggleDrawer(true)}>Open drawer</Button>
 
-            <div className='text-center'>
-                <Drawer modal={false}>
-                    <DrawerTrigger asChild>
-                        <Button>Open Drawer</Button>
-                    </DrawerTrigger>
-                    <DrawerContent className='bg-white'>
-                        <div className='bg-white mx-auto w-full  m-0'>
-                            <DrawerHeader>
-                                <DrawerTitle>Blocks</DrawerTitle>
-                                <DrawerDescription>
-                                    Drag a block to the Canvas
-                                </DrawerDescription>
-                            </DrawerHeader>
-                            <div className='p-4 pb-0 h-[120px]'>
-                                <DraggableList></DraggableList>
-                            </div>
-                            <DrawerFooter>
-                                <DrawerClose asChild>
-                                    <Button variant='outline'>Cancel</Button>
-                                </DrawerClose>
-                            </DrawerFooter>
-                        </div>
-                    </DrawerContent>
+                <Drawer
+                    open={open}
+                    onClose={() => setOpen(!open)}
+                    anchor='bottom'
+                >
+                    <DraggableList></DraggableList>
                 </Drawer>
             </div>
+
+            {/* <Drawer modal={false}>
+                <DrawerTrigger asChild>
+                    <Button>Open Drawer</Button>
+                </DrawerTrigger>
+                <DrawerContent className='bg-white'>
+                    <div className='bg-white mx-auto w-full  m-0'>
+                        <DrawerHeader>
+                            <DrawerTitle>Blocks</DrawerTitle>
+                            <DrawerDescription>
+                                Drag a block to the Canvas
+                            </DrawerDescription>
+                        </DrawerHeader>
+                        <div className='p-4 pb-0 h-[120px]'>
+                            <DraggableList></DraggableList>
+                        </div>
+                        <DrawerFooter>
+                            <DrawerClose asChild>
+                                <Button variant='outline'>Cancel</Button>
+                            </DrawerClose>
+                        </DrawerFooter>
+                    </div>
+                </DrawerContent>
+            </Drawer> */}
         </div>
     )
 }
