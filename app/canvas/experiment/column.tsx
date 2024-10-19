@@ -14,11 +14,17 @@ export default function ColumnComponent({
     return (
         <div>
             {/* <div>{column.title}</div> */}
-            <Droppable droppableId={column.id}>
+            <Droppable droppableId={column.id} direction='horizontal'>
                 {(provided) => (
-                    <div ref={provided.innerRef} {...provided.droppableProps}>
+                    <div
+                        ref={provided.innerRef}
+                        {...provided.droppableProps}
+                        className='flex flex-row flex-wrap m-5'
+                    >
                         {tasks.map((task, index) => (
-                            <Item key={task.id} task={task} index={index} />
+                            <div className='w-1/5'>
+                                <Item key={task.id} task={task} index={index} />
+                            </div>
                         ))}
                         {provided.placeholder}
                     </div>

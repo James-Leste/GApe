@@ -13,8 +13,14 @@ export default function Item({ task, index }: { task: Task; index: number }) {
                     {...provided.draggableProps}
                     {...provided.dragHandleProps}
                     ref={provided.innerRef}
+                    className='flex flex-col justify-between border border-solid border-black px-5 m-5'
                 >
-                    {task.content}
+                    <div className='truncate whitespace-nowrap'>
+                        {task.title}
+                    </div>
+                    <div className='overflow-hidden text-ellipsis whitespace-nowrap'>
+                        {task.content}
+                    </div>
                 </div>
             )}
         </Draggable>

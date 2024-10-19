@@ -29,7 +29,7 @@ export default function ExperimentCanvas() {
     }
     return (
         <div className='pt-16 h-[calc(100vh-1rem)] bg-slate-400 flex flex-col'>
-            <div className='bg-slate-200 h-full'>
+            <div className='bg-slate-200'>
                 <Button onClick={toggleDrawer(true)}>Open drawer</Button>
 
                 <Drawer

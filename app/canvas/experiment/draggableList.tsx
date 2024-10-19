@@ -1,5 +1,5 @@
 /** @format */
-/** @format */
+
 'use client'
 import { useState } from 'react'
 import { DragDropContext, DropResult } from '@hello-pangea/dnd'
@@ -7,6 +7,7 @@ import ColumnComponent from './column'
 
 export interface Task {
     id: string
+    title: string
     content: string
 }
 
@@ -24,12 +25,41 @@ export interface Data {
 
 const initialData: Data = {
     tasks: {
-        'task-1': { id: 'task-1', content: 'Take out the garbage' },
-        'task-2': { id: 'task-2', content: 'Watch my favorite show' },
-        'task-3': { id: 'task-3', content: 'Charge my phone' },
-        'task-4': { id: 'task-4', content: 'Cook dinner' },
-        'task-5': { id: 'task-5', content: 'Fifth task' },
-        'task-6': { id: 'task-6', content: 'Sixth task' },
+        'task-1': {
+            id: 'task-1',
+            title: 'first title',
+            content: 'Take out the garbage',
+        },
+        'task-2': {
+            id: 'task-2',
+            title: 'first title',
+            content: 'Watch my favorite show',
+        },
+        'task-3': {
+            id: 'task-3',
+            title: 'first title',
+            content: 'Charge my phone',
+        },
+        'task-4': {
+            id: 'task-4',
+            title: 'first title',
+            content: 'Cook dinner',
+        },
+        'task-5': {
+            id: 'task-5',
+            title: 'first title',
+            content: 'Fifth ddtask',
+        },
+        'task-6': {
+            id: 'task-6',
+            title: 'first title',
+            content: 'Sixth tasdddk',
+        },
+        'task-7': {
+            id: 'task-7',
+            title: 'first title',
+            content: 'Seventh task',
+        },
     },
     columns: {
         'column-1': {
@@ -42,6 +72,7 @@ const initialData: Data = {
                 'task-4',
                 'task-5',
                 'task-6',
+                'task-7',
             ],
         },
     },
