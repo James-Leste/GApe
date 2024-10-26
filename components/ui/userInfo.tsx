@@ -19,7 +19,7 @@ export default async function UserInfo() {
     function User({ userdata }: { userdata: User }) {
         return (
             <HoverCard>
-                <HoverCardTrigger>
+                <HoverCardTrigger className='size-10'>
                     <Image
                         height={40}
                         width={40}
@@ -42,15 +42,15 @@ export default async function UserInfo() {
 
     return (
         <div>
-            <h2 className='text-customeText1'>
+            <div className='text-customeText1'>
                 {error || !data?.user ? (
                     <a href='/authentication/login'>Login</a>
                 ) : (
-                    <div>
+                    <div className='size-10'>
                         <User userdata={data.user} />
                     </div>
                 )}
-            </h2>
+            </div>
         </div>
     )
 }

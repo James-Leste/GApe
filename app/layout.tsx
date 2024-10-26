@@ -33,9 +33,7 @@ export default function RootLayout({
                 className={`${geistSans.variable} ${geistMono.variable} antialiased w-full h-full`}
             >
                 <HeaderMenu>
-                    <div className='flex flex-row gap-3'>
-                        <UserInfo></UserInfo>
-                    </div>
+                    <UserInfo></UserInfo>
                 </HeaderMenu>
 
                 {children}
