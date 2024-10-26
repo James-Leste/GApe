@@ -19,15 +19,15 @@ interface HeaderMenuProps {
 }
 function ToolBar() {
     return (
-        <div className='flex justify-between w-full'>
+        <div className='flex justify-between w-full items-center'>
             <div className='flex flex-row gap-1'>
-                <Button size='icon'>
+                <Button variant={"secondary"} size='icon'>
                     <Undo2 className='h-4 w-4' />
                 </Button>
-                <Button size='icon'>
+                <Button variant={"secondary"} size='icon'>
                     <Forward className='h-4 w-4' />
                 </Button>
-                <Button size='icon'>
+                <Button variant={"secondary"} size='icon'>
                     <Save className='h-4 w-4' />
                 </Button>
             </div>
@@ -46,7 +46,7 @@ function ToolBar() {
                 </TabsList>
             </Tabs>
             <div>
-                <Button size='icon'>
+                <Button variant={"secondary"} size='icon'>
                     <Printer className='h-4 w-4' />
                 </Button>
             </div>
@@ -69,7 +69,7 @@ export default function HeaderMenu({ children }: HeaderMenuProps) {
                     </div>
                     {isCanvasPage &&  <ToolBar />}
                    
-                    <div className='w-10 h-10'>{children}</div>
+                    <div className='w-10 h-10 flex justify-center'>{children}</div>
 
                     {/* <nav className='flex items-center gap-4 text-sm lg:gap-6'>
                         <a

@@ -14,6 +14,9 @@ export default function LoginPage() {
     const [password, setPassword] = useState('')
 
     const router = useRouter()
+    function toRegister() {
+        router.push('/authentication/register')
+    }
 
     // const handleSubmit = async (event: React.FormEvent) => {
     //     event.preventDefault()
@@ -30,75 +33,95 @@ export default function LoginPage() {
     // }
 
     return (
-        <div className='h-screen flex items-center justify-center'>
-            <form className='bg-slate-50 p-8 rounded-2xl shadow-md max-w-sm w-full'>
-                <div className='flex flex-row justify-start'>
-                    <Button
-                        className='p-0 text-secondary-foreground'
-                        variant={'link'}
-                        onClick={() => {
-                            console.log('/')
-                            router.push('/')
-                        }}
-                    >
-                        Go back
-                    </Button>
-                    {/* <button className='w-fit text-sm bg-green-300 hover:bg-slate-100 border border-black border-solid'>
+        <div className='h-screen grid grid-cols-2 gap-3 items-center justify-center bg-customeBG1 p-4  '>
+            <div className='p-4 w-full'>this is introduce image</div>
+            <div className='flex items-center justify-center w-96'>
+                <form className='bg-customeBG2 border border-customeBorder p-6 rounded-2xl shadow-md max-w-sm w-full gap-6 '>
+                    <div className='flex flex-row justify-start '>
+                        <Button
+                            className='p-0 text-secondary-foreground'
+                            variant={'link'}
+                            onClick={() => {
+                                console.log('/')
+                                router.push('/')
+                            }}
+                        >
+                            Go back
+                        </Button>
+                        {/* <button className='w-fit text-sm bg-green-300 hover:bg-slate-100 border border-black border-solid'>
                         Go back
                     </button> */}
-                </div>
-                <div className='flex flex-row items-center justify-center'>
-                    <h1 className=' text-2xl mb-6 w-fit px-1'>Login</h1>
-                </div>
+                    </div>
+                    <div className='flex flex-row items-center justify-center'>
+                        <h1 className=' text-2xl mb-6 w-fit px-1'>Login</h1>
+                    </div>
+                    <div className='gap-4 flex flex-col mb-6'>
+                        {/* Email Input */}
+                        <div className=''>
+                            <label
+                                htmlFor='email'
+                                className='block mb-1.5 text-sm font-medium text-customeText2'
+                            >
+                                Email
+                            </label>
+                            <input
+                                type='email'
+                                id='email'
+                                // link to the formData.get(name)
+                                name='email'
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                className='w-full p-2 outline-black border border-customeBorder text-sm'
+                                placeholder='Enter your email'
+                                required
+                            />
+                        </div>
 
-                {/* Email Input */}
-                <div className='mb-4'>
-                    <label htmlFor='email' className='block mb-2 text-sm w-fit'>
-                        Email
-                    </label>
-                    <input
-                        type='email'
-                        id='email'
-                        // link to the formData.get(name)
-                        name='email'
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        className='w-full p-2 outline-black border border-slate-100 text-sm'
-                        placeholder='Enter your email'
-                        required
-                    />
-                </div>
+                        {/* Password Input */}
+                        <div className=''>
+                            <label
+                                htmlFor='password'
+                                className='block mb-1.5 text-sm font-medium text-customeText2'
+                            >
+                                Password
+                            </label>
+                            <input
+                                type='password'
+                                id='password'
+                                // link to the formData.get(name)
+                                name='password'
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                className='w-full p-2 outline-black border border-customeBorder text-sm'
+                                placeholder='Enter your password'
+                                required
+                            />
+                        </div>
+                    </div>
 
-                {/* Password Input */}
-                <div className='mb-6'>
-                    <label htmlFor='password' className='block mb-2 text-sm '>
-                        Password
-                    </label>
-                    <input
-                        type='password'
-                        id='password'
-                        // link to the formData.get(name)
-                        name='password'
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        className='w-full p-2 outline-black border border-slate-100 text-sm'
-                        placeholder='Enter your password'
-                        required
-                    />
-                </div>
-
-                {/* Submit Button */}
-                {/* <AsyncButton
+                    {/* Submit Button */}
+                    {/* <AsyncButton
                     
                     displayName='Login'
                 ></AsyncButton> */}
-                <button
-                    formAction={emailLogin}
-                    className='w-full bg-green-300 p-2  hover:bg-slate-200 transition border border-solid border-black'
-                >
-                    Login
-                </button>
-            </form>
+                    <div className='flex justify-between'>
+                        <Button formAction={emailLogin} className='w-16 p-2 '>
+                            Login
+                        </Button>
+
+                        <div className='text-sm text-customeText2 flex gap-1 items-center'>
+                            don’t have account yet?{' '}
+                            <Button
+                                formAction={toRegister}
+                                variant={'link'}
+                                className='w-16 h-full'
+                            >
+                                sign up
+                            </Button>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
     )
 }

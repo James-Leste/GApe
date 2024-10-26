@@ -29,7 +29,7 @@ export default async function UserInfo() {
                     />
                 </HoverCardTrigger>
                 <HoverCardContent>
-                    <div className='flex flex-col gap-2'>
+                    <div className='flex flex-col gap-2 items-center'>
                     {userdata.email}
                     <AsyncButton func={signout} displayName='Sign out' />{' '}
                     </div>
@@ -41,10 +41,10 @@ export default async function UserInfo() {
     }
 
     return (
-        <div>
+        <div className='items-center flex'>
             <div className='text-customeText1'>
                 {error || !data?.user ? (
-                    <a href='/authentication/login'>Login</a>
+                    <a  href='/authentication/login'>Login</a>
                 ) : (
                     <div className='size-10'>
                         <User userdata={data.user} />

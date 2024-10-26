@@ -87,19 +87,6 @@ export default function RegisterPage() {
                     />
                 </div>
 
-                {/* Submit Button */}
-                {/* <AsyncButton
-                    func={async () => {
-                        if (password !== confirmPassword) {
-                            router.push('/authentication/error')
-                            return
-                        }
-
-                        await emailSignup(email, password)
-                        router.push('/')
-                    }}
-                    displayName='Login'
-                ></AsyncButton> */}
                 <button
                     formAction={emailSignup}
                     className='w-full bg-green-300 p-2  hover:bg-slate-200 transition border border-solid border-black'
