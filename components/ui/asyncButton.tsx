@@ -14,9 +14,9 @@ export default function AsyncButton({
 
     return (
         <Button
-            className='mx-5 px-5 border border-solid border-secondary-foreground'
+            className=' border border-customeBorder '
             onClick={() => {
-                console.log('happy')
+                console.log('logout')
                 func() // Wait for signout to complete
                 router.push('/') // Redirect to home page
             }}

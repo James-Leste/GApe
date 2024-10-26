@@ -4,8 +4,6 @@ import type { Metadata } from 'next'
 import localFont from 'next/font/local'
 import './globals.css'
 import UserInfo from '@/components/ui/userInfo'
-import { signout } from './authentication/actions'
-import AsyncButton from '@/components/ui/asyncButton'
 import HeaderMenu from '@/components/ui/headerMenu'
 
 const geistSans = localFont({
@@ -36,10 +34,8 @@ export default function RootLayout({
             >
                 <HeaderMenu>
                     <div className='flex flex-row gap-3'>
-                    <AsyncButton func={signout} displayName='Sign out' />
-                    <UserInfo></UserInfo>
+                        <UserInfo></UserInfo>
                     </div>
-              
                 </HeaderMenu>
 
                 {children}
