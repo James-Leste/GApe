@@ -13,7 +13,12 @@ const config: Config = {
         extend: {
             colors: {
                 customeWhite: '#F5F7F8',
-                customeGreen: '#45474B',
+                customeGreen: '#128149',
+                customeBG1: '#FAF3EA',
+                customeBG2: '#EDE1D1',
+                customeBorder:"#A69986",
+                customeText1:"#128149",
+                customeText2:"#0E3C26",
 
                 background: 'hsl(var(--background))',
                 foreground: 'hsl(var(--foreground))',

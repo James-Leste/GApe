@@ -101,8 +101,8 @@ export default function Layout() {
                     </CardFooter>
                 </Card>
             </div>
-            <div className='h-screen w-full flex flex-col items-center justify-center bg-green-300'>
-                <h1 id='intro'>Introduction</h1>
+            <div className='h-screen w-full flex flex-col items-center justify-center bg-customeBG1'>
+                <h1 id='intro' className='text-customeText2'>Introduction</h1>
             </div>
         </div>
     )

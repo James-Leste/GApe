@@ -4,11 +4,11 @@ interface HeaderMenuProps {
 }
 export default function HeaderMenu({children}:HeaderMenuProps) {
     return (
-        <header className='sticky top-0 z-50 w-full border-border/40 bg-background/95 backdrop-blur border-b border-[#a69986] supports-[backdrop-filter]:bg-background/60'>
+        <header className='sticky top-0 z-50 w-full border-border/40 bg-background/95 backdrop-blur border-b border-customeBorder supports-[backdrop-filter]:bg-background/70'>
             <div className='container flex h-14 max-w-screen-2xl items-center '>
                 <div className='mr-4 hidden md:flex items-center justify-between w-full'>
                     <div className=' h-full pl-9 pr-9 flex flex-col justify-center items-center '>
-                        <div className='text-[#128149] text-2xl font-inter font-semibold break-words'>
+                        <div className='text-customeText2 text-2xl font-inter font-semibold break-words'>
                             <a href='/'>GApe</a>
                         </div>
                       
