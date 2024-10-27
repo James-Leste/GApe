@@ -22,7 +22,7 @@ export default function Layout() {
                 {/* <header>This is header</header> */}
                 <Card className='shadow-md rounded-3xl h-fit w-fit bg-slate-50 p-5 border-hidden'>
                     <CardHeader>
-                        <HoverCard>
+                        <HoverCard openDelay={100}>
                             <HoverCardTrigger asChild className='mt-5 mb-0'>
                                 <Button
                                     asChild
@@ -101,8 +101,10 @@ export default function Layout() {
                     </CardFooter>
                 </Card>
             </div>
-            <div className='h-screen w-full flex flex-col items-center justify-center bg-green-300'>
-                <h1 id='intro'>Introduction</h1>
+            <div className='h-screen w-full flex flex-col items-center justify-center bg-customeBG1'>
+                <h1 id='intro' className='text-customeText2'>
+                    Introduction
+                </h1>
             </div>
         </div>
     )

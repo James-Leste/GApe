@@ -4,8 +4,7 @@ import type { Metadata } from 'next'
 import localFont from 'next/font/local'
 import './globals.css'
 import UserInfo from '@/components/ui/userInfo'
-import { signout } from './authentication/actions'
-import AsyncButton from '@/components/ui/asyncButton'
+import HeaderMenu from '@/components/ui/headerMenu'
 
 const geistSans = localFont({
     src: './fonts/GeistVF.woff',
@@ -33,14 +32,9 @@ export default function RootLayout({
             <body
                 className={`${geistSans.variable} ${geistMono.variable} antialiased w-full h-full`}
             >
-                <div className='flex flex-row fixed z-10 items-center bg-slate-50 w-full py-3'>
-                    <div className='p-1 mx-5'>
-                        <AsyncButton func={signout} displayName='Sign out' />
-                    </div>
-                    <div>
-                        <UserInfo></UserInfo>
-                    </div>
-                </div>
+                <HeaderMenu>
+                    <UserInfo></UserInfo>
+                </HeaderMenu>
 
                 {children}
             </body>
