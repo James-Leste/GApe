@@ -18,7 +18,7 @@ export default async function UserInfo() {
 
     function User({ userdata }: { userdata: User }) {
         return (
-            <HoverCard>
+            <HoverCard openDelay={0}>
                 <HoverCardTrigger className='size-10'>
                     <Image
                         height={40}
@@ -30,11 +30,12 @@ export default async function UserInfo() {
                 </HoverCardTrigger>
                 <HoverCardContent>
                     <div className='flex flex-col gap-2 items-center'>
-                    {userdata.email}
-                    <AsyncButton func={signout} displayName='Sign out' />{' '}
+                        {userdata.email}
+                        <AsyncButton
+                            func={signout}
+                            displayName='Sign out'
+                        />{' '}
                     </div>
-               
-                  
                 </HoverCardContent>
             </HoverCard>
         )
@@ -44,7 +45,7 @@ export default async function UserInfo() {
         <div className='items-center flex'>
             <div className='text-customeText1'>
                 {error || !data?.user ? (
-                    <a  href='/authentication/login'>Login</a>
+                    <a href='/authentication/login'>Login</a>
                 ) : (
                     <div className='size-10'>
                         <User userdata={data.user} />
