@@ -18,20 +18,6 @@ export default function LoginPage() {
         router.push('/authentication/register')
     }
 
-    // const handleSubmit = async (event: React.FormEvent) => {
-    //     event.preventDefault()
-
-    //     // Here you can implement login logic (e.g., API call)
-    //     console.log({ email, password })
-
-    //     // Example login simulation: route to a dashboard page on success
-    //     if (email === 'test@example.com' && password === 'password') {
-    //         router.push('/dashboard')
-    //     } else {
-    //         alert('Invalid credentials')
-    //     }
-    // }
-
     return (
         <div className='h-screen grid grid-cols-2 gap-3 items-center justify-center bg-customeBG1 p-4  '>
             <div className='p-4 w-full flex justify-center'>this is introduce image</div>
