@@ -34,8 +34,9 @@ export default function LoginPage() {
 
     return (
         <div className='h-screen grid grid-cols-2 gap-3 items-center justify-center bg-customeBG1 p-4  '>
-            <div className='p-4 w-full'>this is introduce image</div>
-            <div className='flex items-center justify-center w-96'>
+            <div className='p-4 w-full flex justify-center'>this is introduce image</div>
+            <div className='items-center justify-center flex'>
+            <div className='flex  w-96'>
                 <form className='bg-customeBG2 border border-customeBorder p-6 rounded-2xl shadow-md max-w-sm w-full gap-6 '>
                     <div className='flex flex-row justify-start '>
                         <Button
@@ -122,6 +123,8 @@ export default function LoginPage() {
                     </div>
                 </form>
             </div>
+            </div>
+            
         </div>
     )
 }
