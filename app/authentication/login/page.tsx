@@ -8,6 +8,8 @@ import { useState } from 'react'
 import { emailLogin } from '../actions'
 import { Button } from '@/components/ui/button'
 import { useRouter } from 'next/navigation'
+import { toast } from "sonner"
+
 
 export default function LoginPage() {
     const [email, setEmail] = useState('')
@@ -16,6 +18,12 @@ export default function LoginPage() {
     const router = useRouter()
     function toRegister() {
         router.push('/authentication/register')
+    }
+    function toSignIn(formData: FormData) {
+        emailLogin(formData)
+        toast.success("User has successfully logged in.")
+
+
     }
 
     return (
@@ -92,7 +100,7 @@ export default function LoginPage() {
                     displayName='Login'
                 ></AsyncButton> */}
                     <div className='flex justify-between'>
-                        <Button formAction={emailLogin} className='w-16 p-2 '>
+                        <Button formAction={toSignIn} className='w-16 p-2 '>
                             Login
                         </Button>
 

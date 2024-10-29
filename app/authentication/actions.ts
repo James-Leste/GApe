@@ -4,7 +4,6 @@
 
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
-
 import { createClient } from '@/utils/supabase/server'
 
 export async function emailLogin(formData: FormData) {
@@ -22,7 +21,6 @@ export async function emailLogin(formData: FormData) {
     if (error) {
         redirect('/authentication/error')
     }
-
     revalidatePath('/', 'layout')
     redirect('/')
 }

@@ -20,10 +20,12 @@
         "date-fns": "^3.6.0",
         "lucide-react": "^0.439.0",
         "next": ">=14.2.10",
+        "next-themes": "^0.3.0",
         "prettier": "^3.3.3",
         "react": "^18",
         "react-day-picker": "^8.10.1",
         "react-dom": "^18",
+        "sonner": "^1.5.0",
         "tailwind-merge": "^2.5.2",
         "tailwindcss-animate": "^1.0.7"
     },
