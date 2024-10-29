@@ -19,10 +19,15 @@ export default function LoginPage() {
     function toRegister() {
         router.push('/authentication/register')
     }
-    function toSignIn(formData: FormData) {
-        emailLogin(formData)
-        toast.success("User has successfully logged in.")
-
+    async function toSignIn(formData: FormData) {
+        const response = await emailLogin(formData);
+        if (response.success) {
+            toast.success(response.message)
+            router.push('/')
+              
+        } else {
+            toast.error(response.message)
+        }
 
     }
 

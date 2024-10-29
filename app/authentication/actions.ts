@@ -19,10 +19,10 @@ export async function emailLogin(formData: FormData) {
     const { error } = await supabase.auth.signInWithPassword(data)
 
     if (error) {
-        redirect('/authentication/error')
+        return { success: false, message: error.message }
     }
-    revalidatePath('/', 'layout')
-    redirect('/')
+
+    return { success: true, message: 'User has successfully logged in.' }
 }
 
 export async function emailSignup(formData: FormData) {
@@ -38,12 +38,13 @@ export async function emailSignup(formData: FormData) {
     const { error } = await supabase.auth.signUp(data)
 
     if (error) {
-        console.log(error)
-        redirect('/authentication/error')
+        return { success: false, message: error.message }
     }
 
-    revalidatePath('/', 'layout')
-    redirect('/')
+    return {
+        success: true,
+        message: 'Please check your email to confirm your signup.',
+    }
 }
 
 export async function signout() {
