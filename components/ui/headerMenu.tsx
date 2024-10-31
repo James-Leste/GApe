@@ -63,7 +63,7 @@ export default function HeaderMenu({ children }: HeaderMenuProps) {
             <div className='container flex h-14 max-w-screen-2xl items-center '>
                 <div className='mx-4 gap-4 hidden md:flex items-center justify-between w-full'>
                     <div className=' h-full pl-9 pr-9 flex flex-col justify-center items-center '>
-                        <div className='text-customeText2 text-2xl font-inter font-semibold break-words'>
+                        <div className='text-customeText1 text-2xl font-inter font-semibold break-words'>
                             <a href='/'>GApe</a>
                         </div>
                     </div>
