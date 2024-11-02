@@ -22,12 +22,18 @@ const block_data = {
     },
 }
 
-function SizeChanger({ handleSizeChange, defaultSize }: { handleSizeChange: (value: string) => void , defaultSize: string}) {
+function SizeChanger({
+    handleSizeChange,
+    defaultSize,
+}: {
+    handleSizeChange: (value: string) => void
+    defaultSize: string
+}) {
     return (
         <div className='absolute top-2 right-[-16px] hidden group-hover:block bg-customeBG1 p-1 rounded'>
             <RadioGroup
                 onValueChange={handleSizeChange}
-                defaultValue = {defaultSize}
+                defaultValue={defaultSize}
                 className='flex flex-col gap-1'
             >
                 <div>
@@ -70,7 +76,11 @@ function SizeChanger({ handleSizeChange, defaultSize }: { handleSizeChange: (val
     )
 }
 
-export function InfoBlock_L({ handleSizeChange }: { handleSizeChange: (value: string) => void }) {
+export function InfoBlock_L({
+    handleSizeChange,
+}: {
+    handleSizeChange: (value: string) => void
+}) {
     function Tag({ name }: { name: string }) {
         return (
             <div className='h-[22px] px-0.5 py-1 bg-green-300 rounded-sm border border-black justify-center items-center gap-2.5 inline-flex'>
@@ -137,7 +147,11 @@ export function InfoBlock_L({ handleSizeChange }: { handleSizeChange: (value: st
     )
 }
 
-export function InfoBlock_M({ handleSizeChange }: { handleSizeChange: (value: string) => void }) {
+export function InfoBlock_M({
+    handleSizeChange,
+}: {
+    handleSizeChange: (value: string) => void
+}) {
     return (
         <div className='relative group w-96 h-[140px] p-2 bg-white rounded-lg border border-slate-300 flex-col justify-start items-start gap-2 inline-flex'>
             <SizeChanger defaultSize='m' handleSizeChange={handleSizeChange} />
@@ -179,12 +193,32 @@ export function InfoBlock_M({ handleSizeChange }: { handleSizeChange: (value: st
     )
 }
 
-export function InfoBlock_S({ handleSizeChange }: { handleSizeChange: (value: string) => void }) {
+export function InfoBlock_S({
+    handleSizeChange,
+}: {
+    handleSizeChange: (value: string) => void
+}) {
     return (
-        <div className=' relative group w-40 h-[140px] p-2 bg-white rounded-lg border border-slate-300 flex-col justify-start items-start gap-2 inline-flex'>
+        <div className=' relative group w-40 h-[140px] p-2 bg-white rounded-lg border border-slate-300 flex-col justify-start items-start gap-1 inline-flex'>
             <SizeChanger defaultSize='s' handleSizeChange={handleSizeChange} />
-            <div className='text-black text-xl font-semibold'>
+            <div className='text-black text-sm font-semibold'>
                 {block_data.name}
+            </div>
+            <div
+                className='text-neutral-700  overflow-hidden text-xs font-light  leading-[14px]'
+                style={{
+                    display: '-webkit-box',
+                    WebkitLineClamp: 5,
+                    WebkitBoxOrient: 'vertical',
+                    textOverflow: 'ellipsis',
+                }}
+            >
+                {' '}
+                {block_data.description}{' '}
+            </div>
+            <div className='flex justify-between w-full'>
+                <Twitter className='w-4' /> <Github className='w-4' />{' '}
+                <Phone className='w-4' /> <Mail className='w-4' />
             </div>
         </div>
     )
@@ -227,11 +261,16 @@ export default function InfoBlock() {
                 }}
                 className='w-full'
             >
-                {selectedSize === 'S' && <InfoBlock_S handleSizeChange={handleSizeChange} />}
-                {selectedSize === 'M' && <InfoBlock_M handleSizeChange={handleSizeChange} />}
-                {selectedSize === 'L' && <InfoBlock_L handleSizeChange={handleSizeChange} />}
+                {selectedSize === 'S' && (
+                    <InfoBlock_S handleSizeChange={handleSizeChange} />
+                )}
+                {selectedSize === 'M' && (
+                    <InfoBlock_M handleSizeChange={handleSizeChange} />
+                )}
+                {selectedSize === 'L' && (
+                    <InfoBlock_L handleSizeChange={handleSizeChange} />
+                )}
             </motion.div>
         </div>
     )
 }
-
