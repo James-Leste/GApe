@@ -2,10 +2,10 @@
 'use client'
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-
 import { Globe, Twitter, Github, Phone, Mail } from 'lucide-react'
 import { Label } from '@/components/ui/label'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
+
 const block_data = {
     name: 'John Simth',
     description:
@@ -21,7 +21,56 @@ const block_data = {
         x: '@IsJohn_Smith22',
     },
 }
-export function InfoBlock_L() {
+
+function SizeChanger({ handleSizeChange, defaultSize }: { handleSizeChange: (value: string) => void , defaultSize: string}) {
+    return (
+        <div className='absolute top-2 right-[-16px] hidden group-hover:block bg-customeBG1 p-1 rounded'>
+            <RadioGroup
+                onValueChange={handleSizeChange}
+                defaultValue = {defaultSize}
+                className='flex flex-col gap-1'
+            >
+                <div>
+                    <RadioGroupItem value='s' id='s' className='peer sr-only' />
+                    <Label
+                        htmlFor='s'
+                        className='flex h-5 w-5 cursor-pointer items-center justify-center rounded bg-customeBG1 border border-transparent peer-data-[state=checked]:border-customeBorder peer-data-[state=checked]:bg-customeBG2'
+                    >
+                        <span className='text-sm font-bold text-muted-foreground peer-data-[state=checked]:text-primary'>
+                            S
+                        </span>
+                    </Label>
+                </div>
+
+                <div>
+                    <RadioGroupItem value='m' id='m' className='peer sr-only' />
+                    <Label
+                        htmlFor='m'
+                        className='flex h-5 w-5 cursor-pointer items-center justify-center rounded bg-customeBG1 border  border-transparent peer-data-[state=checked]:border-customeBorder peer-data-[state=checked]:bg-customeBG2'
+                    >
+                        <span className='text-sm font-bold text-muted-foreground peer-data-[state=checked]:text-primary'>
+                            M
+                        </span>
+                    </Label>
+                </div>
+
+                <div>
+                    <RadioGroupItem value='l' id='l' className='peer sr-only' />
+                    <Label
+                        htmlFor='l'
+                        className='flex h-5 w-5 cursor-pointer items-center justify-center rounded bg-customeBG1 border  border-transparent peer-data-[state=checked]:border-customeBorder peer-data-[state=checked]:bg-customeBG2'
+                    >
+                        <span className='text-sm font-bold text-muted-foreground peer-data-[state=checked]:text-primary'>
+                            L
+                        </span>
+                    </Label>
+                </div>
+            </RadioGroup>
+        </div>
+    )
+}
+
+export function InfoBlock_L({ handleSizeChange }: { handleSizeChange: (value: string) => void }) {
     function Tag({ name }: { name: string }) {
         return (
             <div className='h-[22px] px-0.5 py-1 bg-green-300 rounded-sm border border-black justify-center items-center gap-2.5 inline-flex'>
@@ -33,9 +82,10 @@ export function InfoBlock_L() {
     }
 
     return (
-        <div className='w-96 h-[236px] p-2 bg-white rounded-lg border border-slate-300 flex-col justify-start items-start gap-2 inline-flex'>
+        <div className='relative group w-96 h-[236px] p-2 bg-white rounded-lg border border-slate-300 flex-col justify-start items-start gap-2 inline-flex'>
+            <SizeChanger defaultSize='l' handleSizeChange={handleSizeChange} />
             <div className='flex flex-row gap-2 pb-2 border-b'>
-                <img src={block_data.image} className='w-28 rounded  ' />
+                <img src={block_data.image} className='w-28 rounded' />
                 <div className='flex flex-col justify-between'>
                     <p
                         className='text-sm overflow-hidden'
@@ -86,9 +136,11 @@ export function InfoBlock_L() {
         </div>
     )
 }
-export function InfoBlock_M() {
+
+export function InfoBlock_M({ handleSizeChange }: { handleSizeChange: (value: string) => void }) {
     return (
-        <div className='w-96 h-[140px] p-2 bg-white rounded-lg border border-slate-300 flex-col justify-start items-start gap-2 inline-flex'>
+        <div className='relative group w-96 h-[140px] p-2 bg-white rounded-lg border border-slate-300 flex-col justify-start items-start gap-2 inline-flex'>
+            <SizeChanger defaultSize='m' handleSizeChange={handleSizeChange} />
             <div className='text-black text-xl font-semibold'>
                 {block_data.name}
             </div>
@@ -127,9 +179,10 @@ export function InfoBlock_M() {
     )
 }
 
-export function InfoBlock_S() {
+export function InfoBlock_S({ handleSizeChange }: { handleSizeChange: (value: string) => void }) {
     return (
-        <div className='w-40 h-[140px] p-2 bg-white rounded-lg border border-slate-300 flex-col justify-start items-start gap-2 inline-flex'>
+        <div className=' relative group w-40 h-[140px] p-2 bg-white rounded-lg border border-slate-300 flex-col justify-start items-start gap-2 inline-flex'>
+            <SizeChanger defaultSize='s' handleSizeChange={handleSizeChange} />
             <div className='text-black text-xl font-semibold'>
                 {block_data.name}
             </div>
@@ -156,85 +209,13 @@ export default function InfoBlock() {
             transitionEnd: { display: 'none' },
         }),
     }
+
     const handleSizeChange = (value: string) => {
         setSelectedSize(value.toUpperCase())
     }
-    const initialSize = 'M'
-    const getDirection = (current: string, previous: string) => {
-        const order = ['S', 'M', 'L']
-        return order.indexOf(current) - order.indexOf(previous)
-    }
-    const show = {
-        opacity: 1,
-        display: 'block',
-    }
 
-    const hide = {
-        opacity: 0,
-        transitionEnd: {
-            display: 'none',
-        },
-    }
     return (
         <div className='flex flex-col gap-4'>
-            <div>
-                <div className='bg-customeBG1  0 p-1 rounded-xl inline-block'>
-                    <RadioGroup
-                        onValueChange={handleSizeChange}
-                        defaultValue='m'
-                        className='flex gap-1'
-                    >
-                        <div>
-                            <RadioGroupItem
-                                value='s'
-                                id='s'
-                                className='peer sr-only'
-                            />
-                            <Label
-                                htmlFor='s'
-                                className='flex h-10 w-10 cursor-pointer items-center justify-center rounded-lg bg-customeBG1 border-2 border-transparent peer-data-[state=checked]:border-customeBorder peer-data-[state=checked]:bg-customeBG2'
-                            >
-                                <span className='text-base font-bold text-muted-foreground peer-data-[state=checked]:text-primary'>
-                                    S
-                                </span>
-                            </Label>
-                        </div>
-
-                        <div>
-                            <RadioGroupItem
-                                value='m'
-                                id='m'
-                                className='peer sr-only'
-                            />
-                            <Label
-                                htmlFor='m'
-                                className='flex h-10 w-10 cursor-pointer items-center justify-center rounded-lg bg-customeBG1 border-2  border-transparent peer-data-[state=checked]:border-customeBorder peer-data-[state=checked]:bg-customeBG2'
-                            >
-                                <span className='text-base font-bold text-muted-foreground peer-data-[state=checked]:text-primary'>
-                                    M
-                                </span>
-                            </Label>
-                        </div>
-
-                        <div>
-                            <RadioGroupItem
-                                value='l'
-                                id='l'
-                                className='peer sr-only'
-                            />
-                            <Label
-                                htmlFor='l'
-                                className='flex h-10 w-10 cursor-pointer items-center justify-center rounded-lg bg-customeBG1 border-2  border-transparent peer-data-[state=checked]:border-customeBorder peer-data-[state=checked]:bg-customeBG2'
-                            >
-                                <span className='text-base font-bold text-muted-foreground peer-data-[state=checked]:text-primary'>
-                                    L
-                                </span>
-                            </Label>
-                        </div>
-                    </RadioGroup>
-                </div>
-            </div>
-
             <motion.div
                 key={selectedSize}
                 variants={variants}
@@ -246,10 +227,11 @@ export default function InfoBlock() {
                 }}
                 className='w-full'
             >
-                {selectedSize === 'S' && <InfoBlock_S />}
-                {selectedSize === 'M' && <InfoBlock_M />}
-                {selectedSize === 'L' && <InfoBlock_L />}
+                {selectedSize === 'S' && <InfoBlock_S handleSizeChange={handleSizeChange} />}
+                {selectedSize === 'M' && <InfoBlock_M handleSizeChange={handleSizeChange} />}
+                {selectedSize === 'L' && <InfoBlock_L handleSizeChange={handleSizeChange} />}
             </motion.div>
         </div>
     )
 }
+
