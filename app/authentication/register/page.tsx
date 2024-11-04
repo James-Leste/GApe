@@ -6,6 +6,8 @@ import { useState } from 'react'
 import { emailSignup } from '../actions'
 import { Button } from '@/components/ui/button'
 import { useRouter } from 'next/navigation'
+import { toast } from "sonner"
+
 
 export default function RegisterPage() {
     const [email, setEmail] = useState('')
@@ -14,6 +16,24 @@ export default function RegisterPage() {
     const router = useRouter()
     function toLogin() {
         router.push('/authentication/login')
+    }
+    async function handleSignup(event:FormData) {
+
+        const response = await emailSignup(event);
+        console.log(response)
+        const email = event.get('email') as string;
+        const emailDomain = email.split('@')[1];
+
+        if (response.success) {
+            toast(response.message, {
+                action: {
+                  label: 'GO',
+                  onClick: () =>  window.open(`https://${emailDomain}`, '_blank')
+                },
+              })
+        } else {
+            toast.error(response.message)
+        }
     }
     return (
         <div className='h-screen grid grid-cols-2 gap-3 items-center justify-center bg-customeBG1 p-4  '>
@@ -111,7 +131,7 @@ export default function RegisterPage() {
 
                         {/* Submit Button */}
                         <div className='flex justify-between'>
-                            <Button formAction={emailSignup} className=' p-2 '>
+                            <Button formAction={handleSignup} className=' p-2 '>
                                 Sign up
                             </Button>
 

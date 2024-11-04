@@ -3,6 +3,8 @@
 'use client'
 import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
+import { toast } from "sonner"
+
 export default function AsyncButton({
     func,
     displayName,
@@ -17,6 +19,7 @@ export default function AsyncButton({
             className=' border border-customeBorder '
             onClick={() => {
                 console.log('logout')
+                toast.success("User has successfully logged out.")
                 func() // Wait for signout to complete
                 router.push('/') // Redirect to home page
             }}
