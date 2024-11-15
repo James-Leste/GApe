@@ -8,6 +8,8 @@ import { useState } from 'react'
 import { emailLogin } from '../actions'
 import { Button } from '@/components/ui/button'
 import { useRouter } from 'next/navigation'
+import { toast } from "sonner"
+
 
 export default function LoginPage() {
     const [email, setEmail] = useState('')
@@ -16,6 +18,17 @@ export default function LoginPage() {
     const router = useRouter()
     function toRegister() {
         router.push('/authentication/register')
+    }
+    async function toSignIn(formData: FormData) {
+        const response = await emailLogin(formData);
+        if (response.success) {
+            toast.success(response.message)
+            router.push('/')
+              
+        } else {
+            toast.error(response.message)
+        }
+
     }
 
     return (
@@ -92,7 +105,7 @@ export default function LoginPage() {
                     displayName='Login'
                 ></AsyncButton> */}
                     <div className='flex justify-between'>
-                        <Button formAction={emailLogin} className='w-16 p-2 '>
+                        <Button formAction={toSignIn} className='w-16 p-2 '>
                             Login
                         </Button>
 
