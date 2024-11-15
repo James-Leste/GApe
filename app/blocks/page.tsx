@@ -1,9 +1,11 @@
-import InfoBlock from "@/components/blocks/info"
+/** @format */
 
-export default function Blocks(){
+import InfoBlock from '@/components/blocks/info'
+
+export default function Blocks() {
     return (
-        <div className="p-4">
-        <InfoBlock />
+        <div className='p-4'>
+            <InfoBlock />
         </div>
     )
 }

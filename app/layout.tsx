@@ -38,10 +38,7 @@ export default function RootLayout({
                 </HeaderMenu>
 
                 {children}
-                <Toaster
-                    
-                    closeButton
-                />
+                <Toaster closeButton />
             </body>
         </html>
     )

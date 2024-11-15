@@ -6,8 +6,7 @@ import { useState } from 'react'
 import { emailSignup } from '../actions'
 import { Button } from '@/components/ui/button'
 import { useRouter } from 'next/navigation'
-import { toast } from "sonner"
-
+import { toast } from 'sonner'
 
 export default function RegisterPage() {
     const [email, setEmail] = useState('')
@@ -17,20 +16,20 @@ export default function RegisterPage() {
     function toLogin() {
         router.push('/authentication/login')
     }
-    async function handleSignup(event:FormData) {
-
-        const response = await emailSignup(event);
+    async function handleSignup(event: FormData) {
+        const response = await emailSignup(event)
         console.log(response)
-        const email = event.get('email') as string;
-        const emailDomain = email.split('@')[1];
+        const email = event.get('email') as string
+        const emailDomain = email.split('@')[1]
 
         if (response.success) {
             toast(response.message, {
                 action: {
-                  label: 'GO',
-                  onClick: () =>  window.open(`https://${emailDomain}`, '_blank')
+                    label: 'GO',
+                    onClick: () =>
+                        window.open(`https://${emailDomain}`, '_blank'),
                 },
-              })
+            })
         } else {
             toast.error(response.message)
         }
@@ -131,7 +130,7 @@ export default function RegisterPage() {
                             </Button>
 
                             <div className='text-sm text-customeText2 flex gap-1 items-center'>
-                                Already have account?{' '}
+                                <span>Already have account?</span>
                                 <Button
                                     onClick={toLogin}
                                     variant={'link'}
