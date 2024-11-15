@@ -110,11 +110,12 @@ export default function LoginPage() {
                         </Button>
 
                         <div className='text-sm text-customeText2 flex gap-1 items-center'>
-                            don’t have account yet?{' '}
+                            don't have account yet?{' '}
                             <Button
-                                formAction={toRegister}
+                                onClick={toRegister}
                                 variant={'link'}
                                 className='w-16 h-full'
+                                type='button'
                             >
                                 sign up
                             </Button>

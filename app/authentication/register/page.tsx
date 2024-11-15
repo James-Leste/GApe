@@ -54,9 +54,6 @@ export default function RegisterPage() {
                             >
                                 Go back
                             </Button>
-                            {/* <button className='w-fit text-sm bg-green-300 hover:bg-slate-100 border border-black border-solid'>
-                        Go back
-                    </button> */}
                         </div>
                         <div className='flex flex-row items-center justify-center'>
                             <h1 className=' text-2xl mb-6 w-fit px-1'>
@@ -75,7 +72,6 @@ export default function RegisterPage() {
                                 <input
                                     type='email'
                                     id='email'
-                                    // link to the formData.get(name)
                                     name='email'
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
@@ -96,7 +92,6 @@ export default function RegisterPage() {
                                 <input
                                     type='password'
                                     id='password'
-                                    // link to the formData.get(name)
                                     name='password'
                                     value={password}
                                     onChange={(e) =>
@@ -138,9 +133,10 @@ export default function RegisterPage() {
                             <div className='text-sm text-customeText2 flex gap-1 items-center'>
                                 Already have account?{' '}
                                 <Button
-                                    formAction={toLogin}
+                                    onClick={toLogin}
                                     variant={'link'}
                                     className=' h-full'
+                                    type='button'
                                 >
                                     Login
                                 </Button>
