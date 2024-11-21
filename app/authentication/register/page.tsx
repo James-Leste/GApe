@@ -6,8 +6,7 @@ import { useState } from 'react'
 import { emailSignup } from '../actions'
 import { Button } from '@/components/ui/button'
 import { useRouter } from 'next/navigation'
-import { toast } from "sonner"
-
+import { toast } from 'sonner'
 
 export default function RegisterPage() {
     const [email, setEmail] = useState('')
@@ -17,20 +16,20 @@ export default function RegisterPage() {
     function toLogin() {
         router.push('/authentication/login')
     }
-    async function handleSignup(event:FormData) {
-
-        const response = await emailSignup(event);
+    async function handleSignup(event: FormData) {
+        const response = await emailSignup(event)
         console.log(response)
-        const email = event.get('email') as string;
-        const emailDomain = email.split('@')[1];
+        const email = event.get('email') as string
+        const emailDomain = email.split('@')[1]
 
         if (response.success) {
             toast(response.message, {
                 action: {
-                  label: 'GO',
-                  onClick: () =>  window.open(`https://${emailDomain}`, '_blank')
+                    label: 'GO',
+                    onClick: () =>
+                        window.open(`https://${emailDomain}`, '_blank'),
                 },
-              })
+            })
         } else {
             toast.error(response.message)
         }
@@ -54,9 +53,6 @@ export default function RegisterPage() {
                             >
                                 Go back
                             </Button>
-                            {/* <button className='w-fit text-sm bg-green-300 hover:bg-slate-100 border border-black border-solid'>
-                        Go back
-                    </button> */}
                         </div>
                         <div className='flex flex-row items-center justify-center'>
                             <h1 className=' text-2xl mb-6 w-fit px-1'>
@@ -75,7 +71,6 @@ export default function RegisterPage() {
                                 <input
                                     type='email'
                                     id='email'
-                                    // link to the formData.get(name)
                                     name='email'
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
@@ -96,7 +91,6 @@ export default function RegisterPage() {
                                 <input
                                     type='password'
                                     id='password'
-                                    // link to the formData.get(name)
                                     name='password'
                                     value={password}
                                     onChange={(e) =>
@@ -136,11 +130,12 @@ export default function RegisterPage() {
                             </Button>
 
                             <div className='text-sm text-customeText2 flex gap-1 items-center'>
-                                Already have account?{' '}
+                                <span>Already have account?</span>
                                 <Button
-                                    formAction={toLogin}
+                                    onClick={toLogin}
                                     variant={'link'}
                                     className=' h-full'
+                                    type='button'
                                 >
                                     Login
                                 </Button>
