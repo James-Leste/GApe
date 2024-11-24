@@ -30,6 +30,7 @@ const StyledItem = styled.div`
     margin-bottom: ${grid}px;
     user-select: none;
     width: 200px;
+    flex-shrink: 0;
 `
 
 function Item(props: ItemProps) {
@@ -81,7 +82,6 @@ const StyledList = styled.div<StyledListProps>`
     background-color: ${(props) =>
         props.isDraggingOver ? colors.B100 : 'inherit'};
     height: ${(props) => (props.size === 'large' ? 800 : 200)}px;
-    overflow-x: auto;
 `
 
 function List(props: ListProps) {
