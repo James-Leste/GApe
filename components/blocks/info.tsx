@@ -8,6 +8,7 @@ import { Globe, Twitter, Github, Phone, Mail } from 'lucide-react'
 import { Label } from '@/components/ui/label'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import { BlockContext, BlockData } from '@/lib/blockContext'
+import BlockSheet from '@/components/blocks/Context-sheet'
 
 function SizeChanger({
     handleSizeChange,
@@ -17,7 +18,7 @@ function SizeChanger({
     defaultSize: string
 }) {
     return (
-        <div className='absolute top-2 right-[-16px] hidden group-hover:block bg-background p-1 rounded'>
+        <div className='absolute top-2 right-[-16px] hidden group-hover:block bg-customeBG1 p-1 rounded'>
             <RadioGroup
                 onValueChange={handleSizeChange}
                 defaultValue={defaultSize}
@@ -40,7 +41,9 @@ function SizeChanger({
                         </Label>
                     </div>
                 ))}
+
             </RadioGroup>
+            <BlockSheet/>
         </div>
     )
 }

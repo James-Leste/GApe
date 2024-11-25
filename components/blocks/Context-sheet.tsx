@@ -4,6 +4,9 @@
 
 import { useContext, useState } from 'react'
 import { BlockContext, BlockData } from '@/lib/blockContext'
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
+import { Edit } from 'lucide-react'
+
 import {
     Sheet,
     SheetContent,
@@ -52,9 +55,25 @@ export default function BlockSheet() {
     return (
         <Sheet>
             <SheetTrigger asChild>
-                <Button>Edit Info Block</Button>
+                <RadioGroup className='flex flex-col gap-1'>
+                    <RadioGroupItem
+                        value={'K'}
+                        id={'edit'}
+                        className='peer sr-only'
+                    />
+                    <Label
+                        htmlFor={'edit'}
+                        className='flex h-5 w-5 cursor-pointer items-center justify-center rounded bg-background border border-transparent peer-data-[state=checked]:border-primary peer-data-[state=checked]:bg-secondary'
+                    >
+                        <span className='text-sm font-bold text-muted-foreground peer-data-[state=checked]:text-primary'>
+                            <Edit className='size-4'/>
+                        </span>
+                    </Label>
+                </RadioGroup>
+
+                {/* <Button>Edit Info Block</Button> */}
             </SheetTrigger>
-            <SheetContent className='h-full bg-white overflow-y-scroll'>
+            <SheetContent className='h-screen bg-white overflow-y-scroll'>
                 <SheetHeader>
                     <SheetTitle>Edit Info Block</SheetTitle>
                     <SheetDescription>
@@ -154,7 +173,9 @@ export default function BlockSheet() {
                                 onChange={handleInputChange}
                             />
                         </div>
-                        <Button type='submit'>Save Changes</Button>
+                        <Button className='w-full h-8' type='submit'>
+                            Save Changes
+                        </Button>
                     </form>
                 </div>
             </SheetContent>
