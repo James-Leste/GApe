@@ -1,7 +1,7 @@
 /** @format */
 'use client'
 import { useState } from 'react'
-import { Globe, Twitter, Github, Phone, Mail, CircleUser, Trash2 } from 'lucide-react'
+import { Globe, Twitter, Github, Phone, Mail, CircleUser, Trash2, Edit } from 'lucide-react'
 import { Label } from '@/components/ui/label'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 
@@ -27,61 +27,8 @@ const block_data = {
     },
 }
 
-function SizeChanger({
-    handleSizeChange,
-    defaultSize,
-}: {
-    handleSizeChange: (value: string) => void
-    defaultSize: string
-}) {
-    return (
-        <div className='absolute top-2 right-[-16px] hidden group-hover:block bg-customeBG1 p-1 rounded'>
-            <RadioGroup
-                onValueChange={handleSizeChange}
-                defaultValue={defaultSize}
-                className='flex flex-col gap-1'
-            >
-                <div>
-                    <RadioGroupItem value='s' id='s' className='peer sr-only' />
-                    <Label
-                        htmlFor='s'
-                        className='flex h-5 w-5 cursor-pointer items-center justify-center rounded bg-customeBG1 border border-transparent peer-data-[state=checked]:border-customeBorder peer-data-[state=checked]:bg-customeBG2'
-                    >
-                        <span className='text-sm font-bold text-muted-foreground peer-data-[state=checked]:text-primary'>
-                            S
-                        </span>
-                    </Label>
-                </div>
 
-                <div>
-                    <RadioGroupItem value='m' id='m' className='peer sr-only' />
-                    <Label
-                        htmlFor='m'
-                        className='flex h-5 w-5 cursor-pointer items-center justify-center rounded bg-customeBG1 border  border-transparent peer-data-[state=checked]:border-customeBorder peer-data-[state=checked]:bg-customeBG2'
-                    >
-                        <span className='text-sm font-bold text-muted-foreground peer-data-[state=checked]:text-primary'>
-                            M
-                        </span>
-                    </Label>
-                </div>
-
-                <div>
-                    <RadioGroupItem value='l' id='l' className='peer sr-only' />
-                    <Label
-                        htmlFor='l'
-                        className='flex h-5 w-5 cursor-pointer items-center justify-center rounded bg-customeBG1 border  border-transparent peer-data-[state=checked]:border-customeBorder peer-data-[state=checked]:bg-customeBG2'
-                    >
-                        <span className='text-sm font-bold text-muted-foreground peer-data-[state=checked]:text-primary'>
-                            L
-                        </span>
-                    </Label>
-                </div>
-            </RadioGroup>
-        </div>
-    )
-}
-
-export function InfoBlock_L({ onBlockClick, onDelete, showDelete }: { onBlockClick: (block: string) => void, onDelete?: () => void, showDelete?: boolean }) {
+export function InfoBlock_L({ onBlockClick, onDelete, onEdit, showDelete, showEdit }: { onBlockClick: (block: string) => void, onDelete?: () => void, onEdit?: () => void, showDelete?: boolean, showEdit?: boolean }) {
     function Tag({ name }: { name: string }) {
         return (
             <div className='h-[22px] px-0.5 py-1 bg-green-300 rounded-sm border border-black justify-center items-center gap-2.5 inline-flex'>
@@ -95,6 +42,8 @@ export function InfoBlock_L({ onBlockClick, onDelete, showDelete }: { onBlockCli
     return (
         <div onClick={() => onBlockClick('InfoBlock_L')} className='relative group w-96 h-[236px] p-2 bg-white rounded-lg border border-slate-300 flex-col justify-start items-start gap-2 inline-flex hover:border-2 hover:shadow-md hover:border-customeBorder cursor-pointer'>
             {showDelete && <button onClick={(e) => { e.stopPropagation(); onDelete && onDelete(); }} className='absolute top-2 right-2 hidden group-hover:block'><Trash2 className='w-4 h-4' /></button>}
+            {showEdit && <button onClick={(e) => { e.stopPropagation(); onEdit && onEdit(); }} className='absolute top-2 right-8 hidden group-hover:block'><Edit className='w-4 h-4' /></button>}
+
             <div className='flex flex-row gap-2 pb-2 border-b'>
                 <img src={block_data.image} className='w-28 rounded' />
                 <div className='flex flex-col justify-between'>
@@ -148,10 +97,12 @@ export function InfoBlock_L({ onBlockClick, onDelete, showDelete }: { onBlockCli
     )
 }
 
-export function InfoBlock_M({ onBlockClick, onDelete, showDelete }: { onBlockClick: (block: string) => void, onDelete?: () => void, showDelete?: boolean }) {
+export function InfoBlock_M({ onBlockClick, onDelete, onEdit, showDelete, showEdit }: { onBlockClick: (block: string) => void, onDelete?: () => void, onEdit?: () => void, showDelete?: boolean, showEdit?: boolean }) {
     return (
         <div onClick={() => onBlockClick('InfoBlock_M')} className='relative group w-96 h-[140px] p-2 bg-white rounded-lg border border-slate-300 flex-col justify-start items-start gap-2 inline-flex hover:border-2 hover:shadow-md hover:border-customeBorder cursor-pointer'>
             {showDelete && <button onClick={(e) => { e.stopPropagation(); onDelete && onDelete(); }} className='absolute top-2 right-2 hidden group-hover:block'><Trash2 className='w-4 h-4' /></button>}
+            {showEdit && <button onClick={(e) => { e.stopPropagation(); onEdit && onEdit(); }} className='absolute top-2 right-8 hidden group-hover:block'><Edit className='w-4 h-4' /></button>}
+
             <div className='text-black text-xl font-semibold'>
                 {block_data.name}
             </div>
@@ -190,36 +141,6 @@ export function InfoBlock_M({ onBlockClick, onDelete, showDelete }: { onBlockCli
     )
 }
 
-export function InfoBlock_S({
-    handleSizeChange,
-}: {
-    handleSizeChange: (value: string) => void
-}) {
-    return (
-        <div className=' relative group w-40 h-[140px] p-2 bg-white rounded-lg border border-slate-300 flex-col justify-start items-start gap-1 inline-flex'>
-            <SizeChanger defaultSize='s' handleSizeChange={handleSizeChange} />
-            <div className='text-black text-sm font-semibold'>
-                {block_data.name}
-            </div>
-            <div
-                className='text-neutral-700  overflow-hidden text-xs font-light  leading-[14px]'
-                style={{
-                    display: '-webkit-box',
-                    WebkitLineClamp: 5,
-                    WebkitBoxOrient: 'vertical',
-                    textOverflow: 'ellipsis',
-                }}
-            >
-                {' '}
-                {block_data.description}{' '}
-            </div>
-            <div className='flex justify-between w-full'>
-                <Twitter className='w-4' /> <Github className='w-4' />{' '}
-                <Phone className='w-4' /> <Mail className='w-4' />
-            </div>
-        </div>
-    )
-}
 
 export default function InfoBlock({ onBlockClick }: { onBlockClick: (block: string) => void }) {
     const [selectedBlock, setSelectedBlock] = useState<string | null>(null);
