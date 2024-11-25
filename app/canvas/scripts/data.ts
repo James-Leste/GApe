@@ -2,7 +2,7 @@
 
 import { colors } from '@atlaskit/theme'
 import seedrandom from 'seedrandom'
-import type { Author, block1, Quote, QuoteMap } from './types'
+import type { Author, Contact, Quote, QuoteMap } from './types'
 import finnImg from '../../static/media/finn-min.png'
 import bmoImg from '../../static/media/bmo-min.png'
 import princessImg from '../../static/media/princess-min.png'
@@ -121,15 +121,13 @@ export const quotes: Quote[] = [
     },
 ]
 
-export const generateFakeData = (count: number): block1[] => {
-    const fakeData: block1[] = Array.from({ length: count }, (v, k) => ({
-        id: `block${k + 1}`,
-        title: `Title ${k + 1}`,
-        content: `Content for block ${k + 1}`,
-        imageUrl: `https://via.placeholder.com/150?text=Block+${k + 1}`,
-    }))
-    return fakeData
-}
+export const quotes2: Quote[] = [
+    {
+        id: '11231',
+        content: 'Sometimes life is scary and dark',
+        author: BMO,
+    },
+]
 
 // So we do not have any clashes with our hardcoded ones
 let idCount: number
@@ -157,9 +155,13 @@ export const getQuotes = (count: number = quotes.length): Quote[] =>
         return custom
     })
 
+// get a list of quotes for each author
+// Taking a author name as parameter
 const getByAuthor = (author: Author, items: Quote[]): Quote[] =>
     items.filter((quote: Quote) => quote.author === author)
 
+// get a map of quotes for each author
+// each list is a quote[] from a different author
 export const authorQuoteMap: QuoteMap = authors.reduce(
     (previous: QuoteMap, author: Author) => ({
         ...previous,
@@ -176,3 +178,39 @@ export const generateQuoteMap = (quoteCount: number): QuoteMap =>
         }),
         {}
     )
+
+export const fakeContacts: Contact[] = [
+    {
+        id: '1',
+        name: 'John Doe',
+        email: 'john.doe@example.com',
+        phone: '123-456-7890',
+        github: 'johndoe',
+        socialMedia: '@johndoe',
+        tags: 'friend,developer',
+        photoUrl: 'https://example.com/photos/johndoe.jpg',
+        intro: 'Hi, I am John Doe, a software developer from San Francisco.',
+    },
+    {
+        id: '2',
+        name: 'Jane Smith',
+        email: 'jane.smith@example.com',
+        phone: '987-654-3210',
+        github: 'janesmith',
+        socialMedia: '@janesmith',
+        tags: 'colleague,designer',
+        photoUrl: 'https://example.com/photos/janesmith.jpg',
+        intro: 'Hello, I am Jane Smith, a UX designer from New York.',
+    },
+    {
+        id: '3',
+        name: 'Alice Johnson',
+        email: 'alice.johnson@example.com',
+        phone: '555-123-4567',
+        github: 'alicejohnson',
+        socialMedia: '@alicejohnson',
+        tags: 'family,manager',
+        photoUrl: 'https://example.com/photos/alicejohnson.jpg',
+        intro: 'Hey, I am Alice Johnson, a project manager from Los Angeles.',
+    },
+]

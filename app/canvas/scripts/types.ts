@@ -37,9 +37,18 @@ export interface Task {
     content: string
 }
 
-export interface block1 {
+export interface Contact {
     id: Id
-    title: string
-    content: string
-    imageUrl: string
+    name: string
+    email: string
+    phone: string
+    github: string
+    socialMedia: string
+    tags: string
+    photoUrl: string
+    intro: string
+}
+
+export interface ContactMap {
+    [key: string]: Contact[]
 }
