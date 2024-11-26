@@ -2,14 +2,13 @@
 'use client'
 import { colors } from '@atlaskit/theme'
 import styled from '@emotion/styled'
-import React, { ReactElement, ReactNode, useState } from 'react'
+import React, { ReactNode, useEffect, useState } from 'react'
 import { useMemo } from 'use-memo-one'
 import { DragDropContext, Draggable, Droppable } from '@hello-pangea/dnd'
 import type { DropResult } from '@hello-pangea/dnd'
 import type { Quote } from './scripts/types'
 import { grid } from './scripts/constants'
-import { quotes2 } from './scripts/data'
-import reorder, { reorderQuoteMap } from './scripts/reorder'
+import { reorderQuoteMap } from './scripts/reorder'
 import {
     Sheet,
     SheetClose,
@@ -22,6 +21,8 @@ import {
 } from '@/components/ui/sheet'
 import { Button } from '@/components/ui/button'
 import InfoBlock from '@/components/blocks/info'
+import { createClient } from '@/utils/supabase/client'
+import { User } from '@supabase/supabase-js'
 
 const initial: ItemType[] = [
     {
@@ -149,7 +150,7 @@ interface ItemType {
 
 const Parent = styled.div`
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
 `
 
 type Size = 'small' | 'large'
@@ -165,7 +166,7 @@ const StyledItem = styled.div`
     padding: ${grid}px;
     margin-bottom: ${grid}px;
     user-select: none;
-    width: fit-content;
+    width: 400px;
     height: fit-content;
     flex-shrink: 0;
     overflow-y: auto;
@@ -195,7 +196,7 @@ interface ListProps {
 
 const ListContainer = styled.div`
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
 `
 
@@ -211,15 +212,16 @@ interface StyledListProps {
 
 const StyledList = styled.div<StyledListProps>`
     display: flex;
-    flex-direction: row;
-    border: 1px solid ${colors.N100};
+    flex-direction: column;
+    border: 0px solid ${colors.N100};
     margin: ${grid}px;
     padding: ${grid}px;
     box-sizing: border-box;
     background-color: ${(props) =>
         props.isDraggingOver ? colors.B100 : 'inherit'};
     // height: ${(props) => (props.size === 'large' ? 300 : 200)}px;
-    height: fit-content;
+    height: 100%;
+    width: 430px;
 `
 
 function List({ listId, items }: { listId: string; items: ItemType[] }) {
@@ -234,7 +236,7 @@ function List({ listId, items }: { listId: string; items: ItemType[] }) {
                     Large
                 </button>
             </Controls>
-            <Droppable droppableId={listId} direction='horizontal'>
+            <Droppable droppableId={listId} direction='vertical'>
                 {(provided, snapshot) => (
                     <StyledList
                         {...provided.droppableProps}
@@ -253,9 +255,38 @@ function List({ listId, items }: { listId: string; items: ItemType[] }) {
     )
 }
 
+const supabase = createClient()
+
 export default function App() {
+    const [user, setUser] = useState<User | null>(null)
+    const [error, setError] = useState<Error | null>(null)
+    //const [templates, setTemplates] = useState<any>(null)
+    useEffect(() => {
+        const getUser = () => {
+            supabase.auth.getUser().then(({ data, error }) => {
+                if (error) {
+                    setError(error)
+                } else {
+                    setUser(data.user)
+                }
+            })
+        }
+        getUser()
+    }, [])
+
+    const showdata = async () => {
+        let { data: templates, error } = await supabase
+            .from('templates')
+            .select('*')
+        if (templates && templates.length > 0) {
+            console.log(templates[0].content)
+        } else {
+            console.log('No templates found')
+        }
+    }
+
     // const [columns, setColumns] = useState({authorQuoteMap})
-    const [columns, setColumns] = useState({
+    const [columns, setColumns] = useState<Record<string, ItemType[]>>({
         ['column-0']: [],
         ['column-1']: [],
         ['column-2']: [],
@@ -271,7 +302,7 @@ export default function App() {
         setColumns(newColumn)
     }
 
-    const addItem = (listId: string, item: {}) => {
+    const addItem = (listId: string, item: ItemType) => {
         if (Object.keys(columns).length === 0) {
             console.log('no columns available')
         } else {
@@ -307,12 +338,12 @@ export default function App() {
 
         // remove item from source list
         const newColumns = reorderQuoteMap({
-            quoteMap: columns,
+            itemMap: columns,
             source,
             destination,
         })
 
-        setColumns(newColumns.quoteMap)
+        setColumns(newColumns.itemMap)
     }
 
     return (
@@ -326,6 +357,7 @@ export default function App() {
                     </Parent>
                 ) : null}
             </DragDropContext>
+            <div>{user ? user.email : 'loading'}</div>
             <div>
                 <Sheet key='bottom' modal={false}>
                     <SheetTrigger asChild>
@@ -350,8 +382,12 @@ export default function App() {
                             <Button onClick={() => console.log(columns)}>
                                 3
                             </Button>
-                            <Button>4</Button>
-                            <Button>5</Button>
+                            <Button
+                                onClick={() => addItem('column-0', initial[1])}
+                            >
+                                4
+                            </Button>
+                            <Button onClick={showdata}>5</Button>
                             <Button>6</Button>
                         </div>
 

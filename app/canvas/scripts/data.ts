@@ -2,7 +2,7 @@
 
 import { colors } from '@atlaskit/theme'
 import seedrandom from 'seedrandom'
-import type { Author, Contact, Quote, QuoteMap } from './types'
+import type { Author, Quote, QuoteMap } from './types'
 import finnImg from '../../static/media/finn-min.png'
 import bmoImg from '../../static/media/bmo-min.png'
 import princessImg from '../../static/media/princess-min.png'
@@ -12,7 +12,6 @@ const jake: Author = {
     id: '1',
     name: 'Jake',
     url: 'http://adventuretime.wikia.com/wiki/Jake',
-    avatarUrl: jakeImg,
     colors: {
         soft: colors.Y50,
         hard: colors.N400A,
@@ -23,7 +22,6 @@ const BMO: Author = {
     id: '2',
     name: 'BMO',
     url: 'http://adventuretime.wikia.com/wiki/BMO',
-    avatarUrl: bmoImg,
     colors: {
         soft: colors.G50,
         hard: colors.N400A,
@@ -34,7 +32,6 @@ const finn: Author = {
     id: '3',
     name: 'Finn',
     url: 'http://adventuretime.wikia.com/wiki/Finn',
-    avatarUrl: finnImg,
     colors: {
         soft: colors.B50,
         hard: colors.N400A,
@@ -45,7 +42,6 @@ const princess: Author = {
     id: '4',
     name: 'Princess bubblegum',
     url: 'http://adventuretime.wikia.com/wiki/Princess_Bubblegum',
-    avatarUrl: princessImg,
     colors: {
         soft: colors.P50,
         hard: colors.N400A,
@@ -178,39 +174,3 @@ export const generateQuoteMap = (quoteCount: number): QuoteMap =>
         }),
         {}
     )
-
-export const fakeContacts: Contact[] = [
-    {
-        id: '1',
-        name: 'John Doe',
-        email: 'john.doe@example.com',
-        phone: '123-456-7890',
-        github: 'johndoe',
-        socialMedia: '@johndoe',
-        tags: 'friend,developer',
-        photoUrl: 'https://example.com/photos/johndoe.jpg',
-        intro: 'Hi, I am John Doe, a software developer from San Francisco.',
-    },
-    {
-        id: '2',
-        name: 'Jane Smith',
-        email: 'jane.smith@example.com',
-        phone: '987-654-3210',
-        github: 'janesmith',
-        socialMedia: '@janesmith',
-        tags: 'colleague,designer',
-        photoUrl: 'https://example.com/photos/janesmith.jpg',
-        intro: 'Hello, I am Jane Smith, a UX designer from New York.',
-    },
-    {
-        id: '3',
-        name: 'Alice Johnson',
-        email: 'alice.johnson@example.com',
-        phone: '555-123-4567',
-        github: 'alicejohnson',
-        socialMedia: '@alicejohnson',
-        tags: 'family,manager',
-        photoUrl: 'https://example.com/photos/alicejohnson.jpg',
-        intro: 'Hey, I am Alice Johnson, a project manager from Los Angeles.',
-    },
-]
