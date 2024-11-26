@@ -1,6 +1,7 @@
 /** @format */
 
 import type { DraggableId, DraggableLocation } from '@hello-pangea/dnd'
+import { ReactNode } from 'react'
 
 export type Id = string
 
@@ -12,7 +13,6 @@ export interface AuthorColors {
 export interface Author {
     id: Id
     name: string
-    avatarUrl: string
     url: string
     colors: AuthorColors
 }
@@ -37,18 +37,11 @@ export interface Task {
     content: string
 }
 
-export interface Contact {
-    id: Id
-    name: string
-    email: string
-    phone: string
-    github: string
-    socialMedia: string
-    tags: string
-    photoUrl: string
-    intro: string
+export interface ItemMap {
+    [key: string]: ItemType[]
 }
 
-export interface ContactMap {
-    [key: string]: Contact[]
+export interface ItemType {
+    id: string
+    component: ReactNode
 }

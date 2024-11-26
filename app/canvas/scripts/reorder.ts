@@ -1,7 +1,7 @@
 /** @format */
 
 import type { DraggableLocation } from '@hello-pangea/dnd'
-import type { Quote, QuoteMap } from './types'
+import type { Quote, QuoteMap, ItemMap, ItemType } from './types'
 
 // a little function to help us with reordering the result
 function reorder<TItem>(
@@ -19,37 +19,37 @@ function reorder<TItem>(
 export default reorder
 
 interface ReorderQuoteMapArgs {
-    quoteMap: QuoteMap
+    itemMap: ItemMap
     source: DraggableLocation
     destination: DraggableLocation
 }
 
 export interface ReorderQuoteMapResult {
-    quoteMap: QuoteMap
+    itemMap: ItemMap
 }
 
 export const reorderQuoteMap = ({
-    quoteMap,
+    itemMap,
     source,
     destination,
 }: ReorderQuoteMapArgs): ReorderQuoteMapResult => {
-    const current: Quote[] = [...quoteMap[source.droppableId]]
-    const next: Quote[] = [...quoteMap[destination.droppableId]]
-    const target: Quote = current[source.index]
+    const current: ItemType[] = [...itemMap[source.droppableId]]
+    const next: ItemType[] = [...itemMap[destination.droppableId]]
+    const target: ItemType = current[source.index]
 
     // moving to same list
     if (source.droppableId === destination.droppableId) {
-        const reordered: Quote[] = reorder(
+        const reordered: ItemType[] = reorder(
             current,
             source.index,
             destination.index
         )
-        const result: QuoteMap = {
-            ...quoteMap,
+        const result: ItemMap = {
+            ...itemMap,
             [source.droppableId]: reordered,
         }
         return {
-            quoteMap: result,
+            itemMap: result,
         }
     }
 
@@ -60,14 +60,14 @@ export const reorderQuoteMap = ({
     // insert into next
     next.splice(destination.index, 0, target)
 
-    const result: QuoteMap = {
-        ...quoteMap,
+    const result: ItemMap = {
+        ...itemMap,
         [source.droppableId]: current,
         [destination.droppableId]: next,
     }
 
     return {
-        quoteMap: result,
+        itemMap: result,
     }
 }
 
