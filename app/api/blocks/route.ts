@@ -1,30 +1,13 @@
 import { NextResponse } from 'next/server'
 import fs from 'fs/promises'
 import path from 'path'
+import { EduBlockData, InfoBlockData } from '@/components/blocks/blockType'
+type blockType = EduBlockData | InfoBlockData
 
 const dataFilePath = path.join(process.cwd(), 'data', 'blocks.json')
 
-interface Block {
-  id: string;
-  type: string;
-  content: {
-    name: string;
-    description: string;
-    tags: string[];
-    image: string;
-    url: string;
-    contact: {
-      phone: string;
-      email: string;
-      github: string;
-      linkedin: string;
-      x: string;
-    };
-  };
-}
-
 interface BlocksData {
-  blocks: Block[];
+  blocks: blockType[];
 }
 
 async function readBlocksData(): Promise<BlocksData> {
@@ -77,9 +60,9 @@ export async function POST(request: Request) {
 
 export async function PUT(request: Request) {
   try {
-    const body: Block = await request.json()
+    const body: blockType = await request.json()
     const data = await readBlocksData()
-    const index = data.blocks.findIndex((block: Block) => block.id === body.id)
+    const index = data.blocks.findIndex((block) => block.id === body.id)
     if (index !== -1) {
       data.blocks[index] = body
       await writeBlocksData(data)
@@ -100,7 +83,7 @@ export async function DELETE(request: Request) {
       return NextResponse.json({ error: 'Block ID is required' }, { status: 400 })
     }
     const data = await readBlocksData()
-    const index = data.blocks.findIndex((block: Block) => block.id === id)
+    const index = data.blocks.findIndex((block) => block.id === id)
     if (index !== -1) {
       const deletedBlock = data.blocks.splice(index, 1)[0]
       await writeBlocksData(data)

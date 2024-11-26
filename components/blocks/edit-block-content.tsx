@@ -4,37 +4,12 @@ import { useState, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
+import { EduBlockData, InfoBlockData } from '@/components/blocks/blockType'
+type blockType = EduBlockData | InfoBlockData
 
-interface BlockContent {
-    name: string;
-    description: string;
-    tags: string[];
-    image: string;
-    url: string;
-    contact: {
-        phone: string;
-        email: string;
-        github: string;
-        linkedin: string;
-        x: string;
-    };
-}
 
-export default function EditBlockContent({ initialData, onSave }: { initialData?: BlockContent, onSave: (data: BlockContent) => void }) {
-    const [formData, setFormData] = useState<BlockContent>({
-        name: '',
-        description: '',
-        tags: [],
-        image: '',
-        url: '',
-        contact: {
-            phone: '',
-            email: '',
-            github: '',
-            linkedin: '',
-            x: '',
-        },
-    })
+export default function EditBlockContent({ initialData, onSave }: { initialData?: blockType, onSave: (data: blockType) => void }) {
+    const [formData, setFormData] = useState<blockType>({} as blockType)
 
     useEffect(() => {
         if (initialData) {
@@ -44,42 +19,67 @@ export default function EditBlockContent({ initialData, onSave }: { initialData?
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target
-        if (name in formData.contact) {
-            setFormData(prev => ({
-                ...prev,
-                contact: {
-                    ...prev.contact,
-                    [name]: value
-                }
-            }))
-        } else if (name === 'tags') {
-            setFormData(prev => ({
-                ...prev,
-                [name]: value.split(',').map(tag => tag.trim())
-            }))
-        } else {
-            setFormData(prev => ({ ...prev, [name]: value }))
-        }
+        setFormData(prev => ({
+            ...prev,
+            [name]: value
+        }))
     }
 
     const handleSubmit = (e: React.FormEvent) => {
+        console.log('submitting', formData)
         e.preventDefault()
         onSave(formData)
     }
 
+    const renderFields = () => {
+        return Object.keys(formData)
+            .filter((key) => key !== 'id' && key !== 'type')
+            .map((key) => {
+                const value = (formData as EduBlockData & InfoBlockData)[key as keyof (EduBlockData & InfoBlockData)]
+                if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
+                    return Object.keys(value).map((subKey) => (
+                        <div key={subKey}>
+                            <label>{subKey.charAt(0).toUpperCase() + subKey.slice(1)}</label>
+                            <Input
+                                name={subKey}
+                                placeholder={subKey.charAt(0).toUpperCase() + subKey.slice(1)}
+                                value={(value as { [key: string]: string })[subKey]}
+                                onChange={handleChange}
+                            />
+                        </div>
+                    ))
+                } else if (Array.isArray(value)) {
+                    return (
+                        <div key={key}>
+                            <label>{key.charAt(0).toUpperCase() + key.slice(1)}</label>
+                            <Input
+                                name={key}
+                                placeholder={key.charAt(0).toUpperCase() + key.slice(1)}
+                                value={value.join(', ')}
+                                onChange={handleChange}
+                            />
+                        </div>
+                    )
+                } else {
+                    return (
+                        <div key={key}>
+                            <label>{key.charAt(0).toUpperCase() + key.slice(1)}</label>
+                            <Input
+                                name={key}
+                                placeholder={key.charAt(0).toUpperCase() + key.slice(1)}
+                                value={value}
+                                onChange={handleChange}
+                            />
+                        </div>
+                    )
+                }
+            })
+    }
+
     return (
         <form onSubmit={handleSubmit} className="space-y-4">
-            <Input name="name" placeholder="Name" value={formData.name} onChange={handleChange} />
-            <Textarea name="description" placeholder="Description" value={formData.description} onChange={handleChange} />
-            <Input name="tags" placeholder="Tags (comma separated)" value={formData.tags.join(', ')} onChange={handleChange} />
-            <Input name="image" placeholder="Image URL" value={formData.image} onChange={handleChange} />
-            <Input name="url" placeholder="Website URL" value={formData.url} onChange={handleChange} />
-            <Input name="phone" placeholder="Phone" value={formData.contact.phone} onChange={handleChange} />
-            <Input name="email" placeholder="Email" value={formData.contact.email} onChange={handleChange} />
-            <Input name="github" placeholder="GitHub" value={formData.contact.github} onChange={handleChange} />
-            <Input name="linkedin" placeholder="LinkedIn" value={formData.contact.linkedin} onChange={handleChange} />
-            <Input name="x" placeholder="X (Twitter)" value={formData.contact.x} onChange={handleChange} />
-            <Button type="submit">Save Changes</Button>
+            {renderFields()}
+            <Button className='w-full h-8' type="submit">Save Changes</Button>
         </form>
     )
 }
