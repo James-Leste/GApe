@@ -32,8 +32,6 @@ const supabase = createClient()
 const UserDataPage: React.FC = () => {
     const [user, setUser] = useState<User | null>(null)
     const [error, setError] = useState<Error | null>(null)
-    const [canvas, setCanvas] = useState<any>(null)
-
     useEffect(() => {
         const getUser = () => {
             supabase.auth.getUser().then(({ data, error }) => {
@@ -63,7 +61,9 @@ const UserDataPage: React.FC = () => {
     }
 
     const showdata = async () => {
-        let { data: canvas, error } = await supabase.from('canvas').select('*')
+        const { data: canvas, error } = await supabase
+            .from('canvas')
+            .select('*')
 
         console.log(canvas)
     }

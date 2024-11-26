@@ -275,7 +275,7 @@ export default function App() {
     }, [])
 
     const showdata = async () => {
-        let { data: templates, error } = await supabase
+        const { data: templates, error } = await supabase
             .from('templates')
             .select('*')
         if (templates && templates.length > 0) {
@@ -367,8 +367,7 @@ export default function App() {
                         <SheetHeader>
                             <SheetTitle>Choose your block</SheetTitle>
                             <SheetDescription>
-                                Make changes to your profile here. Click save
-                                when you're done.
+                                Make changes to your profile here.
                             </SheetDescription>
                         </SheetHeader>
 
