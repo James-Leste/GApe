@@ -9,7 +9,7 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 const block_data = {
     name: 'John Simth',
     description:
-        'I’m a Software Developer and Aalto University graduate with expertise in building web and data-driven applications. I enjoy solving complex problems using technologies like Python, Java, and JavaScript. Let’s connect and create something awesome together!',
+        "I'm a Software Developer and Aalto University graduate with expertise in building web and data-driven applications. I enjoy solving complex problems using technologies like Python, Java, and JavaScript. Let's connect and create something awesome together!",
     tags: ['Vue', 'React', 'TS/JS', 'Next'],
     image: 'https://s3.is-ali.tech/3ce276f382ff8edb74a24d8a2c872fa8.png',
     url: 'https://www.linkedin.com/in/john-smith-123456/',
@@ -251,7 +251,7 @@ export default function InfoBlock() {
     return (
         <div className='flex flex-col gap-4'>
             <motion.div
-                key={selectedSize}
+                key={`size-${selectedSize}`}
                 variants={variants}
                 initial='enter'
                 animate={'center'}
@@ -271,6 +271,12 @@ export default function InfoBlock() {
                     <InfoBlock_L handleSizeChange={handleSizeChange} />
                 )}
             </motion.div>
+            <div>
+                <p>{selectedSize}</p>
+                <button onClick={() => setSelectedSize('S')}>S</button>
+                <button onClick={() => setSelectedSize('M')}>M</button>
+                <button onClick={() => setSelectedSize('L')}>L</button>
+            </div>
         </div>
     )
 }

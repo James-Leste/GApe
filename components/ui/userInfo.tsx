@@ -14,7 +14,7 @@ export default async function UserInfo() {
     const supabase = createClient()
 
     const { data, error } = await supabase.auth.getUser()
-    console.log(data.user)
+    //console.log(data.user)
 
     function User({ userdata }: { userdata: User }) {
         return (

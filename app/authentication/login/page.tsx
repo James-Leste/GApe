@@ -111,7 +111,7 @@ export default function LoginPage() {
                             </Button>
 
                             <div className='text-sm text-customeText2 flex gap-1 items-center'>
-                                <span>Not account yet?{' '}</span>
+                                <span>Not account yet? </span>
                                 <Button
                                     onClick={toRegister}
                                     variant={'link'}
