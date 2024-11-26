@@ -1,0 +1,42 @@
+{
+  "blocks": [
+    {
+      "id": "1732544553852",
+      "type": "InfoBlock_M",
+      "content": {
+        "name": "",
+        "description": "",
+        "tags": [],
+        "image": "",
+        "url": "",
+        "contact": {
+          "phone": "",
+          "email": "",
+          "github": "",
+          "linkedin": "",
+          "x": ""
+        }
+      }
+    },
+    {
+      "id": "1732544557469",
+      "type": "InfoBlock_L",
+      "content": {
+        "name": "hello",
+        "description": "dwdwd",
+        "tags": [
+          "w"
+        ],
+        "image": "w",
+        "url": "w",
+        "contact": {
+          "phone": "w",
+          "email": "w",
+          "github": "w",
+          "linkedin": "w",
+          "x": "w"
+        }
+      }
+    }
+  ]
+}

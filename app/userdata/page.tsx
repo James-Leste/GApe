@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react'
 import { createClient } from '@/utils/supabase/client'
 import { Button } from '@/components/ui/button'
 import { User } from '@supabase/supabase-js'
-import InfoBlock from '@/components/blocks/info'
+
 import {
     Sheet,
     SheetClose,
@@ -32,7 +32,6 @@ const supabase = createClient()
 const UserDataPage: React.FC = () => {
     const [user, setUser] = useState<User | null>(null)
     const [error, setError] = useState<Error | null>(null)
-    const [canvas, setCanvas] = useState<any>(null)
 
     useEffect(() => {
         const getUser = () => {
@@ -63,7 +62,9 @@ const UserDataPage: React.FC = () => {
     }
 
     const showdata = async () => {
-        let { data: canvas, error } = await supabase.from('canvas').select('*')
+        const { data: canvas, error } = await supabase
+            .from('canvas')
+            .select('*')
 
         console.log(canvas)
     }
@@ -82,12 +83,7 @@ const UserDataPage: React.FC = () => {
                 <Button onClick={showdata}>add new item</Button>
             </div>
             <div>
-                <div className='flex flex-row gap-5'>
-                    <InfoBlock></InfoBlock>
-                    <InfoBlock></InfoBlock>
-                    <InfoBlock></InfoBlock>
-                    <InfoBlock></InfoBlock>
-                </div>
+                <div className='flex flex-row gap-5'></div>
             </div>
             <div>
                 <Counter></Counter>
@@ -108,12 +104,7 @@ const UserDataPage: React.FC = () => {
                                 </SheetDescription>
                             </SheetHeader>
                             <div className='grid gap-4 py-4'></div> */}
-                            <div className='flex flex-row gap-5'>
-                                <InfoBlock key={1}></InfoBlock>
-                                <InfoBlock key={2}></InfoBlock>
-                                <InfoBlock key={3}></InfoBlock>
-                                <InfoBlock key={4}></InfoBlock>
-                            </div>
+                            <div className='flex flex-row gap-5'></div>
 
                             <SheetFooter></SheetFooter>
                         </SheetContent>
