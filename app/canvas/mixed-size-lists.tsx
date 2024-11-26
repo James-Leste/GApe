@@ -23,6 +23,9 @@ import { Button } from '@/components/ui/button'
 import InfoBlock from '@/components/blocks/info'
 import { createClient } from '@/utils/supabase/client'
 import { User } from '@supabase/supabase-js'
+import { InfoBlock_L } from '@/components/blocks/info-block'
+
+import { InfoBlockData } from '@/components/blocks/blockType'
 
 const initial: ItemType[] = [
     {
@@ -30,41 +33,6 @@ const initial: ItemType[] = [
         component: (
             <div>
                 <InfoBlock></InfoBlock>
-                {/* <p>Standard</p>
-                <button type='button'>hello world</button>
-                <br />
-                <p>
-                    With child{' '}
-                    <a
-                        href='https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Content_categories#Phrasing_content'
-                        target='_blank'
-                        rel='noopener noreferrer'
-                    >
-                        phrasing content
-                    </a>
-                </p>
-                <button type='button'>
-                    why{' '}
-                    <strong>
-                        hello <em>there!</em>
-                    </strong>
-                </button>
-                <p>
-                    With child{' '}
-                    <a
-                        href='https://developer.mozilla.org/en-US/docs/Web/API/SVGElement'
-                        target='_blank'
-                        rel='noopener noreferrer'
-                    >
-                        SVGElement
-                    </a>
-                </p>
-                <button type='button'>
-                    My circle <br />
-                    <svg width='40' height='40'>
-                        <circle cx='20' cy='20' r='20' />
-                    </svg>
-                </button> */}
             </div>
         ),
     },
@@ -345,6 +313,22 @@ export default function App() {
 
         setColumns(newColumns.itemMap)
     }
+    const block_data: InfoBlockData = {
+        id: '1',
+        type: 'info',
+        name: 'John Doe',
+        description: 'This is a description',
+        tags: ['tag1', 'tag2'],
+        image: 'https://via.placeholder.com/150',
+        url: 'https://www.google.com',
+        contact: {
+            phone: '123-456-7890',
+            email: '',
+            github: '',
+            linkedin: '',
+            x: '',
+        },
+    }
 
     return (
         <>
@@ -374,7 +358,19 @@ export default function App() {
                         <div className='flex flex-row gap-5'>
                             <Button onClick={addColumn}>add a column</Button>
                             <Button
-                                onClick={() => addItem('column-0', initial[0])}
+                                onClick={() =>
+                                    addItem('column-0', {
+                                        id: (Math.random() + 1)
+                                            .toString(36)
+                                            .substring(7),
+                                        component: (
+                                            <InfoBlock_L
+                                                onBlockClick={() => {}}
+                                                block_data={block_data}
+                                            ></InfoBlock_L>
+                                        ),
+                                    })
+                                }
                             >
                                 add an item
                             </Button>
