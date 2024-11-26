@@ -3,7 +3,8 @@
 'use client'
 
 import { InfoBlock_L, InfoBlock_M } from '@/components/blocks/info-block'
-import { ArrowUp, Edit } from 'lucide-react'
+import { EduBlock_L, EduBlock_M } from '@/components/blocks/edu-block'
+import { ArrowUp } from 'lucide-react'
 import { useState, useEffect, use } from 'react'
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
 import EditBlockContent from '@/components/blocks/edit-block-content'
@@ -153,6 +154,14 @@ export default function Blocks() {
         }
     }
 
+    const componentMap: { [key: string]: (props: { onBlockClick: () => void; showDelete: boolean }) => JSX.Element } = {
+        InfoBlock_L: (props) => <InfoBlock_L {...props} />,
+        InfoBlock_M: (props) => <InfoBlock_M {...props} />,
+        EduBlock_L: (props) => <EduBlock_L {...props} />,
+        EduBlock_M: (props) => <EduBlock_M {...props} />,
+        // Add other mappings here
+    }
+
     const renderBlock = (block: BlockData) => {
         const commonProps = {
             key: block.id,
@@ -164,14 +173,8 @@ export default function Blocks() {
             ...block.content,
         }
 
-        switch (block.type) {
-            case 'InfoBlock_L':
-                return <InfoBlock_L {...commonProps} />
-            case 'InfoBlock_M':
-                return <InfoBlock_M {...commonProps} />
-            default:
-                return null
-        }
+        const Component = componentMap[block.type]
+        return Component ? <Component {...commonProps} /> : null
     }
 
     return (

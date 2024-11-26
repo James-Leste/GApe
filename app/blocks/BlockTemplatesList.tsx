@@ -11,6 +11,7 @@ import {
     HoverCardTrigger,
 } from '@/components/ui/hover-card'
 import { InfoBlock_L, InfoBlock_M } from '@/components/blocks/info-block'
+import { EduBlock_L, EduBlock_M } from '@/components/blocks/edu-block'
 // Import other components as necessary
 
 export default function BlockTemplatesList({
@@ -51,6 +52,12 @@ export default function BlockTemplatesList({
                 <InfoBlock_L onBlockClick={onBlockClick} showDelete={false} />
             </>
         ),
+        Education:(
+            <>
+                <EduBlock_M onBlockClick={onBlockClick} showDelete={false} />
+                <EduBlock_L onBlockClick={onBlockClick} showDelete={false} />
+            </>
+        )
         // Add other mappings here
     }
 
