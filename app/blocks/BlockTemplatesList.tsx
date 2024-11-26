@@ -10,7 +10,8 @@ import {
     HoverCardContent,
     HoverCardTrigger,
 } from '@/components/ui/hover-card'
-import { InfoBlock_L, InfoBlock_M } from '@/components/blocks/info/info-block'
+import { InfoBlock_L, InfoBlock_M } from '@/components/blocks/info-block'
+// Import other components as necessary
 
 export default function BlockTemplatesList({
     onBlockClick,
@@ -43,6 +44,16 @@ export default function BlockTemplatesList({
         fetchTemplates()
     }, [])
 
+    const componentMap: { [key: string]: JSX.Element } = {
+        Info: (
+            <>
+                <InfoBlock_M onBlockClick={onBlockClick} showDelete={false} />
+                <InfoBlock_L onBlockClick={onBlockClick} showDelete={false} />
+            </>
+        ),
+        // Add other mappings here
+    }
+
     return (
         <>
             {templates.map((template) => (
@@ -52,24 +63,14 @@ export default function BlockTemplatesList({
                             <div className='text-[#0e3c26] text-lg font-semibold leading-7'>
                                 {template.name}
                             </div>
-                            <img
-                                src={template.cover_url}
-                                className='size-11'
-                            />
+                            <img src={template.cover_url} className='size-11' />
                             <div className='self-stretch text-[#0e3c26] text-xs font-medium leading-tight'>
                                 {template.description}
                             </div>
                         </div>
                     </HoverCardTrigger>
                     <HoverCardContent className='flex flex-row gap-5 w-fit items-center'>
-                        <InfoBlock_M
-                            onBlockClick={onBlockClick}
-                            showDelete={false}
-                        />
-                        <InfoBlock_L
-                            onBlockClick={onBlockClick}
-                            showDelete={false}
-                        />
+                        {componentMap[template.name] || null}
                     </HoverCardContent>
                 </HoverCard>
             ))}

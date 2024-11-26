@@ -1,15 +1,13 @@
 /** @format */
-'use client'
-import { useState } from 'react'
-import { Globe, Twitter, Github, Phone, Mail, CircleUser, Trash2, Edit } from 'lucide-react'
-import { Label } from '@/components/ui/label'
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
-
 import {
-    HoverCard,
-    HoverCardContent,
-    HoverCardTrigger,
-} from '@/components/ui/hover-card'
+    Globe,
+    Twitter,
+    Github,
+    Phone,
+    Mail,
+    Trash2,
+    Edit,
+} from 'lucide-react'
 
 const block_data = {
     name: 'John Simth',
@@ -27,8 +25,19 @@ const block_data = {
     },
 }
 
-
-export function InfoBlock_L({ onBlockClick, onDelete, onEdit, showDelete, showEdit }: { onBlockClick: (block: string) => void, onDelete?: () => void, onEdit?: () => void, showDelete?: boolean, showEdit?: boolean }) {
+export function InfoBlock_L({
+    onBlockClick,
+    onDelete,
+    onEdit,
+    showDelete,
+    showEdit,
+}: {
+    onBlockClick: (block: string) => void
+    onDelete?: () => void
+    onEdit?: () => void
+    showDelete?: boolean
+    showEdit?: boolean
+}) {
     function Tag({ name }: { name: string }) {
         return (
             <div className='h-[22px] px-0.5 py-1 bg-green-300 rounded-sm border border-black justify-center items-center gap-2.5 inline-flex'>
@@ -40,9 +49,32 @@ export function InfoBlock_L({ onBlockClick, onDelete, onEdit, showDelete, showEd
     }
 
     return (
-        <div onClick={() => onBlockClick('InfoBlock_L')} className='relative group w-96 h-[236px] p-2 bg-white rounded-lg border border-slate-300 flex-col justify-start items-start gap-2 inline-flex hover:border-2 hover:shadow-md hover:border-customeBorder cursor-pointer'>
-            {showDelete && <button onClick={(e) => { e.stopPropagation(); onDelete && onDelete(); }} className='absolute top-2 right-2 hidden group-hover:block'><Trash2 className='w-4 h-4' /></button>}
-            {showEdit && <button onClick={(e) => { e.stopPropagation(); onEdit && onEdit(); }} className='absolute top-2 right-8 hidden group-hover:block'><Edit className='w-4 h-4' /></button>}
+        <div
+            onClick={() => onBlockClick('InfoBlock_L')}
+            className='relative group w-96 h-[236px] p-2 bg-white rounded-lg border border-slate-300 flex-col justify-start items-start gap-2 inline-flex hover:border-2 hover:shadow-md hover:border-customeBorder cursor-pointer'
+        >
+            {showDelete && (
+                <button
+                    onClick={(e) => {
+                        e.stopPropagation()
+                        onDelete && onDelete()
+                    }}
+                    className='absolute top-2 right-2 hidden group-hover:block'
+                >
+                    <Trash2 className='w-4 h-4' />
+                </button>
+            )}
+            {showEdit && (
+                <button
+                    onClick={(e) => {
+                        e.stopPropagation()
+                        onEdit && onEdit()
+                    }}
+                    className='absolute top-2 right-8 hidden group-hover:block'
+                >
+                    <Edit className='w-4 h-4' />
+                </button>
+            )}
 
             <div className='flex flex-row gap-2 pb-2 border-b'>
                 <img src={block_data.image} className='w-28 rounded' />
@@ -97,11 +129,46 @@ export function InfoBlock_L({ onBlockClick, onDelete, onEdit, showDelete, showEd
     )
 }
 
-export function InfoBlock_M({ onBlockClick, onDelete, onEdit, showDelete, showEdit }: { onBlockClick: (block: string) => void, onDelete?: () => void, onEdit?: () => void, showDelete?: boolean, showEdit?: boolean }) {
+export function InfoBlock_M({
+    onBlockClick,
+    onDelete,
+    onEdit,
+    showDelete,
+    showEdit,
+}: {
+    onBlockClick: (block: string) => void
+    onDelete?: () => void
+    onEdit?: () => void
+    showDelete?: boolean
+    showEdit?: boolean
+}) {
     return (
-        <div onClick={() => onBlockClick('InfoBlock_M')} className='relative group w-96 h-[140px] p-2 bg-white rounded-lg border border-slate-300 flex-col justify-start items-start gap-2 inline-flex hover:border-2 hover:shadow-md hover:border-customeBorder cursor-pointer'>
-            {showDelete && <button onClick={(e) => { e.stopPropagation(); onDelete && onDelete(); }} className='absolute top-2 right-2 hidden group-hover:block'><Trash2 className='w-4 h-4' /></button>}
-            {showEdit && <button onClick={(e) => { e.stopPropagation(); onEdit && onEdit(); }} className='absolute top-2 right-8 hidden group-hover:block'><Edit className='w-4 h-4' /></button>}
+        <div
+            onClick={() => onBlockClick('InfoBlock_M')}
+            className='relative group w-96 h-[140px] p-2 bg-white rounded-lg border border-slate-300 flex-col justify-start items-start gap-2 inline-flex hover:border-2 hover:shadow-md hover:border-customeBorder cursor-pointer'
+        >
+            {showDelete && (
+                <button
+                    onClick={(e) => {
+                        e.stopPropagation()
+                        onDelete && onDelete()
+                    }}
+                    className='absolute top-2 right-2 hidden group-hover:block'
+                >
+                    <Trash2 className='w-4 h-4' />
+                </button>
+            )}
+            {showEdit && (
+                <button
+                    onClick={(e) => {
+                        e.stopPropagation()
+                        onEdit && onEdit()
+                    }}
+                    className='absolute top-2 right-8 hidden group-hover:block'
+                >
+                    <Edit className='w-4 h-4' />
+                </button>
+            )}
 
             <div className='text-black text-xl font-semibold'>
                 {block_data.name}
@@ -138,36 +205,5 @@ export function InfoBlock_M({ onBlockClick, onDelete, onEdit, showDelete, showEd
                 </div>
             </div>
         </div>
-    )
-}
-
-
-export default function InfoBlock({ onBlockClick }: { onBlockClick: (block: string) => void }) {
-    const [selectedBlock, setSelectedBlock] = useState<string | null>(null);
-
-    const handleBlockClick = (block: string) => {
-        setSelectedBlock(block);
-        onBlockClick(block);
-    };
-
-    return (
-        <HoverCard>
-            <HoverCardTrigger asChild>
-                <div className='h-[137px] p-2 bg-[#ede1d1] rounded-xl border-2 border-[#a69986] flex-col justify-start items-start gap-2 inline-flex'>
-                    <div className="text-[#0e3c26] text-lg font-semibold  leading-7">
-                        Name / Basic
-                    </div>
-                    <CircleUser className='size-11' />
-                    
-                    <div className="self-stretch text-[#0e3c26] text-xs font-medium  leading-tight">
-                        using this block showing your basic information{' '}
-                    </div>
-                </div>
-            </HoverCardTrigger>
-            <HoverCardContent className='flex flex-row gap-5 w-fit items-center'>
-                <InfoBlock_M onBlockClick={onBlockClick} showDelete={false} />
-                <InfoBlock_L onBlockClick={onBlockClick} showDelete={false} />
-            </HoverCardContent>
-        </HoverCard>
     )
 }

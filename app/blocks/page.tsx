@@ -2,14 +2,13 @@
 
 'use client'
 
-import { InfoBlock_L, InfoBlock_M } from '@/components/blocks/info/info-block'
+import { InfoBlock_L, InfoBlock_M } from '@/components/blocks/info-block'
 import { ArrowUp, Edit } from 'lucide-react'
 import { useState, useEffect, use } from 'react'
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
 import EditBlockContent from '@/components/blocks/edit-block-content'
 import { toast } from 'sonner'
 import BlockTemplatesList from './BlockTemplatesList'
-
 
 interface BlockData {
     id: string
@@ -29,8 +28,6 @@ interface BlockData {
         }
     }
 }
-
-
 
 export default function Blocks() {
     const [selectedBlocks, setSelectedBlocks] = useState<BlockData[]>([])
