@@ -1,31 +1,36 @@
+/** @format */
+
 'use client'
 
-import InfoBlock from '@/components/blocks/info/info-block'
 import { InfoBlock_L, InfoBlock_M } from '@/components/blocks/info/info-block'
 import { ArrowUp, Edit } from 'lucide-react'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, use } from 'react'
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
 import EditBlockContent from '@/components/blocks/edit-block-content'
 import { toast } from 'sonner'
+import BlockTemplatesList from './BlockTemplatesList'
+
 
 interface BlockData {
-  id: string;
-  type: string;
-  content: {
-    name: string;
-    description: string;
-    tags: string[];
-    image: string;
-    url: string;
-    contact: {
-      phone: string;
-      email: string;
-      github: string;
-      linkedin: string;
-      x: string;
-    };
-  };
+    id: string
+    type: string
+    content: {
+        name: string
+        description: string
+        tags: string[]
+        image: string
+        url: string
+        contact: {
+            phone: string
+            email: string
+            github: string
+            linkedin: string
+            x: string
+        }
+    }
 }
+
+
 
 export default function Blocks() {
     const [selectedBlocks, setSelectedBlocks] = useState<BlockData[]>([])
@@ -86,11 +91,9 @@ export default function Blocks() {
             const result = await response.json()
             setSelectedBlocks([...selectedBlocks, result.block])
             toast.success('Block created')
-            
         } catch (error) {
             console.error('Error creating block:', error)
             toast.error('Failed to create block')
-            
         }
     }
 
@@ -109,8 +112,6 @@ export default function Blocks() {
         } catch (error) {
             console.error('Error deleting block:', error)
             toast.error('Failed to delete block')
-
-           
         }
     }
 
@@ -120,7 +121,9 @@ export default function Blocks() {
 
     const handleEditSave = async (data: BlockData['content']) => {
         try {
-            const updatedBlock = selectedBlocks.find((block) => block.id === editingBlock)
+            const updatedBlock = selectedBlocks.find(
+                (block) => block.id === editingBlock
+            )
             if (!updatedBlock) {
                 throw new Error('Block not found')
             }
@@ -140,16 +143,16 @@ export default function Blocks() {
             }
 
             const result = await response.json()
-            setSelectedBlocks(selectedBlocks.map((block) => 
-                block.id === editingBlock ? result.block : block
-            ))
+            setSelectedBlocks(
+                selectedBlocks.map((block) =>
+                    block.id === editingBlock ? result.block : block
+                )
+            )
             setEditingBlock(null)
             toast.success('Block updated')
-            
         } catch (error) {
             console.error('Error saving block data:', error)
             toast.error('Failed to save block data')
-          
         }
     }
 
@@ -192,15 +195,22 @@ export default function Blocks() {
                     </div>
                 </SheetTrigger>
                 <SheetContent side={'bottom'}>
-                    <InfoBlock onBlockClick={handleBlockClick} />
+                    <BlockTemplatesList onBlockClick={handleBlockClick} />
                 </SheetContent>
             </Sheet>
 
-            <Sheet open={editingBlock !== null} onOpenChange={() => setEditingBlock(null)}>
+            <Sheet
+                open={editingBlock !== null}
+                onOpenChange={() => setEditingBlock(null)}
+            >
                 <SheetContent>
                     {editingBlock && (
                         <EditBlockContent
-                            initialData={selectedBlocks.find((block) => block.id === editingBlock)?.content}
+                            initialData={
+                                selectedBlocks.find(
+                                    (block) => block.id === editingBlock
+                                )?.content
+                            }
                             onSave={handleEditSave}
                         />
                     )}
@@ -209,4 +219,3 @@ export default function Blocks() {
         </div>
     )
 }
-
