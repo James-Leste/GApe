@@ -12,12 +12,13 @@ import {
 } from '@/components/ui/hover-card'
 import { InfoBlock_L, InfoBlock_M } from '@/components/blocks/info-block'
 import { EduBlock_L, EduBlock_M } from '@/components/blocks/edu-block'
-// Import other components as necessary
+import { EduBlockData, InfoBlockData } from '@/components/blocks/blockType'
+type blockType = EduBlockData | InfoBlockData
 
 export default function BlockTemplatesList({
     onBlockClick,
 }: {
-    onBlockClick: (block: string) => void
+    onBlockClick: (block: blockType,componentName:string) => void
 }) {
     const supabase = createClient()
     interface Template {
@@ -25,7 +26,7 @@ export default function BlockTemplatesList({
         name: string
         description: string
         cover_url: string
-        content: JSON
+        content: blockType
         // Add other fields as necessary
     }
 
@@ -45,21 +46,44 @@ export default function BlockTemplatesList({
         fetchTemplates()
     }, [])
 
-    const componentMap: { [key: string]: JSX.Element } = {
-        Info: (
-            <>
-                <InfoBlock_M onBlockClick={onBlockClick} showDelete={false} />
-                <InfoBlock_L onBlockClick={onBlockClick} showDelete={false} />
-            </>
-        ),
-        Education:(
-            <>
-                <EduBlock_M onBlockClick={onBlockClick} showDelete={false} />
-                <EduBlock_L onBlockClick={onBlockClick} showDelete={false} />
-            </>
-        )
-        // Add other mappings here
-    }
+    const componentMap: { [key: string]: (content: blockType) => JSX.Element } =
+        {
+            Info: (content: blockType) => {
+                const InfoContent = content as InfoBlockData
+                return (
+                    <>
+                        <InfoBlock_M
+                            onBlockClick={onBlockClick}
+                            showDelete={false}
+                            block_data={InfoContent}
+                        />
+                        <InfoBlock_L
+                            onBlockClick={onBlockClick}
+                            showDelete={false}
+                            block_data={InfoContent}
+                        />
+                    </>
+                )
+            },
+            Education: (content: blockType) => {
+                const eduContent = content as EduBlockData
+                return (
+                    <>
+                        <EduBlock_M
+                            onBlockClick={onBlockClick}
+                            showDelete={false}
+                            block_data={eduContent}
+                        />
+                        <EduBlock_L
+                            onBlockClick={onBlockClick}
+                            showDelete={false}
+                            block_data={eduContent}
+                        />
+                    </>
+                )
+            },
+            // Add other mappings here
+        }
 
     return (
         <>
@@ -77,7 +101,8 @@ export default function BlockTemplatesList({
                         </div>
                     </HoverCardTrigger>
                     <HoverCardContent className='flex flex-row gap-5 w-fit items-center'>
-                        {componentMap[template.name] || null}
+                        {componentMap[template.name]?.(template.content) ||
+                            null}
                     </HoverCardContent>
                 </HoverCard>
             ))}

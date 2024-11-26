@@ -58,14 +58,20 @@ export async function GET() {
 
 export async function POST(request: Request) {
   try {
-    const body: Block = await request.json()
+    const things = await request.json()
+    const { block, componentName } = things
+    if (!block) {
+      throw new Error('Block data is missing')
+    }
+    block.id = Date.now().toString(36) 
+    block.type = componentName
     const data = await readBlocksData()
-    data.blocks.push(body)
+    data.blocks.push(block)
     await writeBlocksData(data)
-    return NextResponse.json({ message: 'Block added successfully', block: body })
+    return NextResponse.json({ message: 'Block added successfully', block: block })
   } catch (error) {
     console.error('Error in POST:', error)
-    return NextResponse.json({ error: 'Failed to add block' }, { status: 500 })
+    return NextResponse.json({ error: error }, { status: 500 })
   }
 }
 

@@ -1,29 +1,6 @@
 /** @format */
-import {
-    Globe,
-    Twitter,
-    Github,
-    Phone,
-    Mail,
-    Trash2,
-    Edit,
-} from 'lucide-react'
-
-const block_data = {
-    name: 'John Simth',
-    description:
-        'I’m a Software Developer and Aalto University graduate with expertise in building web and data-driven applications. I enjoy solving complex problems using technologies like Python, Java, and JavaScript. Let’s connect and create something awesome together!',
-    tags: ['Vue', 'React', 'TS/JS', 'Next'],
-    image: 'https://s3.is-ali.tech/3ce276f382ff8edb74a24d8a2c872fa8.png',
-    url: 'https://www.linkedin.com/in/john-smith-123456/',
-    contact: {
-        Phone: '+358 401234567',
-        Email: 'example@mail.com',
-        github: '@John_Smith22',
-        linkedin: '@John_Smith22',
-        x: '@IsJohn_Smith22',
-    },
-}
+import { Globe, Twitter, Github, Phone, Mail, Trash2, Edit } from 'lucide-react'
+import { InfoBlockData } from '@/components/blocks/blockType'
 
 export function InfoBlock_L({
     onBlockClick,
@@ -31,12 +8,14 @@ export function InfoBlock_L({
     onEdit,
     showDelete,
     showEdit,
+    block_data,
 }: {
-    onBlockClick: (block: string) => void
+    onBlockClick: (block: InfoBlockData,componentName:string) => void
     onDelete?: () => void
     onEdit?: () => void
     showDelete?: boolean
     showEdit?: boolean
+    block_data: InfoBlockData
 }) {
     function Tag({ name }: { name: string }) {
         return (
@@ -50,7 +29,7 @@ export function InfoBlock_L({
 
     return (
         <div
-            onClick={() => onBlockClick('InfoBlock_L')}
+            onClick={() => onBlockClick(block_data,'InfoBlock_L')}
             className='relative group w-96 h-[236px] p-2 bg-white rounded-lg border border-slate-300 flex-col justify-start items-start gap-2 inline-flex hover:border-2 hover:shadow-md hover:border-customeBorder cursor-pointer'
         >
             {showDelete && (
@@ -109,11 +88,11 @@ export function InfoBlock_L({
                 <div className='grid grid-cols-2 gap-1 text-[12px]'>
                     <div className='flex flex-row items-center gap-1'>
                         <Phone className='w-4'></Phone>
-                        {block_data.contact.Phone}
+                        {block_data.contact.phone}
                     </div>
                     <div className='flex flex-row items-center gap-1'>
                         <Mail className='w-4'></Mail>
-                        {block_data.contact.Email}
+                        {block_data.contact.email}
                     </div>
                     <div className='flex flex-row items-center gap-1'>
                         <Github className='w-4'></Github>
@@ -135,16 +114,18 @@ export function InfoBlock_M({
     onEdit,
     showDelete,
     showEdit,
+    block_data,
 }: {
-    onBlockClick: (block: string) => void
+    onBlockClick: (block: InfoBlockData,componentName:string) => void
     onDelete?: () => void
     onEdit?: () => void
     showDelete?: boolean
     showEdit?: boolean
+    block_data: InfoBlockData
 }) {
     return (
         <div
-            onClick={() => onBlockClick('InfoBlock_M')}
+            onClick={() => onBlockClick(block_data,'InfoBlock_M')}
             className='relative group w-96 h-[140px] p-2 bg-white rounded-lg border border-slate-300 flex-col justify-start items-start gap-2 inline-flex hover:border-2 hover:shadow-md hover:border-customeBorder cursor-pointer'
         >
             {showDelete && (
@@ -194,12 +175,12 @@ export function InfoBlock_M({
                     <div className='self-stretch justify-between items-start inline-flex'>
                         <div className="text-neutral-700 text-xs font-normal font-['Inter'] flex items-center gap-1">
                             <Phone className='w-4'></Phone>
-                            {block_data.contact.Phone}
+                            {block_data.contact.phone}
                         </div>
 
                         <div className="text-neutral-700 text-xs font-normal font-['Inter'] flex items-center gap-1">
                             <Mail className='w-4'></Mail>{' '}
-                            {block_data.contact.Email}
+                            {block_data.contact.email}
                         </div>
                     </div>
                 </div>
