@@ -35,6 +35,7 @@ const UserDataPage: React.FC = () => {
     const [templates, setTemplates] = useState<Template[]>([])
     // current template
     const [selectedTemplate, setSelectedTemplate] = useState<string[]>([])
+    const [selectedTemplateId, setSelectedTemplateId] = useState<string>('')
 
     useEffect(() => {
         const getUser = () => {
@@ -66,7 +67,8 @@ const UserDataPage: React.FC = () => {
         }
 
         getTemplates()
-    })
+    }, [])
+
     const showCanvas = async () => {
         if (!user) {
             return
@@ -123,7 +125,7 @@ const UserDataPage: React.FC = () => {
                                     </SheetHeader>
                                     <form
                                         className='grid gap-4 py-4'
-                                        onSubmit={(e) => {
+                                        onSubmit={async (e) => {
                                             e.preventDefault()
                                             const formData = new FormData(
                                                 e.currentTarget
@@ -140,6 +142,18 @@ const UserDataPage: React.FC = () => {
                                                     2
                                                 )
                                             )
+                                            if (user?.id) {
+                                                await addBlock(
+                                                    item.id,
+                                                    user.id,
+                                                    selectedTemplateId,
+                                                    formObject
+                                                )
+                                            } else {
+                                                console.error(
+                                                    'User ID is undefined'
+                                                )
+                                            }
                                             // if (user?.id) {
                                             //     addBlock(item.id, user.id, )
                                             // }
@@ -201,11 +215,13 @@ const UserDataPage: React.FC = () => {
                             <RadioGroupItem
                                 value={template.name}
                                 id={template.id}
-                                onClick={() =>
-                                    setSelectedTemplate(
+                                onClick={async () => {
+                                    await setSelectedTemplate(
                                         Object.keys(template.content)
                                     )
-                                }
+
+                                    await setSelectedTemplateId(template.id)
+                                }}
                             />
                             <Label htmlFor={template.id}>{template.name}</Label>
                         </div>

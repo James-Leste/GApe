@@ -32,11 +32,12 @@ export const getBlock = async (canvas_id: string, blockMap: BlockMap) => {
 export const addBlock = async (
     canvas_id: string,
     user_id: string,
-    data: InfoBlockData
+    templateId: string,
+    data: {}
 ) => {
     const { error } = await supabase.from('blocks').insert({
         canvas_id: canvas_id,
-        template_id: 'info',
+        template_id: templateId,
         content: data,
         column: 0,
         location: 0,
