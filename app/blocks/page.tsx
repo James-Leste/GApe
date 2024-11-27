@@ -102,7 +102,7 @@ export default function Blocks() {
                 throw new Error('Block not found')
             }
 
-            const updatedBlockData = {  ...data }
+            const updatedBlockData = { ...data }
 
             const response = await fetch('/api/blocks', {
                 method: 'PUT',
@@ -216,7 +216,6 @@ export default function Blocks() {
                             onSave={handleEditSave}
                         />
                     )}
-                
                 </SheetContent>
             </Sheet>
         </div>

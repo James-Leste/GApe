@@ -1,52 +1,65 @@
 {
-    "blocks": [
-        {
-            "url": "https://www.linkedin.com/in/john-smith-123456/",
-            "name": "Alimjan",
-            "tags": ["Vue", "React", "CI/CD"],
-            "image": "https://s3.is-ali.tech/3ce276f382ff8edb74a24d8a2c872fa8.png",
-            "contact": {
-                "x": "@IsJohn_Smith22",
-                "email": "example@mail.com",
-                "phone": "+358 401234567",
-                "github": "@John_Smith22",
-                "linkedin": "@John_Smith22"
-            },
-            "description": "I'm a Software Developer and Aalto University graduate with expertise in building web and data-driven applications. I enjoy solving complex problems using technologies like Python, Java, and JavaScript. Let's connect and create something awesome together!",
-            "id": "m3yo73jr",
-            "type": "InfoBlock_M"
-        },
-        {
-            "url": "https://www.linkedin.com/in/john-smith-123456/",
-            "name": "Alimjan Ablimit",
-            "tags": ["Vue", "React", "CI/CD"],
-            "image": "https://s3.is-ali.tech/3ce276f382ff8edb74a24d8a2c872fa8.png",
-            "contact": {
-                "x": "@IsJohn_Smith22",
-                "email": "example@mail.com",
-                "phone": "+358 401234567",
-                "github": "@John_Smith22",
-                "linkedin": "@John_Smith22"
-            },
-            "description": "I'm a Software Developer and Aalto University graduate with expertise in building web and data-driven applications. I enjoy solving complex problems using technologies like Python, Java, and JavaScript. Let's connect and create something awesome together!",
-            "id": "m3yoai21",
-            "type": "InfoBlock_L"
-        },
-        {
-            "institutionName": "Aalto University",
-            "location": "Espoo, Finland",
-            "degree": "Bachelor of Science",
-            "startDate": "2015-09-01",
-            "endDate": "2019-05-15",
-            "major": "Computer Science",
-            "minor": "Mathematics",
-            "gpa": "3.8",
-            "description": "Studied various aspects of computer science including algorithms, data structures, and software engineering.",
-            "tags": ["Computer Science", "Mathematics", "Algorithms"],
-            "image": "https://example.com/harvard.jpg",
-            "url": "https://www.aalto.fi",
-            "id": "m3yob8dr",
-            "type": "EduBlock_M"
-        }
-    ]
+  "blocks": [
+    {
+      "url": "https://www.linkedin.com/in/john-smith-123456/",
+      "name": "Alimjan",
+      "tags": [
+        "Vue",
+        "React",
+        "CI/CD"
+      ],
+      "image": "https://s3.is-ali.tech/3ce276f382ff8edb74a24d8a2c872fa8.png",
+      "contact": {
+        "x": "@IsJohn_Smith22",
+        "email": "example@mail.com",
+        "phone": "+358 401234567",
+        "github": "@John_Smith22",
+        "linkedin": "@John_Smith22"
+      },
+      "description": "I'm a Software Developer and Aalto University graduate with expertise in building web and data-driven applications. I enjoy solving complex problems using technologies like Python, Java, and JavaScript. Let's connect and create something awesome together!",
+      "id": "m3yo73jr",
+      "type": "InfoBlock_M",
+      "email": "exampl"
+    },
+    {
+      "url": "https://www.linkedin.com/in/john-smith-123456/",
+      "name": "Alimjan Ablimit",
+      "tags": [
+        "Vue",
+        "React",
+        "CI/CD"
+      ],
+      "image": "https://s3.is-ali.tech/3ce276f382ff8edb74a24d8a2c872fa8.png",
+      "contact": {
+        "x": "@IsJohn_Smith22",
+        "email": "example@mail.com",
+        "phone": "+358 401234567",
+        "github": "@John_Smith22",
+        "linkedin": "@John_Smith22"
+      },
+      "description": "I'm a Software Developer and Aalto University graduate with expertise in building web and data-driven applications. I enjoy solving complex problems using technologies like Python, Java, and JavaScript. Let's connect and create something awesome together!",
+      "id": "m3yoai21",
+      "type": "InfoBlock_L"
+    },
+    {
+      "institutionName": "Aalto University",
+      "location": "Espoo, Finland",
+      "degree": "Bachelor of Science",
+      "startDate": "2015-09-01",
+      "endDate": "2019-05-15",
+      "major": "Computer Science",
+      "minor": "Mathematics",
+      "gpa": "3.8",
+      "description": "Studied various aspects of computer science including algorithms, data structures, and software engineering.",
+      "tags": [
+        "Computer Science",
+        "Mathematics",
+        "Algorithms"
+      ],
+      "image": "https://example.com/harvard.jpg",
+      "url": "https://www.aalto.fi",
+      "id": "m3yob8dr",
+      "type": "EduBlock_M"
+    }
+  ]
 }

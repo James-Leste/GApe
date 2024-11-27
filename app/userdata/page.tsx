@@ -5,7 +5,9 @@ import React, { useEffect, useState } from 'react'
 import { createClient } from '@/utils/supabase/client'
 import { Button } from '@/components/ui/button'
 import { User } from '@supabase/supabase-js'
-import InfoBlock from '@/components/blocks/info'
+
+import { Canvas, BlockMap, Template } from '@/types/dbtypes'
+import { getCanvasByUserId, getBlock, addBlock } from './actions'
 import {
     Sheet,
     SheetClose,
@@ -16,22 +18,24 @@ import {
     SheetTitle,
     SheetTrigger,
 } from '@/components/ui/sheet'
-
-const Counter = () => {
-    const [count, setCount] = useState(0)
-    return (
-        <div>
-            <p>Count: {count}</p>
-            <button onClick={() => setCount(count + 1)}>Increment</button>
-        </div>
-    )
-}
+import { Label } from '@/components/ui/label'
+import { Input } from '@/components/ui/input'
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 
 const supabase = createClient()
 
 const UserDataPage: React.FC = () => {
     const [user, setUser] = useState<User | null>(null)
     const [error, setError] = useState<Error | null>(null)
+    // all the canvas
+    const [canvas, setCanvas] = useState<Canvas[] | null>([])
+    // all the blocks based on canvas_id
+    const [blockMap, setBlockMap] = useState<BlockMap>(new Map())
+    // all the templates
+    const [templates, setTemplates] = useState<Template[]>([])
+    // current template
+    const [selectedTemplate, setSelectedTemplate] = useState<string[]>([])
+
     useEffect(() => {
         const getUser = () => {
             supabase.auth.getUser().then(({ data, error }) => {
@@ -46,26 +50,35 @@ const UserDataPage: React.FC = () => {
         getUser()
     }, [])
 
-    const insert = async () => {
-        const { data, error } = await supabase.from('canvas').insert([
-            {
-                userId: user ? user.id : '',
-                // create_at: new Date(),
-            },
+    useEffect(() => {
+        const getTemplates = () => {
+            supabase
+                .from('templates')
+                .select('*')
+                .then(({ data, error }) => {
+                    if (error) {
+                        console.log(error.code)
+                        return
+                    } else {
+                        setTemplates(data)
+                    }
+                })
+        }
 
-            {
-                userId: user ? user.id : '',
-                // create_at: new Date(),
-            },
-        ])
+        getTemplates()
+    })
+    const showCanvas = async () => {
+        if (!user) {
+            return
+        }
+        const canvas = await getCanvasByUserId(user?.id)
+        setCanvas(canvas)
     }
 
-    const showdata = async () => {
-        const { data: canvas, error } = await supabase
-            .from('canvas')
-            .select('*')
-
-        console.log(canvas)
+    const showBlock = async (canvas_id: string) => {
+        const newBlockMap: BlockMap =
+            (await getBlock(canvas_id, blockMap)) ?? new Map()
+        setBlockMap(newBlockMap)
     }
 
     return (
@@ -77,48 +90,134 @@ const UserDataPage: React.FC = () => {
                 <p></p>
             </div>
             <div>
-                <Button>hello</Button>
-                <Button onClick={insert}>create new canvas</Button>
-                <Button onClick={showdata}>add new item</Button>
+                <Button onClick={showCanvas}>Show Canvas</Button>
+                <Button onClick={() => console.log(blockMap)}>
+                    Show BlockMap
+                </Button>
             </div>
-            <div>
-                <div className='flex flex-row gap-5'>
-                    <InfoBlock></InfoBlock>
-                    <InfoBlock></InfoBlock>
-                    <InfoBlock></InfoBlock>
-                    <InfoBlock></InfoBlock>
-                </div>
-            </div>
-            <div>
-                <Counter></Counter>
-                <Counter></Counter>
-            </div>
-            <div>
-                <div className='grid grid-cols-2 gap-2'>
-                    <Sheet key='bottom' modal={false}>
-                        <SheetTrigger asChild>
-                            <Button variant='outline'>bottom</Button>
-                        </SheetTrigger>
-                        <SheetContent side='bottom' className='bg-white'>
-                            {/* <SheetHeader>
-                                <SheetTitle>Edit profile</SheetTitle>
-                                <SheetDescription>
-                                    Make changes to your profile here. Click
-                                    save when you're done.
-                                </SheetDescription>
-                            </SheetHeader>
-                            <div className='grid gap-4 py-4'></div> */}
-                            <div className='flex flex-row gap-5'>
-                                <InfoBlock key={1}></InfoBlock>
-                                <InfoBlock key={2}></InfoBlock>
-                                <InfoBlock key={3}></InfoBlock>
-                                <InfoBlock key={4}></InfoBlock>
-                            </div>
+            <div className='border-solid border-2 border-black w-fit'>
+                <h1>Canvas</h1>
+                {canvas?.map((item) => (
+                    <div key={item.id} className='m-5'>
+                        <div>
+                            <Button
+                                onClick={async () => {
+                                    await showBlock(item.id)
+                                    console.log(blockMap.get(item.id))
+                                }}
+                            >
+                                Canvas name: {item.name}
+                            </Button>
+                            <Sheet>
+                                <SheetTrigger asChild>
+                                    <Button variant='outline'>
+                                        Add a block
+                                    </Button>
+                                </SheetTrigger>
+                                <SheetContent>
+                                    <SheetHeader>
+                                        <SheetTitle>Set values</SheetTitle>
+                                        <SheetDescription>
+                                            Customize your block
+                                        </SheetDescription>
+                                    </SheetHeader>
+                                    <form
+                                        className='grid gap-4 py-4'
+                                        onSubmit={(e) => {
+                                            e.preventDefault()
+                                            const formData = new FormData(
+                                                e.currentTarget
+                                            )
+                                            const formObject =
+                                                Object.fromEntries(
+                                                    formData.entries()
+                                                )
 
-                            <SheetFooter></SheetFooter>
-                        </SheetContent>
-                    </Sheet>
-                </div>
+                                            console.log(
+                                                JSON.stringify(
+                                                    formObject,
+                                                    null,
+                                                    2
+                                                )
+                                            )
+                                            // if (user?.id) {
+                                            //     addBlock(item.id, user.id, )
+                                            // }
+                                        }}
+                                    >
+                                        {selectedTemplate.map((item) => (
+                                            <div
+                                                className='grid grid-cols-6 items-center gap-1'
+                                                key={item}
+                                            >
+                                                <Label
+                                                    htmlFor={item}
+                                                    className='overflow-hidden col-span-2'
+                                                >
+                                                    {item.toUpperCase()}
+                                                </Label>
+                                                <Input
+                                                    id={item}
+                                                    className='col-span-4'
+                                                    type='text'
+                                                    name={item}
+                                                />
+                                            </div>
+                                        ))}
+                                        <SheetFooter>
+                                            <SheetClose asChild>
+                                                <Button type='submit'>
+                                                    Save changes
+                                                </Button>
+                                            </SheetClose>
+                                        </SheetFooter>
+                                    </form>
+                                </SheetContent>
+                            </Sheet>
+
+                            <div>
+                                {blockMap.get(item.id)?.length === 0 ? (
+                                    <p>No blocks</p>
+                                ) : (
+                                    blockMap
+                                        .get(item.id)
+                                        ?.map((block) => (
+                                            <p key={block.id}>{block.id}</p>
+                                        ))
+                                )}
+                            </div>
+                        </div>
+                    </div>
+                ))}
+            </div>
+            <div className='border-solid border-2 border-black w-fit'>
+                <h1>Available Templates</h1>
+                <RadioGroup defaultValue='comfortable'>
+                    {templates.map((template) => (
+                        <div
+                            key={template.id}
+                            className='flex items-center space-x-2'
+                        >
+                            <RadioGroupItem
+                                value={template.name}
+                                id={template.id}
+                                onClick={() =>
+                                    setSelectedTemplate(
+                                        Object.keys(template.content)
+                                    )
+                                }
+                            />
+                            <Label htmlFor={template.id}>{template.name}</Label>
+                        </div>
+                    ))}
+                </RadioGroup>
+            </div>
+            <div>
+                {selectedTemplate.map((item) => (
+                    <div key={item}>
+                        <h1>{item}</h1>
+                    </div>
+                ))}
             </div>
         </div>
     )
