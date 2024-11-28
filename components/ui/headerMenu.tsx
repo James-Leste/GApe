@@ -1,5 +1,5 @@
 /** @format */
-"use client"
+'use client'
 import {
     Save,
     Forward,
@@ -9,7 +9,7 @@ import {
     Touchpad,
     Smartphone,
 } from 'lucide-react'
-import { usePathname } from 'next/navigation';
+import { usePathname } from 'next/navigation'
 
 import { Button } from '@/components/ui/button'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
@@ -22,13 +22,13 @@ function ToolBar() {
     return (
         <div className='flex justify-between w-full items-center'>
             <div className='flex flex-row gap-1'>
-                <Button variant={"secondary"} size='icon'>
+                <Button variant={'secondary'} size='icon'>
                     <Undo2 className='h-4 w-4' />
                 </Button>
-                <Button variant={"secondary"} size='icon'>
+                <Button variant={'secondary'} size='icon'>
                     <Forward className='h-4 w-4' />
                 </Button>
-                <Button variant={"secondary"} size='icon'>
+                <Button variant={'secondary'} size='icon'>
                     <Save className='h-4 w-4' />
                 </Button>
             </div>
@@ -47,7 +47,7 @@ function ToolBar() {
                 </TabsList>
             </Tabs>
             <div className='flex justify-between gap-2 items-center'>
-                <Button variant={"secondary"} size='icon'>
+                <Button variant={'secondary'} size='icon'>
                     <Printer className='h-4 w-4' />
                 </Button>
                 <Share />
@@ -57,8 +57,10 @@ function ToolBar() {
 }
 
 export default function HeaderMenu({ children }: HeaderMenuProps) {
-    const pathname = usePathname();
-    const isCanvasPage = pathname === '/canvas';
+    const pathname = usePathname()
+    const isCanvasPage =
+        pathname === '/canvas' || pathname.startsWith('/canvas/edit')
+    const isSharePage = pathname.startsWith('/canvas/share')
 
     return (
         <header className='sticky top-0 z-50 w-full border-border/40 bg-background/95 backdrop-blur border-b border-customeBorder supports-[backdrop-filter]:bg-background/70'>
@@ -69,9 +71,16 @@ export default function HeaderMenu({ children }: HeaderMenuProps) {
                             <a href='/'>GApe</a>
                         </div>
                     </div>
-                    {isCanvasPage &&  <ToolBar />}
-                   
-                    <div className='w-10 h-10 flex justify-center'>{children}</div>
+                    {isCanvasPage && <ToolBar />}
+                    {isSharePage && (
+                        <div className='flex w-full justify-end'>
+                            <Share />
+                        </div>
+                    )}
+
+                    <div className='w-10 h-10 flex justify-center'>
+                        {children}
+                    </div>
 
                     {/* <nav className='flex items-center gap-4 text-sm lg:gap-6'>
                         <a
