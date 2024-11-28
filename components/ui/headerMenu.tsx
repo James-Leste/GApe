@@ -13,6 +13,7 @@ import { usePathname } from 'next/navigation';
 
 import { Button } from '@/components/ui/button'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import Share from '@/components/ui/sharing'
 
 interface HeaderMenuProps {
     children?: React.ReactNode
@@ -45,10 +46,11 @@ function ToolBar() {
                     </TabsTrigger>
                 </TabsList>
             </Tabs>
-            <div>
+            <div className='flex justify-between gap-2 items-center'>
                 <Button variant={"secondary"} size='icon'>
                     <Printer className='h-4 w-4' />
                 </Button>
+                <Share />
             </div>
         </div>
     )
