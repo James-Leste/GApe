@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button'
 import { User } from '@supabase/supabase-js'
 
 import { Canvas, BlockMap, Template } from '@/types/dbtypes'
-import { getCanvasByUserId, getBlock, addBlock } from './actions'
+import { getCanvasByUserId, getBlock, addBlock, deleteBlock } from './actions'
 import {
     Sheet,
     SheetClose,
@@ -105,7 +105,7 @@ const UserDataPage: React.FC = () => {
                             <Button
                                 onClick={async () => {
                                     await showBlock(item.id)
-                                    console.log(blockMap.get(item.id))
+                                    //console.log(blockMap.get(item.id))
                                 }}
                             >
                                 Canvas name: {item.name}
@@ -193,11 +193,20 @@ const UserDataPage: React.FC = () => {
                                 {blockMap.get(item.id)?.length === 0 ? (
                                     <p>No blocks</p>
                                 ) : (
-                                    blockMap
-                                        .get(item.id)
-                                        ?.map((block) => (
-                                            <p key={block.id}>{block.id}</p>
-                                        ))
+                                    blockMap.get(item.id)?.map((block) => (
+                                        <div key={block.id}>
+                                            <p>{block.id}</p>
+                                            <Button
+                                                onClick={() => {
+                                                    //console.log(block.id)
+                                                    deleteBlock(block.id)
+                                                    showBlock(item.id)
+                                                }}
+                                            >
+                                                delete
+                                            </Button>
+                                        </div>
+                                    ))
                                 )}
                             </div>
                         </div>
@@ -215,12 +224,12 @@ const UserDataPage: React.FC = () => {
                             <RadioGroupItem
                                 value={template.name}
                                 id={template.id}
-                                onClick={async () => {
-                                    await setSelectedTemplate(
+                                onClick={() => {
+                                    setSelectedTemplate(
                                         Object.keys(template.content)
                                     )
 
-                                    await setSelectedTemplateId(template.id)
+                                    setSelectedTemplateId(template.id)
                                 }}
                             />
                             <Label htmlFor={template.id}>{template.name}</Label>

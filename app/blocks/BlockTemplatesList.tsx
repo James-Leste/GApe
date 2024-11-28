@@ -18,7 +18,7 @@ type blockType = EduBlockData | InfoBlockData
 export default function BlockTemplatesList({
     onBlockClick,
 }: {
-    onBlockClick: (block: blockType,componentName:string) => void
+    onBlockClick: (block: blockType, componentName: string) => void
 }) {
     const supabase = createClient()
     interface Template {

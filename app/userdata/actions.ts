@@ -33,7 +33,7 @@ export const addBlock = async (
     canvas_id: string,
     user_id: string,
     templateId: string,
-    data: {}
+    data: object
 ) => {
     const { error } = await supabase.from('blocks').insert({
         canvas_id: canvas_id,
@@ -43,4 +43,15 @@ export const addBlock = async (
         location: 0,
         user_id: user_id,
     })
+}
+
+export const deleteBlock = async (blockId: string) => {
+    const { error } = await supabase
+        .from('blocks')
+        .delete()
+        .eq('id', blockId)
+        .select()
+    if (error) {
+        console.error('Error deleting block:', error)
+    }
 }
