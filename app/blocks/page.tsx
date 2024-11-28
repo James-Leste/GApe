@@ -6,32 +6,21 @@ import { InfoBlock_L, InfoBlock_M } from '@/components/blocks/info-block'
 import { EduBlock_L, EduBlock_M } from '@/components/blocks/edu-block'
 import { ArrowUp } from 'lucide-react'
 import { useState, useEffect, use } from 'react'
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
+import {
+    Sheet,
+    SheetContent,
+    SheetFooter,
+    SheetTrigger,
+} from '@/components/ui/sheet'
 import EditBlockContent from '@/components/blocks/edit-block-content'
 import { toast } from 'sonner'
 import BlockTemplatesList from './BlockTemplatesList'
-
-interface BlockData {
-    id: string
-    type: string
-    content: {
-        name: string
-        description: string
-        tags: string[]
-        image: string
-        url: string
-        contact: {
-            phone: string
-            email: string
-            github: string
-            linkedin: string
-            x: string
-        }
-    }
-}
+import { EduBlockData, InfoBlockData } from '@/components/blocks/blockType'
 
 export default function Blocks() {
-    const [selectedBlocks, setSelectedBlocks] = useState<BlockData[]>([])
+    const [selectedBlocks, setSelectedBlocks] = useState<
+        (EduBlockData | InfoBlockData)[]
+    >([])
     const [editingBlock, setEditingBlock] = useState<string | null>(null)
 
     useEffect(() => {
@@ -53,33 +42,20 @@ export default function Blocks() {
         }
     }
 
-    const handleBlockClick = async (block: string) => {
-        const newBlock: BlockData = {
-            id: Date.now().toString(),
-            type: block,
-            content: {
-                name: '',
-                description: '',
-                tags: [],
-                image: '',
-                url: '',
-                contact: {
-                    phone: '',
-                    email: '',
-                    github: '',
-                    linkedin: '',
-                    x: '',
-                },
-            },
-        }
-
+    const handleBlockClick = async (
+        block: EduBlockData | InfoBlockData,
+        componentName: string
+    ) => {
         try {
             const response = await fetch('/api/blocks', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(newBlock),
+                body: JSON.stringify({
+                    block: block,
+                    componentName: componentName,
+                }),
             })
 
             if (!response.ok) {
@@ -117,7 +93,7 @@ export default function Blocks() {
         setEditingBlock(id)
     }
 
-    const handleEditSave = async (data: BlockData['content']) => {
+    const handleEditSave = async (data: EduBlockData | InfoBlockData) => {
         try {
             const updatedBlock = selectedBlocks.find(
                 (block) => block.id === editingBlock
@@ -126,7 +102,7 @@ export default function Blocks() {
                 throw new Error('Block not found')
             }
 
-            const updatedBlockData = { ...updatedBlock, content: data }
+            const updatedBlockData = { ...data }
 
             const response = await fetch('/api/blocks', {
                 method: 'PUT',
@@ -154,15 +130,41 @@ export default function Blocks() {
         }
     }
 
-    const componentMap: { [key: string]: (props: { onBlockClick: () => void; showDelete: boolean }) => JSX.Element } = {
-        InfoBlock_L: (props) => <InfoBlock_L {...props} />,
-        InfoBlock_M: (props) => <InfoBlock_M {...props} />,
-        EduBlock_L: (props) => <EduBlock_L {...props} />,
-        EduBlock_M: (props) => <EduBlock_M {...props} />,
+    const componentMap: {
+        [key: string]: (props: {
+            onBlockClick: () => void
+            showDelete: boolean
+            block_data: EduBlockData | InfoBlockData
+        }) => JSX.Element
+    } = {
+        InfoBlock_L: (props) => (
+            <InfoBlock_L
+                {...props}
+                block_data={props.block_data as InfoBlockData}
+            />
+        ),
+        InfoBlock_M: (props) => (
+            <InfoBlock_M
+                {...props}
+                block_data={props.block_data as InfoBlockData}
+            />
+        ),
+        EduBlock_L: (props) => (
+            <EduBlock_L
+                {...props}
+                block_data={props.block_data as EduBlockData}
+            />
+        ),
+        EduBlock_M: (props) => (
+            <EduBlock_M
+                {...props}
+                block_data={props.block_data as EduBlockData}
+            />
+        ),
         // Add other mappings here
     }
 
-    const renderBlock = (block: BlockData) => {
+    const renderBlock = (block: EduBlockData | InfoBlockData) => {
         const commonProps = {
             key: block.id,
             onBlockClick: () => {},
@@ -170,7 +172,7 @@ export default function Blocks() {
             onEdit: () => handleEditClick(block.id),
             showDelete: true,
             showEdit: true,
-            ...block.content,
+            block_data: block,
         }
 
         const Component = componentMap[block.type]
@@ -203,13 +205,13 @@ export default function Blocks() {
                 open={editingBlock !== null}
                 onOpenChange={() => setEditingBlock(null)}
             >
-                <SheetContent>
+                <SheetContent className='overflow-y-scroll h-screen'>
                     {editingBlock && (
                         <EditBlockContent
                             initialData={
                                 selectedBlocks.find(
                                     (block) => block.id === editingBlock
-                                )?.content
+                                ) as InfoBlockData | EduBlockData
                             }
                             onSave={handleEditSave}
                         />
