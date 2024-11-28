@@ -9,12 +9,16 @@ import {
     HoverCardContent,
     HoverCardTrigger,
 } from '@/components/ui/hover-card'
+import { Button } from './button'
+import Link from 'next/link'
+
 
 export default async function UserInfo() {
     const supabase = createClient()
 
     const { data, error } = await supabase.auth.getUser()
-    //console.log(data.user)
+    const userId = data.user?.id
+    const userUrl = `/user/${userId}`
 
     function User({ userdata }: { userdata: User }) {
         return (
@@ -31,10 +35,10 @@ export default async function UserInfo() {
                 <HoverCardContent>
                     <div className='flex flex-col gap-2 items-center'>
                         {userdata.email}
-                        <AsyncButton
-                            func={signout}
-                            displayName='Sign out'
-                        />{' '}
+                        <AsyncButton func={signout} displayName='Sign out' />
+                        <Link href={userUrl}>
+                            <Button>My Profile</Button>
+                        </Link>
                     </div>
                 </HoverCardContent>
             </HoverCard>

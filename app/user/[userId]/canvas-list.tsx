@@ -8,25 +8,21 @@ import { Pencil, Share2, Trash2 } from 'lucide-react'
 interface Canvas {
   id: string
   name: string
-  createdAt: string
-  modifiedAt: string
+  userId: string
+  create_at: string
 }
 
-export function CanvasList({ canvases }: { canvases: Canvas[] }) {
+export function CanvasList({ canvases, deleteCanvas }: { canvases: Canvas[], deleteCanvas: (id: string) => void }) {
   const handleDelete = (id: string) => {
-    // Here you would typically send a delete request to your backend
-    console.log('Delete canvas:', id)
+    deleteCanvas(id)
   }
 
   return (
-    <div>
-      <h2 className="text-2xl font-bold mb-4">Your Canvases</h2>
-      <Table>
+    <Table>
         <TableHeader>
           <TableRow>
             <TableHead>Name</TableHead>
             <TableHead>Created At</TableHead>
-            <TableHead>Modified At</TableHead>
             <TableHead>Actions</TableHead>
           </TableRow>
         </TableHeader>
@@ -34,8 +30,7 @@ export function CanvasList({ canvases }: { canvases: Canvas[] }) {
           {canvases.map((canvas) => (
             <TableRow key={canvas.id}>
               <TableCell>{canvas.name}</TableCell>
-              <TableCell>{new Date(canvas.createdAt).toLocaleDateString()}</TableCell>
-              <TableCell>{new Date(canvas.modifiedAt).toLocaleDateString()}</TableCell>
+              <TableCell>{new Date(canvas.create_at).toLocaleDateString()}</TableCell>
               <TableCell>
                 <div className="flex space-x-2">
                   <Link href={`/canvas/edit/${canvas.id}`}>
@@ -57,7 +52,6 @@ export function CanvasList({ canvases }: { canvases: Canvas[] }) {
           ))}
         </TableBody>
       </Table>
-    </div>
   )
 }
 
