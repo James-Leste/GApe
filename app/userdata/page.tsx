@@ -7,7 +7,13 @@ import { Button } from '@/components/ui/button'
 import { User } from '@supabase/supabase-js'
 
 import { Canvas, BlockMap, Template } from '@/types/dbtypes'
-import { getCanvasByUserId, getBlock, addBlock, deleteBlock } from './actions'
+import {
+    getCanvasByUserId,
+    getBlock,
+    addBlock,
+    deleteBlock,
+    getBlockColumn,
+} from './actions'
 import {
     Sheet,
     SheetClose,
@@ -106,6 +112,7 @@ const UserDataPage: React.FC = () => {
                                 onClick={async () => {
                                     await showBlock(item.id)
                                     //console.log(blockMap.get(item.id))
+                                    await getBlockColumn(item.id, 0)
                                 }}
                             >
                                 Canvas name: {item.name}
@@ -147,7 +154,8 @@ const UserDataPage: React.FC = () => {
                                                     item.id,
                                                     user.id,
                                                     selectedTemplateId,
-                                                    formObject
+                                                    formObject,
+                                                    Number(formObject.column)
                                                 )
                                             } else {
                                                 console.error(

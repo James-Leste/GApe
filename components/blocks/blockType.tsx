@@ -1,24 +1,20 @@
 /** @format */
 
 export interface InfoBlockData {
-    id: string
     type: string
     name: string
     description: string
-    tags: string[]
     image: string
     url: string
-    contact: {
-        phone: string
-        email: string
-        github: string
-        linkedin: string
-        x: string
-    }
+    phone: string
+    email: string
+    github: string
+    linkedin: string
+    x: string
+    tags: string[]
 }
 
 export interface EduBlockData {
-    id: string
     type: string
     institutionName: string
     location: string
