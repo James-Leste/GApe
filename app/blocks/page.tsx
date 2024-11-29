@@ -180,14 +180,14 @@ export default function Blocks() {
     }
 
     return (
-        <div className='p-4 h-full'>
-            <div className='h-4/6 w-full grid grid-cols-3 gap-4'>
+        <div className='p-4 h-full print:p-0'>
+            <div className='h-4/6 w-full grid grid-cols-3 gap-4 print:grid-cols-2' >
                 {selectedBlocks.map((block) => renderBlock(block))}
             </div>
 
             <Sheet key={'bottom'}>
                 <SheetTrigger asChild>
-                    <div className='w-full flex justify-center mt-4'>
+                    <div className='w-full flex justify-center mt-4 print:hidden'>
                         <div className='px-6 h-10 flex text-customeText2 bg-customeBG1 rounded-[7px] shadow border border-customeBorder justify-center items-center gap-1 cursor-pointer'>
                             <p className='text-sm font-semibold text-center'>
                                 Pick Up Block
