@@ -249,6 +249,7 @@ export default function App() {
         ['column-1']: [],
         ['column-2']: [],
     })
+
     //const ordered = ['Finn', 'Jake', 'Princess bubblegum', 'BMO']
     const ordered = useMemo(() => Object.keys(columns), [columns])
 
@@ -318,20 +319,18 @@ export default function App() {
         setColumns(newColumns.itemMap)
     }
     const block_data: InfoBlockData = {
-        id: '1',
-        type: 'info',
-        name: 'John Doe',
-        description: 'This is a description',
-        tags: ['tag1', 'tag2'],
-        image: 'https://via.placeholder.com/150',
-        url: 'https://www.google.com',
-        contact: {
-            phone: '123-456-7890',
-            email: '',
-            github: '',
-            linkedin: '',
-            x: '',
-        },
+        url: 'https://www.linkedin.com/in/john-smith-123456/',
+        name: 'John Dash',
+        image: 'https://s3.is-ali.tech/3ce276f382ff8edb74a24d8a2c872fa8.png',
+        x: '@IsJohn_Smith22',
+        email: 'example@mail.com',
+        phone: '+358 401234567',
+        github: '@John_Smith22',
+        linkedin: '@John_Smith22',
+        description:
+            "I'm a Software Developer and Aalto University graduate with expertise in building web and data-driven applications. I enjoy solving complex problems using technologies like Python, Java, and JavaScript. Let's connect and create something awesome together!",
+        type: 'Default type',
+        tags: ['Python', 'Java', 'JavaScript', 'React', 'Node.js'],
     }
 
     return (

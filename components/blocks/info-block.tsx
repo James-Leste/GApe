@@ -10,7 +10,7 @@ export function InfoBlock_L({
     showEdit,
     block_data,
 }: {
-    onBlockClick: (block: InfoBlockData,componentName:string) => void
+    onBlockClick: (block: InfoBlockData, componentName: string) => void
     onDelete?: () => void
     onEdit?: () => void
     showDelete?: boolean
@@ -29,7 +29,7 @@ export function InfoBlock_L({
 
     return (
         <div
-            onClick={() => onBlockClick(block_data,'InfoBlock_L')}
+            onClick={() => onBlockClick(block_data, 'InfoBlock_L')}
             className='relative group w-96 h-[236px] p-2 bg-white rounded-lg border border-slate-300 flex-col justify-start items-start gap-2 inline-flex hover:border-2 hover:shadow-md hover:border-customeBorder cursor-pointer'
         >
             {showDelete && (
@@ -88,19 +88,19 @@ export function InfoBlock_L({
                 <div className='grid grid-cols-2 gap-1 text-[12px]'>
                     <div className='flex flex-row items-center gap-1'>
                         <Phone className='w-4'></Phone>
-                        {block_data.contact.phone}
+                        {block_data.phone}
                     </div>
                     <div className='flex flex-row items-center gap-1'>
                         <Mail className='w-4'></Mail>
-                        {block_data.contact.email}
+                        {block_data.email}
                     </div>
                     <div className='flex flex-row items-center gap-1'>
                         <Github className='w-4'></Github>
-                        {block_data.contact.github}
+                        {block_data.github}
                     </div>
                     <div className='flex flex-row items-center gap-1'>
                         <Twitter className='w-4'></Twitter>
-                        {block_data.contact.x}
+                        {block_data.x}
                     </div>
                 </div>
             </div>
@@ -117,7 +117,7 @@ export function InfoBlock_M({
     showEdit,
     block_data,
 }: {
-    onBlockClick: (block: InfoBlockData,componentName:string) => void
+    onBlockClick: (block: InfoBlockData, componentName: string) => void
     onDelete?: () => void
     onEdit?: () => void
     showDelete?: boolean
@@ -126,7 +126,7 @@ export function InfoBlock_M({
 }) {
     return (
         <div
-            onClick={() => onBlockClick(block_data,'InfoBlock_M')}
+            onClick={() => onBlockClick(block_data, 'InfoBlock_M')}
             className='relative group w-96 h-[140px] p-2 bg-white rounded-lg border border-slate-300 flex-col justify-start items-start gap-2 inline-flex hover:border-2 hover:shadow-md hover:border-customeBorder cursor-pointer'
         >
             {showDelete && (
@@ -176,12 +176,11 @@ export function InfoBlock_M({
                     <div className='self-stretch justify-between items-start inline-flex'>
                         <div className="text-neutral-700 text-xs font-normal font-['Inter'] flex items-center gap-1">
                             <Phone className='w-4'></Phone>
-                            {block_data.contact.phone}
+                            {block_data.phone}
                         </div>
 
                         <div className="text-neutral-700 text-xs font-normal font-['Inter'] flex items-center gap-1">
-                            <Mail className='w-4'></Mail>{' '}
-                            {block_data.contact.email}
+                            <Mail className='w-4'></Mail> {block_data.email}
                         </div>
                     </div>
                 </div>
