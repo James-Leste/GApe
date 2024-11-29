@@ -25,29 +25,33 @@ function ToolBar() {
                 <Button variant={'secondary'} size='icon'>
                     <Undo2 className='h-4 w-4' />
                 </Button>
-                <Button variant={'secondary'} size='icon'>
+                {/* <Button variant={'secondary'} size='icon'>
                     <Forward className='h-4 w-4' />
-                </Button>
+                </Button> */}
                 <Button variant={'secondary'} size='icon'>
                     <Save className='h-4 w-4' />
                 </Button>
             </div>
 
-            <Tabs>
-                <TabsList className='grid w-full grid-cols-3'>
+            <Tabs value='pc'>
+                <TabsList  className='grid w-full grid-cols-3'>
                     <TabsTrigger value='pc'>
                         <Laptop className='h-4 w-4' />
                     </TabsTrigger>
-                    <TabsTrigger value='pad'>
+                    <TabsTrigger disabled value='pad'>
                         <Touchpad className='h-4 w-4' />
                     </TabsTrigger>
-                    <TabsTrigger value='phone'>
+                    <TabsTrigger disabled value='phone'>
                         <Smartphone className='h-4 w-4' />
                     </TabsTrigger>
                 </TabsList>
             </Tabs>
             <div className='flex justify-between gap-2 items-center'>
-                <Button variant={'secondary'} size='icon'>
+                <Button
+                    variant={'secondary'}
+                    size='icon'
+                    onClick={() => window.print()}
+                >
                     <Printer className='h-4 w-4' />
                 </Button>
                 <Share />
@@ -59,11 +63,11 @@ function ToolBar() {
 export default function HeaderMenu({ children }: HeaderMenuProps) {
     const pathname = usePathname()
     const isCanvasPage =
-        pathname === '/canvas' || pathname.startsWith('/canvas/edit')
+        pathname === '/canvas' || pathname.startsWith('/canvas/edit') || pathname.startsWith('/blocks')
     const isSharePage = pathname.startsWith('/canvas/share')
 
     return (
-        <header className='sticky top-0 z-50 w-full border-border/40 bg-background/95 backdrop-blur border-b border-customeBorder supports-[backdrop-filter]:bg-background/70'>
+        <header className='sticky top-0 z-50 w-full border-border/40 bg-background/95 backdrop-blur border-b border-customeBorder supports-[backdrop-filter]:bg-background/70 print:hidden'>
             <div className='container flex h-14 max-w-screen-2xl items-center '>
                 <div className='mx-4 gap-4 hidden md:flex items-center justify-between w-full'>
                     <div className=' h-full pl-9 pr-9 flex flex-col justify-center items-center '>
