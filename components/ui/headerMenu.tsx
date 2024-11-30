@@ -67,9 +67,9 @@ export default function HeaderMenu({ children }: HeaderMenuProps) {
     const isSharePage = pathname.startsWith('/canvas/share')
 
     return (
-        <header className='sticky top-0 z-50 w-full border-border/40 bg-background/95 backdrop-blur border-b border-customeBorder supports-[backdrop-filter]:bg-background/70 print:hidden'>
-            <div className='container flex h-14 max-w-screen-2xl items-center '>
-                <div className='mx-4 gap-4 hidden md:flex items-center justify-between w-full'>
+        <header className='sticky top-0 z-50 w-full border-border/40 bg-background/95 backdrop-blur border-b border-customeBorder supports-[backdrop-filter]:bg-background/70 print:hidden  flex justify-center'>
+            <div className=' container flex h-14 items-center '>
+                <div className='mx-4 gap-4  flex items-center justify-between w-full'>
                     <div className=' h-full pl-9 pr-9 flex flex-col justify-center items-center '>
                         <div className='text-customeText1 text-2xl font-inter font-semibold break-words'>
                             <a href='/'>GApe</a>
@@ -82,7 +82,7 @@ export default function HeaderMenu({ children }: HeaderMenuProps) {
                         </div>
                     )}
 
-                    <div className='w-10 h-10 flex justify-center'>
+                    <div className='w-10 h-10 flex justify-center mr-8'>
                         {children}
                     </div>
 
