@@ -4,7 +4,7 @@ import * as React from 'react'
 import { ProfileCard } from "@/components/blocks/v2/profile/ProfileCard"
 import { EduBlock_L,EduBlock_M } from '@/components/blocks/v2/profile/EducationCard'
 import { WorkBlock_L,WorkBlock_M } from '@/components/blocks/v2/profile/ExperienceCard'
-import { PublicationCard } from '@/components/blocks/v2/profile/PublicationCard'
+import { PublicationBlock_L, PublicationBlock_M } from '@/components/blocks/v2/profile/PublicationCard'
 import { SkillsCard } from '@/components/blocks/v2/profile/SkillsCard'
 
 export default function ProfilePage() {
@@ -52,7 +52,7 @@ export default function ProfilePage() {
         year: '2021',
         type: 'Article',
         description:
-            "Spiking Neural Networks (SNNs) have emerged as a biology-inspired method mimicking the spiking nature of brain neurons. This bio-mimicry derives SNNs' energy efficiency of inference on neuromorphic hardware.",
+            "Spiking Neural Networks (SNNs) have emerged as a biology-inspired method mimicking the spiking nature of brain neurons. This bio-mimicry derives SNNs' energy efficiency of inference on neuromorphic hardware. However, it also causes an intrinsic disadvantage in training high-performing SNNs from scratch ",
         journal: 'Advances in Neural Information Processing Systems',
     }
 
@@ -106,7 +106,8 @@ export default function ProfilePage() {
                 <WorkBlock_M {...workData} />
                 <EduBlock_L {...educationData} />
                 <EduBlock_M {...educationData} />
-                <PublicationCard {...publicationData} />
+                <PublicationBlock_L {...publicationData} />
+                <PublicationBlock_M {...publicationData} />
                 <SkillsCard {...skillsData} />
             </div>
         </div>
