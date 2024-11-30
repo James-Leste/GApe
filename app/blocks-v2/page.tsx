@@ -3,7 +3,7 @@
 import * as React from 'react'
 import { ProfileCard } from "@/components/blocks/v2/profile/ProfileCard"
 import { EduBlock_L,EduBlock_M } from '@/components/blocks/v2/profile/EducationCard'
-import { ExperienceCard } from '@/components/blocks/v2/profile/ExperienceCard'
+import { WorkBlock_L,WorkBlock_M } from '@/components/blocks/v2/profile/ExperienceCard'
 import { PublicationCard } from '@/components/blocks/v2/profile/PublicationCard'
 import { SkillsCard } from '@/components/blocks/v2/profile/SkillsCard'
 
@@ -34,13 +34,13 @@ export default function ProfilePage() {
             'https://cdn.builder.io/api/v1/image/assets/TEMP/3ffda4f2e4bc6420b663a0bdac641d23b169162badce65081c66f522d603309c?placeholderIfAbsent=true&apiKey=cf0d30cc7fd245a4886607b2fdd26b2b',
     }
 
-    const experienceData = {
+    const workData = {
         company: 'JadeFoci Technology',
         title: 'Engineer | User Interface Engineer',
         location: 'Hangzhou, China',
         dateRange: 'Dec 2022 ‑ Mar 2023',
         description:
-            'Developed a graphical process editor using the AntV X6 open source project, enabling staff to create Edge computing algorithms easily with user-friendly atomic operators.',
+            'Conducted competitive analysis of AI painting apps like Stable Diffusion WebUI and Midjourney. Designed UX/UI for uType.ai, a web app generating font graphics, and developed a NextJS-based demo with Tailwind, ShadCN, and REST API integration to connect front and back-end services',
         logoUrl:
             'https://cdn.builder.io/api/v1/image/assets/TEMP/8ab2db17a88c2ef83dedff0f1ff302bee1c700cdf9a79ff19ff87b303904237c?placeholderIfAbsent=true&apiKey=cf0d30cc7fd245a4886607b2fdd26b2b',
         type: 'internship',
@@ -101,8 +101,9 @@ export default function ProfilePage() {
     return (
         <div className='flex overflow-hidden flex-col px-16 py-32 bg-white max-md:px-5 max-md:py-24'>
             <div className='grid grid-cols-2 gap-5 max-md:grid-cols-1'>
-                <ProfileCard {...profileData} />
-                <ExperienceCard {...experienceData} />
+                {/* <ProfileCard {...profileData} /> */}
+                <WorkBlock_L {...workData} />
+                <WorkBlock_M {...workData} />
                 <EduBlock_L {...educationData} />
                 <EduBlock_M {...educationData} />
                 <PublicationCard {...publicationData} />
