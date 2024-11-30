@@ -108,6 +108,7 @@ export function InfoBlock_L({
     )
 }
 
+
 export function InfoBlock_M({
     onBlockClick,
     onDelete,
