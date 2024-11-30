@@ -5,7 +5,7 @@ import { ProfileCard } from "@/components/blocks/v2/profile/ProfileCard"
 import { EduBlock_L,EduBlock_M } from '@/components/blocks/v2/profile/EducationCard'
 import { WorkBlock_L,WorkBlock_M } from '@/components/blocks/v2/profile/ExperienceCard'
 import { PublicationBlock_L, PublicationBlock_M } from '@/components/blocks/v2/profile/PublicationCard'
-import { SkillsCard } from '@/components/blocks/v2/profile/SkillsCard'
+import { SkillsBlock_L,SkillsBlock_M } from '@/components/blocks/v2/profile/SkillsCard'
 
 export default function ProfilePage() {
     const profileData = {
@@ -108,7 +108,9 @@ export default function ProfilePage() {
                 <EduBlock_M {...educationData} />
                 <PublicationBlock_L {...publicationData} />
                 <PublicationBlock_M {...publicationData} />
-                <SkillsCard {...skillsData} />
+                <SkillsBlock_L {...skillsData} />
+                <SkillsBlock_M {...skillsData} />
+
             </div>
         </div>
     )
