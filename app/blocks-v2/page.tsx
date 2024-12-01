@@ -6,6 +6,8 @@ import { EduBlock_L,EduBlock_M } from '@/components/blocks/v2/profile/EducationC
 import { WorkBlock_L,WorkBlock_M } from '@/components/blocks/v2/profile/ExperienceCard'
 import { PublicationBlock_L, PublicationBlock_M } from '@/components/blocks/v2/profile/PublicationCard'
 import { SkillsBlock_L,SkillsBlock_M } from '@/components/blocks/v2/profile/SkillsCard'
+import { ProjectBlock_L, ProjectBlock_M } from '@/components/blocks/v2/profile/ProjectCard'
+import { ProjectCardProps} from '@/components/blocks/v2/profile/types'
 
 export default function ProfilePage() {
     const profileData = {
@@ -18,6 +20,20 @@ export default function ProfilePage() {
         imageUrl:
             'https://cdn.builder.io/api/v1/image/assets/TEMP/a3827856688a042542ad9e567ae365a57fc1d089116f559125c4352d76b9bd19?placeholderIfAbsent=true&apiKey=cf0d30cc7fd245a4886607b2fdd26b2b',
         skills: ['Vue', 'React', 'TS/JS', 'Next'],
+    }
+
+    const ProjectData: ProjectCardProps = {
+        company: 'Z‑one tech',
+        role: 'Front‑end developer',
+        location: 'Shanghai, China',
+        dateRange: 'Dec 2022 ‑ Mar 2023',
+        description:
+            'Developed a graphical process editor using the AntV X6 open source project, enabling staff to create Edge computing algorithms easily with user-friendly atomic operators. Enhanced user experience with drag-and-drop and form interactions, built with VueJS and integrated Ant Design for visual consistency. Gained experience in a production environment using Jenkins and Docker.',
+        image:
+            'https://cdn.builder.io/api/v1/image/assets/TEMP/8ab2db17a88c2ef83dedff0f1ff302bee1c700cdf9a79ff19ff87b303904237c?placeholderIfAbsent=true&apiKey=cf0d30cc7fd245a4886607b2fdd26b2b',
+        type: 'internship',
+        project: 'Edge computing platform',
+        Heyperlink: 'https://www.example.com',
     }
 
     const educationData = {
@@ -110,6 +126,8 @@ export default function ProfilePage() {
                 <PublicationBlock_M {...publicationData} />
                 <SkillsBlock_L {...skillsData} />
                 <SkillsBlock_M {...skillsData} />
+                <ProjectBlock_L {...ProjectData} />
+                <ProjectBlock_M {...ProjectData} />
 
             </div>
         </div>
