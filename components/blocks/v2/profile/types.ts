@@ -33,6 +33,18 @@ export interface ExperienceCardProps {
     type?: string
 }
 
+export interface ProjectCardProps {
+    project: string
+    company: string
+    role: string
+    dateRange: string
+    Heyperlink: string
+    location: string
+    description: string
+    image: string
+    type?: string
+}
+
 export interface PublicationCardProps {
     title: string
     authors: string
