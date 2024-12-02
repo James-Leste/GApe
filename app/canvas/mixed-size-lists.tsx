@@ -3,7 +3,7 @@
 import { colors } from '@atlaskit/theme'
 import styled from '@emotion/styled'
 import React, { ReactNode, useEffect, useState } from 'react'
-import { useMemo } from 'use-memo-one'
+import { useMemo } from 'react'
 import { DragDropContext, Draggable, Droppable } from '@hello-pangea/dnd'
 import type { DropResult } from '@hello-pangea/dnd'
 import type { Quote, ItemMap } from './scripts/types'
