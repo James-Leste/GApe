@@ -7,10 +7,11 @@ import { WorkBlock_L,WorkBlock_M } from '@/components/blocks/v2/profile/Experien
 import { PublicationBlock_L, PublicationBlock_M } from '@/components/blocks/v2/profile/PublicationCard'
 import { SkillsBlock_L,SkillsBlock_M } from '@/components/blocks/v2/profile/SkillsCard'
 import { ProjectBlock_L, ProjectBlock_M } from '@/components/blocks/v2/profile/ProjectCard'
-import { ProjectCardProps} from '@/components/blocks/v2/profile/types'
+import { InfoBlock_L,InfoBlock_M } from '@/components/blocks/v2/profile/info-block'
+import { ProjectCardProps,ProfileCardProps} from '@/components/blocks/v2/profile/types'
 
 export default function ProfilePage() {
-    const profileData = {
+    const profileData:ProfileCardProps = {
         name: 'John Smith',
         title: 'Software Developer',
         description:
@@ -20,6 +21,12 @@ export default function ProfilePage() {
         imageUrl:
             'https://cdn.builder.io/api/v1/image/assets/TEMP/a3827856688a042542ad9e567ae365a57fc1d089116f559125c4352d76b9bd19?placeholderIfAbsent=true&apiKey=cf0d30cc7fd245a4886607b2fdd26b2b',
         skills: ['Vue', 'React', 'TS/JS', 'Next'],
+        github: 'https://github.com',
+        linkedin: 'https://linkedin.com',
+        image:
+            'https://s3.is-ali.tech/3ce276f382ff8edb74a24d8a2c872fa8.png',
+        x: 'https://twitter.com',
+        url: 'https://www.example.com',
     }
 
     const ProjectData: ProjectCardProps = {
@@ -118,6 +125,8 @@ export default function ProfilePage() {
         <div className='flex overflow-hidden flex-col px-16 py-32 bg-white max-md:px-5 max-md:py-24'>
             <div className='grid grid-cols-2 gap-5 max-md:grid-cols-1'>
                 {/* <ProfileCard {...profileData} /> */}
+                <InfoBlock_L block_data={profileData} />
+                <InfoBlock_M block_data={profileData} />
                 <WorkBlock_L {...workData} />
                 <WorkBlock_M {...workData} />
                 <EduBlock_L {...educationData} />
