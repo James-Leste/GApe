@@ -9,7 +9,14 @@ export interface ProfileCardProps {
     location?: string
     imageUrl: string
     skills?: string[]
+    github: string
+    linkedin: string
+    image: string
+    x: string
+    url: string
 }
+
+
 
 export interface EducationCardProps {
     institution: string
