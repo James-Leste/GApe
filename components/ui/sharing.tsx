@@ -75,7 +75,7 @@ export default function SocialShare() {
     }
 
     return (
-        <div className='flex flex-col items-center justify-center min-h-screen bg-background'>
+        <div className='flex flex-col items-center justify-center bg-background'>
             <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                     <Button variant={'secondary'} size='icon'>
