@@ -13,7 +13,7 @@ import {
     addBlock,
     deleteBlock,
     getBlockMap,
-} from './actions'
+} from '@/app/canvas/actions'
 import {
     Sheet,
     SheetClose,
@@ -160,8 +160,8 @@ const UserDataPage: React.FC = () => {
                                                     item.id,
                                                     user.id,
                                                     selectedTemplateId,
-                                                    formObject,
-                                                    Number(formObject.column)
+                                                    formObject
+                                                    //Number(formObject.column)
                                                 )
                                             } else {
                                                 console.error(
