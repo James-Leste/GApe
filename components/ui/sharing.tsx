@@ -26,7 +26,9 @@ export default function SocialShare() {
     useEffect(() => {
         // Only run on client-side
         if (typeof window !== 'undefined') {
-            setUrl(window.location.href)
+            let currentUrl = window.location.href
+            currentUrl = currentUrl.replace('/edit/', '/share/')
+            setUrl(currentUrl)
         }
     }, [])
 
