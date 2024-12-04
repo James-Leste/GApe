@@ -33,15 +33,27 @@ export const addBlock = async (
     canvas_id: string,
     user_id: string,
     templateId: string,
-    data: object
+    content: object,
+    column: number
 ) => {
-    const { error } = await supabase.from('blocks').insert({
-        canvas_id: canvas_id,
-        template_id: templateId,
-        content: data,
-        column: 0,
-        user_id: user_id,
-    })
+    const { data, error } = await supabase
+        .from('blocks')
+        .insert({
+            canvas_id: canvas_id,
+            template_id: templateId,
+            content: content,
+            column: 0,
+            user_id: user_id,
+        })
+        .select()
+    // return the added block's id
+    if (data && data.length === 1) {
+        //console.log('id: ' + data[0].id)
+        //console.log('column: ' + data[0].column)
+        await insertBlockLocation(canvas_id, data[0].id, 0)
+    } else {
+        console.error('No data returned from insert operation')
+    }
 }
 
 export const insertBlockLocation = async (
@@ -63,7 +75,7 @@ export const insertBlockLocation = async (
         //await supabase.from('blockMap').update({})
 
         const current_list: string[] = data[0].blocks
-        //console.log(current_list)
+        console.log(current_list)
         current_list.push(block_id)
         await supabase
             .from('blockColumn')
@@ -101,6 +113,23 @@ export const updateBlockColumn = async (
     }
 }
 
+// export const updateBlockLocation = async (
+
+// )
+
+// export const getBlockColumn = async (canvas_id: string, column: number) => {
+//     const { data: blockMap, error } = await supabase
+//         .from('blocks')
+//         .select('*')
+//         .eq('canvas_id', canvas_id)
+//         .eq('column', column)
+//     if (error) {
+//         console.error('Error fetching blocks:', error)
+//         return
+//     }
+//     //console.log(blockMap)
+// }
+
 export const getBlockMap = async (canvas_id: string) => {
     const { data: columns, error } = await supabase
         .from('blockColumn')
@@ -113,14 +142,38 @@ export const getBlockMap = async (canvas_id: string) => {
     return columns
 }
 
-export const deleteBlock = async (blockId: string) => {
-    const { error } = await supabase
+export const deleteBlock = async (
+    canvas_id: string,
+    block_id: string,
+    column: number
+) => {
+    const response = await supabase
         .from('blocks')
         .delete()
-        .eq('id', blockId)
-        .select()
+        .eq('id', block_id)
+        .select('canvas_id')
+
+    // console.log(response.data)
+    const { data, error } = await supabase
+        .from('blockColumn')
+        .select('blocks')
+        .eq('canvas_id', canvas_id)
+        .eq('column', column)
     if (error) {
-        console.error('Error deleting block:', error)
+        console.error('Error fetching blockColumn:', error)
+    }
+    if (data && data.length > 0) {
+        const current_list: string[] = data[0].blocks
+        console.log(current_list)
+        const updated_list = current_list.filter((id) => id !== block_id)
+        console.log(updated_list)
+        await supabase
+            .from('blockColumn')
+            .update({
+                blocks: updated_list,
+            })
+            .eq('canvas_id', canvas_id)
+            .eq('column', column)
     }
 }
 
