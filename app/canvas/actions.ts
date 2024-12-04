@@ -2,10 +2,11 @@
 
 import { createClient } from '@/utils/supabase/client'
 
-import { BlockMap, InfoBlockData } from '@/types/dbtypes'
+import { BlockMap, InfoBlockData, Template } from '@/types/dbtypes'
 
 const supabase = createClient()
 
+//done
 export const getCanvasByUserId = async (userId: string) => {
     const { data: canvas } = await supabase
         .from('canvas')
@@ -14,6 +15,7 @@ export const getCanvasByUserId = async (userId: string) => {
     return canvas
 }
 
+//done
 export const getBlock = async (canvas_id: string, blockMap: BlockMap) => {
     const { data: infoBlock, error } = await supabase
         .from('blocks')
@@ -29,6 +31,7 @@ export const getBlock = async (canvas_id: string, blockMap: BlockMap) => {
     return newBlockMap
 }
 
+//done
 export const addBlock = async (
     canvas_id: string,
     user_id: string,
@@ -56,6 +59,7 @@ export const addBlock = async (
     }
 }
 
+//done
 export const insertBlockLocation = async (
     canvas_id: string,
     block_id: string,
@@ -96,6 +100,8 @@ export const insertBlockLocation = async (
     }
 }
 
+//done
+//update the whole column
 export const updateBlockColumn = async (
     canvas_id: string,
     column: number,
@@ -142,6 +148,8 @@ export const getBlockMap = async (canvas_id: string) => {
     return columns
 }
 
+//done
+//delete block and its location info
 export const deleteBlock = async (
     canvas_id: string,
     block_id: string,
@@ -167,13 +175,7 @@ export const deleteBlock = async (
         console.log(current_list)
         const updated_list = current_list.filter((id) => id !== block_id)
         console.log(updated_list)
-        await supabase
-            .from('blockColumn')
-            .update({
-                blocks: updated_list,
-            })
-            .eq('canvas_id', canvas_id)
-            .eq('column', column)
+        updateBlockColumn(canvas_id, column, updated_list)
     }
 }
 
@@ -187,4 +189,46 @@ export const updateBlock = async (blockId: string, data: object) => {
     if (error) {
         console.error('Error updating block:', error)
     }
+}
+
+//done
+export const getTemplates = async () => {
+    const { data, error } = await supabase.from('templates').select('*')
+    if (error || !data) {
+        console.error('Error fetching templates:', error)
+        return
+    }
+    const templateList: Template[] = data
+    return data
+}
+
+export const addCanvas = async (user_id: string, name: string) => {
+    const { data, error } = await supabase
+        .from('canvas')
+        .insert([{ userId: user_id, name: name }])
+        .select()
+    if (error) {
+        console.error(error)
+        //toast.error('Error creating canvas')
+        return
+    }
+    await addDefaultColumns(data[0].id)
+    return data
+}
+
+export const addDefaultColumns = async (canvas_id: string) => {
+    const { data, error } = await supabase
+        .from('blockColumn')
+        .insert([
+            { column: 0, blocks: [], canvas_id: canvas_id },
+            { column: 1, blocks: [], canvas_id: canvas_id },
+        ])
+        .select()
+    if (error) {
+        console.error(error)
+        //toast.error('Error creating canvas')
+        return
+    }
+    console.log('added two columns for canvas: ' + canvas_id)
+    return data
 }

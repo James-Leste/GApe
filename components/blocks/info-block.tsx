@@ -1,6 +1,6 @@
 /** @format */
 import { Globe, Twitter, Github, Phone, Mail, Trash2, Edit } from 'lucide-react'
-import { InfoBlockData } from '@/components/blocks/blockType'
+import { InfoBlockData } from '@/types/dbtypes'
 
 export function InfoBlock_L({
     onBlockClick,

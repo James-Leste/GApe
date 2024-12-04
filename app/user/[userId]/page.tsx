@@ -17,6 +17,7 @@ import {
     HoverCardTrigger,
 } from '@/components/ui/hover-card'
 import { toast } from 'sonner'
+import { addCanvas } from '@/app/canvas/actions'
 
 export default function UserPage() {
     const supabase = createClient()
@@ -61,12 +62,8 @@ export default function UserPage() {
     }, [supabase])
 
     const createNewCanvas = async (id: string) => {
-        const { data, error } = await supabase
-            .from('canvas')
-            .insert([{ userId: id, name: canvasName }])
-            .select()
-        if (error) {
-            console.error(error)
+        const data = await addCanvas(id, canvasName)
+        if (!data) {
             toast.error('Error creating canvas')
             return
         }
@@ -139,11 +136,10 @@ export default function UserPage() {
                     </div>
                     {canvases.length > 0 && (
                         <CanvasList
-                          canvases={canvases}
-                          deleteCanvas={deleteCanvas}
+                            canvases={canvases}
+                            deleteCanvas={deleteCanvas}
                         />
                     )}
-                  
                 </div>
             </div>
         </div>
