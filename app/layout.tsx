@@ -34,12 +34,14 @@ export default function RootLayout({
             <body
                 className={`${geistSans.variable} ${geistMono.variable} antialiased w-full h-full`}
             >
-                <HeaderMenu>
-                    <UserInfo></UserInfo>
-                </HeaderMenu>
+                <div className='flex flex-col h-full'>
+                    <HeaderMenu>
+                        <UserInfo />
+                    </HeaderMenu>
+                    <div className='flex-grow'>{children}</div>
+                </div>
 
-                {children}
-                <Toaster closeButton />
+                {/* <Toaster closeButton /> */}
             </body>
         </html>
     )

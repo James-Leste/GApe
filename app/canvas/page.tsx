@@ -4,10 +4,8 @@ import React from 'react'
 
 const CanvasPage: React.FC = () => {
     return (
-        <div>
-            <div>
-                <App></App>
-            </div>
+        <div className='h-full'>
+            <App></App>
         </div>
     )
 }
