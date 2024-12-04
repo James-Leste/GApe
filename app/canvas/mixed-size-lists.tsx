@@ -9,104 +9,47 @@ import type { DropResult } from '@hello-pangea/dnd'
 import type { Quote, ItemMap } from './scripts/types'
 import { grid } from './scripts/constants'
 import { reorderQuoteMap } from './scripts/reorder'
-import {
-    Sheet,
-    SheetClose,
-    SheetContent,
-    SheetDescription,
-    SheetFooter,
-    SheetHeader,
-    SheetTitle,
-    SheetTrigger,
-} from '@/components/ui/sheet'
+
 import { Button } from '@/components/ui/button'
-import InfoBlock from '@/components/blocks/info'
+
 import { createClient } from '@/utils/supabase/client'
 import { User } from '@supabase/supabase-js'
-import { InfoBlock_L } from '@/components/blocks/info-block'
+import { InfoBlock_L, InfoBlock_M } from '@/components/blocks/info-block'
 
 import { InfoBlockData } from '@/components/blocks/blockType'
 
+const block_data: InfoBlockData = {
+    url: 'https://www.linkedin.com/in/john-smith-123456/',
+    name: 'John Dash',
+    image: 'https://s3.is-ali.tech/3ce276f382ff8edb74a24d8a2c872fa8.png',
+    x: '@IsJohn_Smith22',
+    email: 'example@mail.com',
+    phone: '+358 401234567',
+    github: '@John_Smith22',
+    linkedin: '@John_Smith22',
+    description:
+        "I'm a Software Developer and Aalto University graduate with expertise in building web and data-driven applications. I enjoy solving complex problems using technologies like Python, Java, and JavaScript. Let's connect and create something awesome together!",
+    type: 'Default type',
+    tags: ['Python', 'Java', 'JavaScript', 'Node.js'],
+}
+
 const initial: ItemType[] = [
     {
-        id: 'button',
+        id: '1',
         component: (
-            <div>
-                <InfoBlock></InfoBlock>
-            </div>
+            <InfoBlock_L
+                onBlockClick={() => {}}
+                block_data={block_data}
+            ></InfoBlock_L>
         ),
     },
     {
-        id: 'select',
+        id: '2',
         component: (
-            <select>
-                <option>Option 1</option>
-                <option>Option 2</option>
-                <option>Option 3</option>
-            </select>
-        ),
-    },
-    {
-        id: 'textarea',
-        component: <textarea placeholder='type some text here' />,
-    },
-    {
-        id: 'input',
-        component: (
-            <div>
-                <input type='text' placeholder='text input' />
-            </div>
-        ),
-    },
-    {
-        id: 'checkbox',
-        component: (
-            <div>
-                <label htmlFor='myCheckbox1'>
-                    <input id='myCheckbox1' type='checkbox' name='myCheckbox' />
-                    Checkbox 1
-                </label>
-                <br />
-                <label htmlFor='myCheckbox2'>
-                    <input id='myCheckbox2' type='checkbox' name='myCheckbox' />
-                    Checkbox 2
-                </label>
-            </div>
-        ),
-    },
-    {
-        id: 'radio',
-        component: (
-            <div>
-                <label htmlFor='myRadio'>
-                    <input id='myRadio1' type='radio' name='myRadio' />
-                    Option 1
-                </label>
-                <br />
-                <label htmlFor='myRadio'>
-                    <input id='myRadio2' type='radio' name='myRadio' />
-                    Option 2
-                </label>
-            </div>
-        ),
-    },
-    {
-        id: 'range',
-        component: <input type='range' min='1' max='100' />,
-    },
-    {
-        id: 'content editable',
-        component: (
-            <div
-                contentEditable
-                // eslint-disable-next-line react/no-danger
-                dangerouslySetInnerHTML={{
-                    __html: `
-              A content editable with
-              <strong>my super cool content</strong>
-            `,
-                }}
-            />
+            <InfoBlock_M
+                onBlockClick={() => {}}
+                block_data={block_data}
+            ></InfoBlock_M>
         ),
     },
 ]
@@ -119,6 +62,7 @@ interface ItemType {
 const Parent = styled.div`
     display: flex;
     flex-direction: row;
+    justify-content: center;
 `
 
 type Size = 'small' | 'large'
@@ -129,12 +73,8 @@ type Size = 'small' | 'large'
 // }
 
 const StyledItem = styled.div`
-    border: 2px solid ${colors.N100};
-    background: ${colors.G50};
-    padding: ${grid}px;
-    margin-bottom: ${grid}px;
     user-select: none;
-    width: 400px;
+    width: fit-content;
     height: fit-content;
     flex-shrink: 0;
     overflow-y: auto;
@@ -157,42 +97,29 @@ function Item({ item, index }: { item: ItemType; index: number }) {
     )
 }
 
-interface ListProps {
-    listId: string
-    quotes: Quote[]
-}
-
 const ListContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
 `
 
-const Controls = styled.div`
-    display: flex;
-    flex-direction: column;
-`
-
 interface StyledListProps {
     isDraggingOver: boolean
-    size: Size
 }
 
 const StyledList = styled.div<StyledListProps>`
     display: flex;
     flex-direction: column;
+    aligh-items: center;
+    align-content: center;
     border: 1px solid ${colors.N100};
-    margin: ${grid}px;
-    padding: ${grid}px;
-    box-sizing: border-box;
     background-color: ${(props) =>
         props.isDraggingOver ? colors.B100 : 'inherit'};
     height: 100%;
-    width: fit-content;
+    width: 24rem;
 `
 
 function List({ listId, items }: { listId: string; items: ItemType[] }) {
-    const [size, setSize] = useState<Size>('small')
     return (
         <ListContainer>
             <Droppable droppableId={listId} direction='vertical'>
@@ -201,7 +128,6 @@ function List({ listId, items }: { listId: string; items: ItemType[] }) {
                         {...provided.droppableProps}
                         ref={provided.innerRef}
                         isDraggingOver={snapshot.isDraggingOver}
-                        size={size}
                     >
                         {items.map((item: ItemType, index: number) => (
                             <Item key={item.id} item={item} index={index} />
@@ -233,21 +159,40 @@ export default function App() {
         getUser()
     }, [])
 
-    const showdata = async () => {
-        const { data: templates, error } = await supabase
-            .from('templates')
-            .select('*')
-        if (templates && templates.length > 0) {
-            console.log(templates[0].content)
-        } else {
-            console.log('No templates found')
-        }
-    }
+    const selections: ReactNode[] = [
+        <InfoBlock_L
+            onBlockClick={() =>
+                addItem('column-0', {
+                    id: (Math.random() + 1).toString(36).substring(7),
+                    component: (
+                        <InfoBlock_L
+                            onBlockClick={() => {}}
+                            block_data={block_data}
+                        ></InfoBlock_L>
+                    ),
+                })
+            }
+            block_data={block_data}
+        ></InfoBlock_L>,
+        <InfoBlock_M
+            onBlockClick={() =>
+                addItem('column-0', {
+                    id: (Math.random() + 1).toString(36).substring(7),
+                    component: (
+                        <InfoBlock_M
+                            onBlockClick={() => {}}
+                            block_data={block_data}
+                        ></InfoBlock_M>
+                    ),
+                })
+            }
+            block_data={block_data}
+        ></InfoBlock_M>,
+    ]
 
     const [columns, setColumns] = useState<ItemMap>({
-        ['column-0']: [],
-        ['column-1']: [],
-        ['column-2']: [],
+        ['column-0']: [initial[0]],
+        ['column-1']: [initial[1]],
     })
 
     //const ordered = ['Finn', 'Jake', 'Princess bubblegum', 'BMO']
@@ -260,6 +205,7 @@ export default function App() {
         }
         setColumns(newColumn)
     }
+
     const getShortestColumn = (columns: ItemMap) => {
         let minLength = Infinity
         let shortestColumn = ''
@@ -318,81 +264,65 @@ export default function App() {
 
         setColumns(newColumns.itemMap)
     }
-    const block_data: InfoBlockData = {
-        url: 'https://www.linkedin.com/in/john-smith-123456/',
-        name: 'John Dash',
-        image: 'https://s3.is-ali.tech/3ce276f382ff8edb74a24d8a2c872fa8.png',
-        x: '@IsJohn_Smith22',
-        email: 'example@mail.com',
-        phone: '+358 401234567',
-        github: '@John_Smith22',
-        linkedin: '@John_Smith22',
-        description:
-            "I'm a Software Developer and Aalto University graduate with expertise in building web and data-driven applications. I enjoy solving complex problems using technologies like Python, Java, and JavaScript. Let's connect and create something awesome together!",
-        type: 'Default type',
-        tags: ['Python', 'Java', 'JavaScript', 'React', 'Node.js'],
-    }
 
     return (
-        <>
-            <DragDropContext onDragEnd={onDragEnd}>
-                {Object.keys(columns).length != 0 ? (
-                    <Parent>
-                        {ordered.map((key: string) => (
-                            <List listId={key} items={columns[key]} key={key} />
-                        ))}
-                    </Parent>
-                ) : null}
-            </DragDropContext>
-            <div>{user ? user.email : 'loading'}</div>
-            <div>
-                <Sheet key='bottom' modal={false}>
-                    <SheetTrigger asChild>
-                        <Button variant='outline'>bottom</Button>
-                    </SheetTrigger>
-                    <SheetContent side='bottom' className='bg-white'>
-                        <SheetHeader>
-                            <SheetTitle>Choose your block</SheetTitle>
-                            <SheetDescription>
-                                Make changes to your profile here.
-                            </SheetDescription>
-                        </SheetHeader>
-
-                        <div className='flex flex-row gap-5'>
-                            <Button onClick={addColumn}>add a column</Button>
-                            <Button
-                                onClick={() =>
-                                    addItem('column-0', {
-                                        id: (Math.random() + 1)
-                                            .toString(36)
-                                            .substring(7),
-                                        component: (
-                                            <InfoBlock_L
-                                                onBlockClick={() => {}}
-                                                block_data={block_data}
-                                            ></InfoBlock_L>
-                                        ),
-                                    })
-                                }
-                            >
-                                add an item
-                            </Button>
-                            <Button onClick={() => console.log(columns)}>
-                                3
-                            </Button>
-                            <Button
-                                onClick={() => addItem('column-0', initial[1])}
-                            >
-                                4
-                            </Button>
-                            <Button onClick={showdata}>5</Button>
-                            <Button>6</Button>
-                        </div>
-
-                        <SheetFooter></SheetFooter>
-                    </SheetContent>
-                </Sheet>
+        <div className='flex h-full'>
+            <div className='flex-shrink-0 flex-grow bg-gray-200'></div>
+            <div className='flex flex-shrink-0 w-[75rem]'>
+                <div className='bg-blue-500 w-[50rem]'>
+                    <DragDropContext onDragEnd={onDragEnd}>
+                        {Object.keys(columns).length != 0 ? (
+                            <Parent>
+                                {ordered.map((key: string) => (
+                                    <List
+                                        listId={key}
+                                        items={columns[key]}
+                                        key={key}
+                                    />
+                                ))}
+                            </Parent>
+                        ) : null}
+                    </DragDropContext>
+                </div>
+                <div className='bg-green-500 w-[25rem]'>
+                    {selections.map((selection, index) => (
+                        <>{selection}</>
+                    ))}
+                </div>
             </div>
-        </>
+
+            {/* 
+
+            <div className='col-span-1 bg-red-20 flex flex-col'>
+                <div>Choose your block</div>
+
+                <div>Make changes to your profile here.</div>
+
+                <Button onClick={addColumn}>add a column</Button>
+                <Button
+                    onClick={() =>
+                        addItem('column-0', {
+                            id: (Math.random() + 1).toString(36).substring(7),
+                            component: (
+                                <InfoBlock_L
+                                    onBlockClick={() => {}}
+                                    block_data={block_data}
+                                ></InfoBlock_L>
+                            ),
+                        })
+                    }
+                >
+                    add an item
+                </Button>
+                <Button onClick={() => console.log(columns)}>3</Button>
+                <Button onClick={() => addItem('column-0', initial[1])}>
+                    4
+                </Button>
+                <Button onClick={showdata}>5</Button>
+                <Button>6</Button>
+            </div> */}
+
+            <div className='flex-shrink-0 flex-grow bg-gray-200'></div>
+        </div>
     )
 }

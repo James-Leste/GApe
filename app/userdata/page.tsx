@@ -12,7 +12,7 @@ import {
     getBlock,
     addBlock,
     deleteBlock,
-    getBlockColumn,
+    getBlockMap,
 } from './actions'
 import {
     Sheet,
@@ -36,7 +36,7 @@ const UserDataPage: React.FC = () => {
     // all the canvas
     const [canvas, setCanvas] = useState<Canvas[] | null>([])
     // all the blocks based on canvas_id
-    const [blockMap, setBlockMap] = useState<BlockMap>(new Map())
+    const [blocks, setBlocks] = useState<BlockMap>(new Map())
     // all the templates
     const [templates, setTemplates] = useState<Template[]>([])
     // current template
@@ -85,8 +85,13 @@ const UserDataPage: React.FC = () => {
 
     const showBlock = async (canvas_id: string) => {
         const newBlockMap: BlockMap =
-            (await getBlock(canvas_id, blockMap)) ?? new Map()
-        setBlockMap(newBlockMap)
+            (await getBlock(canvas_id, blocks)) ?? new Map()
+        setBlocks(newBlockMap)
+    }
+
+    const showBlockMap = async (canvas_id: string) => {
+        const data = await getBlockMap(canvas_id)
+        console.log(data)
     }
 
     return (
@@ -99,7 +104,7 @@ const UserDataPage: React.FC = () => {
             </div>
             <div>
                 <Button onClick={showCanvas}>Show Canvas</Button>
-                <Button onClick={() => console.log(blockMap)}>
+                <Button onClick={() => console.log(blocks)}>
                     Show BlockMap
                 </Button>
             </div>
@@ -111,8 +116,9 @@ const UserDataPage: React.FC = () => {
                             <Button
                                 onClick={async () => {
                                     await showBlock(item.id)
-                                    //console.log(blockMap.get(item.id))
-                                    await getBlockColumn(item.id, 0)
+                                    //console.log(blocks.get(item.id))
+                                    //await getBlockColumn(item.id, 0)]
+                                    await showBlockMap(item.id)
                                 }}
                             >
                                 Canvas name: {item.name}
@@ -198,10 +204,10 @@ const UserDataPage: React.FC = () => {
                             </Sheet>
 
                             <div>
-                                {blockMap.get(item.id)?.length === 0 ? (
+                                {blocks.get(item.id)?.length === 0 ? (
                                     <p>No blocks</p>
                                 ) : (
-                                    blockMap.get(item.id)?.map((block) => (
+                                    blocks.get(item.id)?.map((block) => (
                                         <div key={block.id}>
                                             <p>{block.id}</p>
                                             <Button

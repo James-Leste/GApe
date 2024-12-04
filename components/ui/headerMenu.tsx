@@ -34,7 +34,7 @@ function ToolBar() {
             </div>
 
             <Tabs value='pc'>
-                <TabsList  className='grid w-full grid-cols-3'>
+                <TabsList className='grid w-full grid-cols-3'>
                     <TabsTrigger value='pc'>
                         <Laptop className='h-4 w-4' />
                     </TabsTrigger>
@@ -63,7 +63,9 @@ function ToolBar() {
 export default function HeaderMenu({ children }: HeaderMenuProps) {
     const pathname = usePathname()
     const isCanvasPage =
-        pathname === '/canvas' || pathname.startsWith('/canvas/edit') || pathname.startsWith('/blocks')
+        pathname === '/canvas' ||
+        pathname.startsWith('/canvas/edit') ||
+        pathname.startsWith('/blocks')
     const isSharePage = pathname.startsWith('/canvas/share')
 
     return (
@@ -75,7 +77,7 @@ export default function HeaderMenu({ children }: HeaderMenuProps) {
                             <a href='/'>GApe</a>
                         </div>
                     </div>
-                    {isCanvasPage && <ToolBar />}
+                    {/* {isCanvasPage && <ToolBar />} */}
                     {isSharePage && (
                         <div className='flex w-full justify-end'>
                             <Share />
