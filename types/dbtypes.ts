@@ -38,7 +38,6 @@ export interface Block {
 }
 
 export interface InfoBlockData {
-    id: string
     type: string
     name: string
     description: string
@@ -49,10 +48,10 @@ export interface InfoBlockData {
     github: string
     linkedin: string
     x: string
+    tags: string[]
 }
 
 export interface EduBlockData {
-    id: string
     type: string
     institutionName: string
     location: string
