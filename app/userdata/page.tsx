@@ -110,18 +110,18 @@ const UserDataPage: React.FC = () => {
             </div>
             <div className='border-solid border-2 border-black w-fit'>
                 <h1>Canvas</h1>
-                {canvas?.map((item) => (
-                    <div key={item.id} className='m-5'>
+                {canvas?.map((canvas) => (
+                    <div key={canvas.id} className='m-5'>
                         <div>
                             <Button
                                 onClick={async () => {
-                                    await showBlock(item.id)
+                                    await showBlock(canvas.id)
                                     //console.log(blocks.get(item.id))
                                     //await getBlockColumn(item.id, 0)]
-                                    await showBlockMap(item.id)
+                                    await showBlockMap(canvas.id)
                                 }}
                             >
-                                Canvas name: {item.name}
+                                Canvas name: {canvas.name}
                             </Button>
                             <Sheet>
                                 <SheetTrigger asChild>
@@ -157,11 +157,11 @@ const UserDataPage: React.FC = () => {
                                             )
                                             if (user?.id) {
                                                 await addBlock(
-                                                    item.id,
+                                                    canvas.id,
                                                     user.id,
                                                     selectedTemplateId,
-                                                    formObject
-                                                    //Number(formObject.column)
+                                                    formObject,
+                                                    Number(formObject.column)
                                                 )
                                             } else {
                                                 console.error(
@@ -173,22 +173,22 @@ const UserDataPage: React.FC = () => {
                                             // }
                                         }}
                                     >
-                                        {selectedTemplate.map((item) => (
+                                        {selectedTemplate.map((template_id) => (
                                             <div
                                                 className='grid grid-cols-6 items-center gap-1'
-                                                key={item}
+                                                key={template_id}
                                             >
                                                 <Label
-                                                    htmlFor={item}
+                                                    htmlFor={template_id}
                                                     className='overflow-hidden col-span-2'
                                                 >
-                                                    {item.toUpperCase()}
+                                                    {template_id.toUpperCase()}
                                                 </Label>
                                                 <Input
-                                                    id={item}
+                                                    id={template_id}
                                                     className='col-span-4'
                                                     type='text'
-                                                    name={item}
+                                                    name={template_id}
                                                 />
                                             </div>
                                         ))}
@@ -204,17 +204,21 @@ const UserDataPage: React.FC = () => {
                             </Sheet>
 
                             <div>
-                                {blocks.get(item.id)?.length === 0 ? (
+                                {blocks.get(canvas.id)?.length === 0 ? (
                                     <p>No blocks</p>
                                 ) : (
-                                    blocks.get(item.id)?.map((block) => (
+                                    blocks.get(canvas.id)?.map((block) => (
                                         <div key={block.id}>
                                             <p>{block.id}</p>
                                             <Button
                                                 onClick={() => {
                                                     //console.log(block.id)
-                                                    deleteBlock(block.id)
-                                                    showBlock(item.id)
+                                                    deleteBlock(
+                                                        canvas.id,
+                                                        block.id,
+                                                        Number(block.column)
+                                                    )
+                                                    showBlock(canvas.id)
                                                 }}
                                             >
                                                 delete
