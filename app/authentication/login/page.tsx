@@ -12,13 +12,10 @@ import { toast } from 'sonner'
 import { createClient } from '@/utils/supabase/client'
 import { User } from '@supabase/supabase-js'
 
-
 export default function LoginPage() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [user, setUser] = useState<User | null>(null)
-
-
 
     const router = useRouter()
     function toRegister() {
@@ -28,14 +25,14 @@ export default function LoginPage() {
         const response = await emailLogin(formData)
         if (response.success) {
             toast.success(response.message)
-         
+
             const supabase = createClient()
             const { data, error } = await supabase.auth.getUser()
             if (error) {
                 console.error(error)
                 return
-            }   router.push('/user/'+data.user?.id)
-
+            }
+            router.push('/user/' + data.user?.id)
         } else {
             toast.error(response.message)
         }

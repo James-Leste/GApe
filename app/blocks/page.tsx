@@ -181,7 +181,7 @@ export default function Blocks() {
 
     return (
         <div className='p-4 h-full print:p-0'>
-            <div className='h-4/6 w-full grid grid-cols-3 gap-4 print:grid-cols-2' >
+            <div className='h-4/6 w-full grid grid-cols-3 gap-4 print:grid-cols-2'>
                 {selectedBlocks.map((block) => renderBlock(block))}
             </div>
 
