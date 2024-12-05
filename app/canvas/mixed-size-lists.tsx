@@ -27,10 +27,21 @@ import {
     InfoBlockData,
 } from '@/types/dbtypes'
 
-import { info_block_data, edu_block_data } from './default'
+import customSheet, { info_block_data, edu_block_data } from './default'
 
 import { EduBlock_L, EduBlock_M } from '@/components/blocks/edu-block'
 import { InfoBlock_L, InfoBlock_M } from '@/components/blocks/info-block'
+import {
+    Sheet,
+    SheetClose,
+    SheetContent,
+    SheetDescription,
+    SheetFooter,
+    SheetHeader,
+    SheetTitle,
+    SheetTrigger,
+} from '@/components/ui/sheet'
+import { Input } from '@/components/ui/input'
 
 const Parent = styled.div`
     display: flex;
@@ -115,6 +126,11 @@ export default function App({ canvas_id }: { canvas_id: string }) {
     const [templates, setTemplates] = useState<ItemType[]>([])
     const [columns, setColumns] = useState<ItemMap>({})
     const ordered = useMemo(() => Object.keys(columns), [columns])
+    const [isEditsheetOpen, setIsEditsheetOpen] = useState<boolean>(false)
+    const [selectedTemplate, setSelectedTemplate] = useState<string[]>([])
+    const [selectedContent, setSelectedContent] = useState<
+        InfoBlockData | EduBlockData | null
+    >(null)
     useEffect(() => {
         const getUser = () => {
             supabase.auth.getUser().then(({ data, error }) => {
@@ -134,6 +150,7 @@ export default function App({ canvas_id }: { canvas_id: string }) {
         initMap(canvas_id)
     }, [])
 
+    //load block from database to local state
     const initMap = async (canvas_id: string) => {
         const data = await getBlockMap(canvas_id)
         if (data) {
@@ -150,8 +167,6 @@ export default function App({ canvas_id }: { canvas_id: string }) {
                 [column1.id]: [],
                 [column2.id]: [],
             }
-            console.log(column1.blocks)
-            console.log(column2.blocks)
 
             const fetchBlocks = async (
                 blockIds: string[],
@@ -166,14 +181,46 @@ export default function App({ canvas_id }: { canvas_id: string }) {
                                 block.content as InfoBlockData
                             switch (block.template_name) {
                                 case 'Info':
-                                    return {
-                                        id: block.id,
-                                        component: (
-                                            <InfoBlock_L
-                                                onBlockClick={() => {}}
-                                                block_data={content}
-                                            ></InfoBlock_L>
-                                        ),
+                                    if (block.isBig) {
+                                        return {
+                                            id: block.id,
+                                            component: (
+                                                <InfoBlock_L
+                                                    onBlockClick={() => {
+                                                        setSelectedTemplate(
+                                                            Object.keys(content)
+                                                        )
+                                                        setSelectedContent(
+                                                            content
+                                                        )
+                                                        setIsEditsheetOpen(true)
+                                                        //console.log(content)
+                                                    }}
+                                                    block_data={content}
+                                                ></InfoBlock_L>
+                                            ),
+                                        }
+                                    } else {
+                                        return {
+                                            id: block.id,
+                                            component: (
+                                                <InfoBlock_M
+                                                    onBlockClick={() => {
+                                                        setSelectedTemplate(
+                                                            Object.keys(
+                                                                block.content
+                                                            )
+                                                        )
+                                                        setSelectedContent(
+                                                            content
+                                                        )
+                                                        setIsEditsheetOpen(true)
+                                                        //console.log(content)
+                                                    }}
+                                                    block_data={content}
+                                                ></InfoBlock_M>
+                                            ),
+                                        }
                                     }
                             }
                         }
@@ -187,48 +234,6 @@ export default function App({ canvas_id }: { canvas_id: string }) {
                 fetchBlocks(column1.blocks, column1.id),
                 fetchBlocks(column2.blocks, column2.id),
             ])
-
-            // column1.blocks.forEach(async (block_id) => {
-            //     const data: Block = await getBlockById(block_id)
-            //     //console.log(data.length)
-            //     if (data) {
-            //         const block: Block = data
-            //         const content: InfoBlockData =
-            //             block.content as InfoBlockData
-            //         switch (block.template_name) {
-            //             case 'Info':
-            //                 columns[column1.id].push({
-            //                     id: block.id,
-            //                     component: (
-            //                         <InfoBlock_L
-            //                             onBlockClick={() => {}}
-            //                             block_data={content}
-            //                         ></InfoBlock_L>
-            //                     ),
-            //                 })
-            //         }
-            //     }
-            // })
-            // column2.blocks.forEach(async (block_id) => {
-            //     const data: Block = await getBlockById(block_id)
-            //     if (data) {
-            //         const block: Block = data
-            //         const content: InfoBlockData =
-            //             block.content as InfoBlockData
-            //         switch (block.template_name) {
-            //             case 'Info':
-            //                 columns[column2.id].push({
-            //                     id: block.id,
-            //                     component: (
-            //                         <InfoBlock_L
-            //                             onBlockClick={() => {}}
-            //                             block_data={content}
-            //                         ></InfoBlock_L>
-            //                     ),
-            //                 })
-            //         }
-            //     }
-            // })
             console.log(columns)
             setColumns(columns)
         }
@@ -374,6 +379,87 @@ export default function App({ canvas_id }: { canvas_id: string }) {
 
     return (
         <div className='flex h-full'>
+            <Sheet
+                modal={true}
+                defaultOpen={false}
+                onOpenChange={setIsEditsheetOpen}
+                open={isEditsheetOpen}
+            >
+                <SheetContent className='overflow-y-auto max-h-screen'>
+                    <SheetHeader>
+                        <SheetTitle>Set values</SheetTitle>
+                        <SheetDescription>
+                            Customize your block
+                        </SheetDescription>
+                    </SheetHeader>
+                    <form
+                        className='grid gap-4 py-4'
+                        onSubmit={async (e) => {
+                            e.preventDefault()
+                            const formData = new FormData(e.currentTarget)
+                            const formObject = Object.fromEntries(
+                                formData.entries()
+                            )
+
+                            console.log(JSON.stringify(formObject, null, 2))
+
+                            // if (user?.id) {
+                            //     await addBlock(
+                            //         canvas.id,
+                            //         user.id,
+                            //         selectedTemplateId,
+                            //         formObject,
+                            //         Number(formObject.column),
+                            //         'Info'
+                            //     )
+                            // } else {
+                            //     console.error(
+                            //         'User ID is undefined'
+                            //     )
+                            // }
+                            // if (user?.id) {
+                            //     addBlock(item.id, user.id, )
+                            // }
+                        }}
+                    >
+                        {selectedTemplate.map((template_id) => {
+                            return (
+                                <div
+                                    className='grid grid-cols-6 items-center gap-1'
+                                    key={template_id}
+                                >
+                                    <Label
+                                        htmlFor={template_id}
+                                        className='overflow-hidden col-span-2'
+                                    >
+                                        {template_id.toUpperCase()}
+                                    </Label>
+                                    <Input
+                                        id={template_id}
+                                        className='col-span-4'
+                                        type='text'
+                                        name={template_id}
+                                        defaultValue={
+                                            (
+                                                selectedContent as Record<
+                                                    string,
+                                                    any
+                                                >
+                                            )?.[template_id]
+                                        }
+                                    />
+                                </div>
+                            )
+                        })}
+                        <SheetFooter>
+                            <SheetClose asChild>
+                                <Button type='submit'>Save changes</Button>
+                            </SheetClose>
+                        </SheetFooter>
+                    </form>
+                </SheetContent>
+            </Sheet>
+
             <div className='flex-shrink-0 flex-grow bg-gray-200'></div>
             <div className='flex flex-shrink-0 w-[75rem]'>
                 <div className='bg-blue-500 w-[50rem]'>

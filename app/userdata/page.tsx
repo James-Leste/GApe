@@ -161,7 +161,8 @@ const UserDataPage: React.FC = () => {
                                                     user.id,
                                                     selectedTemplateId,
                                                     formObject,
-                                                    Number(formObject.column)
+                                                    Number(formObject.column),
+                                                    'Info'
                                                 )
                                             } else {
                                                 console.error(

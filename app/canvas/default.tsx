@@ -1,7 +1,22 @@
 /** @format */
 
 import { InfoBlock_L, InfoBlock_M } from '@/components/blocks/info-block'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import {
+    Sheet,
+    SheetClose,
+    SheetContent,
+    SheetDescription,
+    SheetFooter,
+    SheetHeader,
+    SheetTitle,
+    SheetTrigger,
+} from '@/components/ui/sheet'
 import { EduBlockData, InfoBlockData, ItemType } from '@/types/dbtypes'
+import { User } from '@supabase/supabase-js'
+import { ReactNode } from 'react'
+import { Button } from 'react-day-picker'
 
 export const info_block_data: InfoBlockData = {
     id: '1',
@@ -57,6 +72,80 @@ export const initial: ItemType[] = [
         ),
     },
 ]
+
+export default function customSheet({
+    selectedTemplate,
+    user,
+    component,
+}: {
+    selectedTemplate: string[]
+    user: User
+    component: ReactNode
+}) {
+    return (
+        <Sheet>
+            <SheetTrigger asChild>{component}</SheetTrigger>
+            <SheetContent>
+                <SheetHeader>
+                    <SheetTitle>Set values</SheetTitle>
+                    <SheetDescription>Customize your block</SheetDescription>
+                </SheetHeader>
+                <form
+                    className='grid gap-4 py-4'
+                    onSubmit={async (e) => {
+                        e.preventDefault()
+                        const formData = new FormData(e.currentTarget)
+                        const formObject = Object.fromEntries(
+                            formData.entries()
+                        )
+
+                        console.log(JSON.stringify(formObject, null, 2))
+                        if (user?.id) {
+                            // await addBlock(
+                            //     canvas.id,
+                            //     user.id,
+                            //     selectedTemplateId,
+                            //     formObject,
+                            //     Number(formObject.column),
+                            //     'Info'
+                            // )
+                        } else {
+                            console.error('User ID is undefined')
+                        }
+                        // if (user?.id) {
+                        //     addBlock(item.id, user.id, )
+                        // }
+                    }}
+                >
+                    {selectedTemplate.map((template_id) => (
+                        <div
+                            className='grid grid-cols-6 items-center gap-1'
+                            key={template_id}
+                        >
+                            <Label
+                                htmlFor={template_id}
+                                className='overflow-hidden col-span-2'
+                            >
+                                {template_id.toUpperCase()}
+                            </Label>
+                            <Input
+                                id={template_id}
+                                className='col-span-4'
+                                type='text'
+                                name={template_id}
+                            />
+                        </div>
+                    ))}
+                    <SheetFooter>
+                        <SheetClose asChild>
+                            <Button type='submit'>Save changes</Button>
+                        </SheetClose>
+                    </SheetFooter>
+                </form>
+            </SheetContent>
+        </Sheet>
+    )
+}
 
 // export const selections: ReactNode[] = [
 //     <InfoBlock_L
