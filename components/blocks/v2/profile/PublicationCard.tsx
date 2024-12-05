@@ -23,12 +23,36 @@ export const PublicationBlock_L: React.FC<PublicationCardProps> = ({
                     </div>
                 </div>
                 <div className='flex gap-1 items-center self-stretch my-auto w-4'>
-                    <img
-                        loading='lazy'
-                        src='https://cdn.builder.io/api/v1/image/assets/TEMP/463dea923f5e8d5a241ac8023375b011bffa4234e0ffc74a300c03dd76d90f49?placeholderIfAbsent=true&apiKey=cf0d30cc7fd245a4886607b2fdd26b2b'
+                    <svg
+                        width='16'
+                        height='16'
+                        viewBox='0 0 48 48'
+                        fill='none'
+                        xmlns='http://www.w3.org/2000/svg'
                         className='object-contain self-stretch my-auto w-4 aspect-square'
-                        alt=''
-                    />
+                    >
+                        <path
+                            d='M28 6H42V20'
+                            stroke='#254d3e'
+                            stroke-width='4'
+                            stroke-linecap='round'
+                            stroke-linejoin='round'
+                        />
+                        <path
+                            d='M42 29.4737V39C42 40.6569 40.6569 42 39 42H9C7.34315 42 6 40.6569 6 39V9C6 7.34315 7.34315 6 9 6L18 6'
+                            stroke='#254d3e'
+                            stroke-width='4'
+                            stroke-linecap='round'
+                            stroke-linejoin='round'
+                        />
+                        <path
+                            d='M25.7998 22.1999L41.0998 6.8999'
+                            stroke='#254d3e'
+                            stroke-width='4'
+                            stroke-linecap='round'
+                            stroke-linejoin='round'
+                        />
+                    </svg>
                 </div>
             </div>
             <div className='flex flex-col mt-1 w-full'>
@@ -54,12 +78,57 @@ export const PublicationBlock_L: React.FC<PublicationCardProps> = ({
                 <div className='flex gap-1.5 items-center self-stretch my-auto min-w-[240px]'>
                     <div className='flex flex-col items-start self-stretch my-auto min-w-[240px]'>
                         <div className='flex gap-1 items-center'>
-                            <img
-                                loading='lazy'
-                                src='https://cdn.builder.io/api/v1/image/assets/TEMP/9d6a953de997106f12d356c2a42f4997add528afc9f05c06b4d2231be36d6c24?placeholderIfAbsent=true&apiKey=cf0d30cc7fd245a4886607b2fdd26b2b'
+                            <svg
                                 className='object-contain shrink-0 self-stretch my-auto w-4 aspect-square'
-                                alt=''
-                            />
+                                width='16'
+                                height='16'
+                                viewBox='0 0 48 48'
+                                fill='none'
+                                xmlns='http://www.w3.org/2000/svg'
+                            >
+                                <path
+                                    d='M8 6C8 4.89543 8.89543 4 10 4H38C39.1046 4 40 4.89543 40 6V42C40 43.1046 39.1046 44 38 44H10C8.89543 44 8 43.1046 8 42V6Z'
+                                    fill='none'
+                                    stroke='#254d3e'
+                                    stroke-width='4'
+                                    stroke-linejoin='round'
+                                />
+                                <path
+                                    d='M16 4V44'
+                                    stroke='#254d3e'
+                                    stroke-width='4'
+                                    stroke-linecap='round'
+                                    stroke-linejoin='round'
+                                />
+                                <path
+                                    d='M24 12H32'
+                                    stroke='#254d3e'
+                                    stroke-width='4'
+                                    stroke-linecap='round'
+                                    stroke-linejoin='round'
+                                />
+                                <path
+                                    d='M24 20H32'
+                                    stroke='#254d3e'
+                                    stroke-width='4'
+                                    stroke-linecap='round'
+                                    stroke-linejoin='round'
+                                />
+                                <path
+                                    d='M10 4H22'
+                                    stroke='#254d3e'
+                                    stroke-width='4'
+                                    stroke-linecap='round'
+                                    stroke-linejoin='round'
+                                />
+                                <path
+                                    d='M10 44H22'
+                                    stroke='#254d3e'
+                                    stroke-width='4'
+                                    stroke-linecap='round'
+                                    stroke-linejoin='round'
+                                />
+                            </svg>
                             <div className='self-stretch my-auto'>
                                 {journal}
                             </div>
@@ -90,12 +159,36 @@ export const PublicationBlock_M: React.FC<PublicationCardProps> = ({
                     </div>
                 </div>
                 <div className='flex gap-1 items-center self-stretch my-auto w-4'>
-                    <img
-                        loading='lazy'
-                        src='https://cdn.builder.io/api/v1/image/assets/TEMP/463dea923f5e8d5a241ac8023375b011bffa4234e0ffc74a300c03dd76d90f49?placeholderIfAbsent=true&apiKey=cf0d30cc7fd245a4886607b2fdd26b2b'
+                    <svg
+                        width='16'
+                        height='16'
+                        viewBox='0 0 48 48'
+                        fill='none'
+                        xmlns='http://www.w3.org/2000/svg'
                         className='object-contain self-stretch my-auto w-4 aspect-square'
-                        alt=''
-                    />
+                    >
+                        <path
+                            d='M28 6H42V20'
+                            stroke='#254d3e'
+                            stroke-width='4'
+                            stroke-linecap='round'
+                            stroke-linejoin='round'
+                        />
+                        <path
+                            d='M42 29.4737V39C42 40.6569 40.6569 42 39 42H9C7.34315 42 6 40.6569 6 39V9C6 7.34315 7.34315 6 9 6L18 6'
+                            stroke='#254d3e'
+                            stroke-width='4'
+                            stroke-linecap='round'
+                            stroke-linejoin='round'
+                        />
+                        <path
+                            d='M25.7998 22.1999L41.0998 6.8999'
+                            stroke='#254d3e'
+                            stroke-width='4'
+                            stroke-linecap='round'
+                            stroke-linejoin='round'
+                        />
+                    </svg>
                 </div>
             </div>
             <div className='flex flex-col mt-1 w-full'>
@@ -111,12 +204,58 @@ export const PublicationBlock_M: React.FC<PublicationCardProps> = ({
                 <div className='flex gap-1.5 items-center self-stretch my-auto min-w-[240px]'>
                     <div className='flex flex-col items-start self-stretch my-auto min-w-[240px]'>
                         <div className='flex gap-1 items-center'>
-                            <img
-                                loading='lazy'
-                                src='https://cdn.builder.io/api/v1/image/assets/TEMP/9d6a953de997106f12d356c2a42f4997add528afc9f05c06b4d2231be36d6c24?placeholderIfAbsent=true&apiKey=cf0d30cc7fd245a4886607b2fdd26b2b'
+                            <svg
                                 className='object-contain shrink-0 self-stretch my-auto w-4 aspect-square'
-                                alt=''
-                            />
+                                width='16'
+                                height='16'
+                                viewBox='0 0 48 48'
+                                fill='none'
+                                xmlns='http://www.w3.org/2000/svg'
+                            >
+                                <path
+                                    d='M8 6C8 4.89543 8.89543 4 10 4H38C39.1046 4 40 4.89543 40 6V42C40 43.1046 39.1046 44 38 44H10C8.89543 44 8 43.1046 8 42V6Z'
+                                    fill='none'
+                                    stroke='#254d3e'
+                                    stroke-width='4'
+                                    stroke-linejoin='round'
+                                />
+                                <path
+                                    d='M16 4V44'
+                                    stroke='#254d3e'
+                                    stroke-width='4'
+                                    stroke-linecap='round'
+                                    stroke-linejoin='round'
+                                />
+                                <path
+                                    d='M24 12H32'
+                                    stroke='#254d3e'
+                                    stroke-width='4'
+                                    stroke-linecap='round'
+                                    stroke-linejoin='round'
+                                />
+                                <path
+                                    d='M24 20H32'
+                                    stroke='#254d3e'
+                                    stroke-width='4'
+                                    stroke-linecap='round'
+                                    stroke-linejoin='round'
+                                />
+                                <path
+                                    d='M10 4H22'
+                                    stroke='#254d3e'
+                                    stroke-width='4'
+                                    stroke-linecap='round'
+                                    stroke-linejoin='round'
+                                />
+                                <path
+                                    d='M10 44H22'
+                                    stroke='#254d3e'
+                                    stroke-width='4'
+                                    stroke-linecap='round'
+                                    stroke-linejoin='round'
+                                />
+                            </svg>
+
                             <div className='self-stretch my-auto'>
                                 {journal}
                             </div>
