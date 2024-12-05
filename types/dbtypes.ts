@@ -2,6 +2,14 @@
 
 import { ReactNode } from 'react'
 
+export interface blockColumn {
+    id: string
+    canvas_id: string
+    column: number
+    blocks: string[]
+    create_at: string
+}
+
 export interface ItemType {
     id: string
     component: ReactNode
@@ -34,10 +42,12 @@ export interface Block {
     template_id: string
     content: InfoBlockData | EduBlockData
     column: number
-    location: number
+    template_name: string
+    isBig: boolean
 }
 
 export interface InfoBlockData {
+    id: string
     type: string
     name: string
     description: string
@@ -52,6 +62,7 @@ export interface InfoBlockData {
 }
 
 export interface EduBlockData {
+    id: string
     type: string
     institutionName: string
     location: string

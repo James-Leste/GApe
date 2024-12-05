@@ -1,15 +1,15 @@
-import Link from 'next/link'
-import { Button } from '@/components/ui/button'
+/** @format */
 
-export default function EditCanvasPage({ params }: { params: { canvasId: string } }) {
-  return (
-    <div className="container mx-auto p-4 space-y-8">
-      <div className="flex justify-between items-center">
-        <h1 className="text-3xl font-bold">Edit Canvas</h1>
-      </div>
-      <p className="text-xl">Editing canvas with ID: {params.canvasId}</p>
-      {/* Add your canvas editing interface here */}
-    </div>
-  )
+import App from '@/app/canvas/mixed-size-lists'
+
+export default function EditCanvasPage({
+    params,
+}: {
+    params: { canvasId: string }
+}) {
+    return (
+        <div className='h-full'>
+            <App canvas_id={params.canvasId}></App>
+        </div>
+    )
 }
-

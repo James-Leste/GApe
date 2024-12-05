@@ -4,6 +4,7 @@ import { InfoBlock_L, InfoBlock_M } from '@/components/blocks/info-block'
 import { EduBlockData, InfoBlockData, ItemType } from '@/types/dbtypes'
 
 export const info_block_data: InfoBlockData = {
+    id: '1',
     url: 'https://www.linkedin.com/in/john-smith-123456/',
     name: 'John Dash',
     image: 'https://s3.is-ali.tech/3ce276f382ff8edb74a24d8a2c872fa8.png',
@@ -19,6 +20,7 @@ export const info_block_data: InfoBlockData = {
 }
 
 export const edu_block_data: EduBlockData = {
+    id: '1',
     type: 'Education',
     institutionName: 'Aalto University',
     location: 'Espoo, Finland',

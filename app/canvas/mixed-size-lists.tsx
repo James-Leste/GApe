@@ -6,71 +6,37 @@ import React, { ReactNode, useEffect, useState } from 'react'
 import { useMemo } from 'react'
 import { DragDropContext, Draggable, Droppable } from '@hello-pangea/dnd'
 import type { DropResult } from '@hello-pangea/dnd'
-import type { Quote, ItemMap } from './scripts/types'
-import { grid } from './scripts/constants'
+import type { ItemMap, ItemType } from './scripts/types'
 import { reorderQuoteMap } from './scripts/reorder'
 
 import { Button } from '@/components/ui/button'
 
 import { createClient } from '@/utils/supabase/client'
 import { User } from '@supabase/supabase-js'
+
+//import { InfoBlockData } from '@/components/blocks/blockType'
+import { Label } from '@/components/ui/label'
+import { getBlock, getBlockById, getBlockMap, getTemplates } from './actions'
+import {
+    blockColumn,
+    BlockMap,
+    Canvas,
+    EduBlockData,
+    Template,
+    Block,
+    InfoBlockData,
+} from '@/types/dbtypes'
+
+import { info_block_data, edu_block_data } from './default'
+
+import { EduBlock_L, EduBlock_M } from '@/components/blocks/edu-block'
 import { InfoBlock_L, InfoBlock_M } from '@/components/blocks/info-block'
-
-import { InfoBlockData } from '@/components/blocks/blockType'
-
-const block_data: InfoBlockData = {
-    url: 'https://www.linkedin.com/in/john-smith-123456/',
-    name: 'John Dash',
-    image: 'https://s3.is-ali.tech/3ce276f382ff8edb74a24d8a2c872fa8.png',
-    x: '@IsJohn_Smith22',
-    email: 'example@mail.com',
-    phone: '+358 401234567',
-    github: '@John_Smith22',
-    linkedin: '@John_Smith22',
-    description:
-        "I'm a Software Developer and Aalto University graduate with expertise in building web and data-driven applications. I enjoy solving complex problems using technologies like Python, Java, and JavaScript. Let's connect and create something awesome together!",
-    type: 'Default type',
-    tags: ['Python', 'Java', 'JavaScript', 'Node.js'],
-}
-
-const initial: ItemType[] = [
-    {
-        id: '1',
-        component: (
-            <InfoBlock_L
-                onBlockClick={() => {}}
-                block_data={block_data}
-            ></InfoBlock_L>
-        ),
-    },
-    {
-        id: '2',
-        component: (
-            <InfoBlock_M
-                onBlockClick={() => {}}
-                block_data={block_data}
-            ></InfoBlock_M>
-        ),
-    },
-]
-
-interface ItemType {
-    id: string
-    component: ReactNode
-}
 
 const Parent = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: center;
 `
-
-type Size = 'small' | 'large'
-
-// interface ItemProps {
-//     quote: Quote
-//     index: number
-// }
 
 const StyledItem = styled.div`
     user-select: none;
@@ -142,10 +108,13 @@ function List({ listId, items }: { listId: string; items: ItemType[] }) {
 
 const supabase = createClient()
 
-export default function App() {
+export default function App({ canvas_id }: { canvas_id: string }) {
     const [user, setUser] = useState<User | null>(null)
     const [error, setError] = useState<Error | null>(null)
-    //const [templates, setTemplates] = useState<any>(null)
+    const [blocks, setBlocks] = useState<BlockMap>(new Map())
+    const [templates, setTemplates] = useState<ItemType[]>([])
+    const [columns, setColumns] = useState<ItemMap>({})
+    const ordered = useMemo(() => Object.keys(columns), [columns])
     useEffect(() => {
         const getUser = () => {
             supabase.auth.getUser().then(({ data, error }) => {
@@ -159,52 +128,190 @@ export default function App() {
         getUser()
     }, [])
 
-    const selections: ReactNode[] = [
-        <InfoBlock_L
-            onBlockClick={() =>
-                addItem('column-0', {
-                    id: (Math.random() + 1).toString(36).substring(7),
-                    component: (
-                        <InfoBlock_L
-                            onBlockClick={() => {}}
-                            block_data={block_data}
-                        ></InfoBlock_L>
-                    ),
-                })
+    useEffect(() => {
+        showTemplates()
+        showBlock(canvas_id)
+        initMap(canvas_id)
+    }, [])
+
+    const initMap = async (canvas_id: string) => {
+        const data = await getBlockMap(canvas_id)
+        if (data) {
+            // list1: first column
+            // list2: second column
+            const lists: blockColumn[] = data
+            const column1: blockColumn = lists.filter(
+                (list) => list.column === 0
+            )[0]
+            const column2: blockColumn = lists.filter(
+                (list) => list.column === 1
+            )[0]
+            const columns: ItemMap = {
+                [column1.id]: [],
+                [column2.id]: [],
             }
-            block_data={block_data}
-        ></InfoBlock_L>,
-        <InfoBlock_M
-            onBlockClick={() =>
-                addItem('column-0', {
-                    id: (Math.random() + 1).toString(36).substring(7),
-                    component: (
-                        <InfoBlock_M
-                            onBlockClick={() => {}}
-                            block_data={block_data}
-                        ></InfoBlock_M>
-                    ),
-                })
+            console.log(column1.blocks)
+            console.log(column2.blocks)
+
+            const fetchBlocks = async (
+                blockIds: string[],
+                columnId: string
+            ) => {
+                const blocks = await Promise.all(
+                    blockIds.map(async (block_id) => {
+                        const data: Block = await getBlockById(block_id)
+                        if (data) {
+                            const block: Block = data
+                            const content: InfoBlockData =
+                                block.content as InfoBlockData
+                            switch (block.template_name) {
+                                case 'Info':
+                                    return {
+                                        id: block.id,
+                                        component: (
+                                            <InfoBlock_L
+                                                onBlockClick={() => {}}
+                                                block_data={content}
+                                            ></InfoBlock_L>
+                                        ),
+                                    }
+                            }
+                        }
+                        return null
+                    })
+                )
+                columns[columnId] = blocks.filter((block) => block !== null)
             }
-            block_data={block_data}
-        ></InfoBlock_M>,
-    ]
 
-    const [columns, setColumns] = useState<ItemMap>({
-        ['column-0']: [initial[0]],
-        ['column-1']: [initial[1]],
-    })
+            await Promise.all([
+                fetchBlocks(column1.blocks, column1.id),
+                fetchBlocks(column2.blocks, column2.id),
+            ])
 
-    //const ordered = ['Finn', 'Jake', 'Princess bubblegum', 'BMO']
-    const ordered = useMemo(() => Object.keys(columns), [columns])
-
-    const addColumn = () => {
-        const newColumn = {
-            ...columns,
-            [`column-${ordered.length}`]: [],
+            // column1.blocks.forEach(async (block_id) => {
+            //     const data: Block = await getBlockById(block_id)
+            //     //console.log(data.length)
+            //     if (data) {
+            //         const block: Block = data
+            //         const content: InfoBlockData =
+            //             block.content as InfoBlockData
+            //         switch (block.template_name) {
+            //             case 'Info':
+            //                 columns[column1.id].push({
+            //                     id: block.id,
+            //                     component: (
+            //                         <InfoBlock_L
+            //                             onBlockClick={() => {}}
+            //                             block_data={content}
+            //                         ></InfoBlock_L>
+            //                     ),
+            //                 })
+            //         }
+            //     }
+            // })
+            // column2.blocks.forEach(async (block_id) => {
+            //     const data: Block = await getBlockById(block_id)
+            //     if (data) {
+            //         const block: Block = data
+            //         const content: InfoBlockData =
+            //             block.content as InfoBlockData
+            //         switch (block.template_name) {
+            //             case 'Info':
+            //                 columns[column2.id].push({
+            //                     id: block.id,
+            //                     component: (
+            //                         <InfoBlock_L
+            //                             onBlockClick={() => {}}
+            //                             block_data={content}
+            //                         ></InfoBlock_L>
+            //                     ),
+            //                 })
+            //         }
+            //     }
+            // })
+            console.log(columns)
+            setColumns(columns)
         }
-        setColumns(newColumn)
     }
+
+    const showTemplates = async () => {
+        const dbtemplates = await getTemplates()
+        if (dbtemplates) {
+            //setTemplates(templates)
+            const initTemplates: ItemType[] = []
+
+            dbtemplates?.map((template) => {
+                if (template.name === 'Info') {
+                    console.log('Adding 2 info blocks')
+                    initTemplates.push({
+                        id: template.id + '-L',
+                        component: (
+                            <InfoBlock_L
+                                onBlockClick={() => {
+                                    addItem({
+                                        id: (Math.random() + 1)
+                                            .toString(36)
+                                            .substring(7),
+                                        component: (
+                                            <InfoBlock_L
+                                                onBlockClick={() => {}}
+                                                block_data={info_block_data}
+                                            ></InfoBlock_L>
+                                        ),
+                                    })
+                                }}
+                                block_data={info_block_data}
+                            ></InfoBlock_L>
+                        ),
+                    })
+                    initTemplates.push({
+                        id: template.id + '-M',
+                        component: (
+                            <InfoBlock_M
+                                onBlockClick={() => {}}
+                                block_data={info_block_data}
+                            ></InfoBlock_M>
+                        ),
+                    })
+                } else if (template.name === 'Education') {
+                    console.log('Adding 2 Edu blocks')
+                    initTemplates.push({
+                        id: template.id + '-L',
+                        component: (
+                            <EduBlock_L
+                                onBlockClick={() => {}}
+                                block_data={edu_block_data}
+                            ></EduBlock_L>
+                        ),
+                    })
+                    initTemplates.push({
+                        id: template.id + '-M',
+                        component: (
+                            <EduBlock_M
+                                onBlockClick={() => {}}
+                                block_data={edu_block_data}
+                            ></EduBlock_M>
+                        ),
+                    })
+                }
+            })
+            setTemplates(initTemplates)
+        }
+    }
+
+    const showBlock = async (canvas_id: string) => {
+        const newBlockMap: BlockMap =
+            (await getBlock(canvas_id, blocks)) ?? new Map()
+        setBlocks(newBlockMap)
+    }
+
+    // const addColumn = () => {
+    //     const newColumn = {
+    //         ...columns,
+    //         [`column-${ordered.length}`]: [],
+    //     }
+    //     setColumns(newColumn)
+    // }
 
     const getShortestColumn = (columns: ItemMap) => {
         let minLength = Infinity
@@ -220,7 +327,7 @@ export default function App() {
         return shortestColumn
     }
 
-    const addItem = (listId: string, item: ItemType) => {
+    const addItem = (item: ItemType) => {
         if (Object.keys(columns).length === 0) {
             console.log('no columns available')
         } else {
@@ -284,10 +391,24 @@ export default function App() {
                         ) : null}
                     </DragDropContext>
                 </div>
-                <div className='bg-green-500 w-[25rem]'>
-                    {selections.map((selection, index) => (
-                        <>{selection}</>
-                    ))}
+                <div className='bg-green-500 w-[25rem] h-[calc(100vh-4rem)] overflow-y-auto'>
+                    <div>
+                        <Label>
+                            Click on the component that you would like to use.
+                        </Label>
+                    </div>
+
+                    {templates.length === 0 ? (
+                        <div>
+                            <Label>
+                                No templates to choose from? Try refresh
+                            </Label>
+                        </div>
+                    ) : (
+                        templates.map((selection) => (
+                            <div key={selection.id}>{selection.component}</div>
+                        ))
+                    )}
                 </div>
             </div>
 

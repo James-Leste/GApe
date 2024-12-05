@@ -1,17 +1,38 @@
 /** @format */
 
 import * as React from 'react'
-import { ProfileCard } from "@/components/blocks/v2/profile/ProfileCard"
-import { EduBlock_L,EduBlock_M } from '@/components/blocks/v2/profile/EducationCard'
-import { WorkBlock_L,WorkBlock_M } from '@/components/blocks/v2/profile/ExperienceCard'
-import { PublicationBlock_L, PublicationBlock_M } from '@/components/blocks/v2/profile/PublicationCard'
-import { SkillsBlock_L,SkillsBlock_M } from '@/components/blocks/v2/profile/SkillsCard'
-import { ProjectBlock_L, ProjectBlock_M } from '@/components/blocks/v2/profile/ProjectCard'
-import { InfoBlock_L,InfoBlock_M } from '@/components/blocks/v2/profile/info-block'
-import { ProjectCardProps,ProfileCardProps} from '@/components/blocks/v2/profile/types'
+import { ProfileCard } from '@/components/blocks/v2/profile/ProfileCard'
+import {
+    EduBlock_L,
+    EduBlock_M,
+} from '@/components/blocks/v2/profile/EducationCard'
+import {
+    WorkBlock_L,
+    WorkBlock_M,
+} from '@/components/blocks/v2/profile/ExperienceCard'
+import {
+    PublicationBlock_L,
+    PublicationBlock_M,
+} from '@/components/blocks/v2/profile/PublicationCard'
+import {
+    SkillsBlock_L,
+    SkillsBlock_M,
+} from '@/components/blocks/v2/profile/SkillsCard'
+import {
+    ProjectBlock_L,
+    ProjectBlock_M,
+} from '@/components/blocks/v2/profile/ProjectCard'
+import {
+    InfoBlock_L,
+    InfoBlock_M,
+} from '@/components/blocks/v2/profile/info-block'
+import {
+    ProjectCardProps,
+    ProfileCardProps,
+} from '@/components/blocks/v2/profile/types'
 
 export default function ProfilePage() {
-    const profileData:ProfileCardProps = {
+    const profileData: ProfileCardProps = {
         name: 'John Smith',
         title: 'Software Developer',
         description:
@@ -23,8 +44,7 @@ export default function ProfilePage() {
         skills: ['Vue', 'React', 'TS/JS', 'Next'],
         github: 'https://github.com',
         linkedin: 'https://linkedin.com',
-        image:
-            'https://s3.is-ali.tech/3ce276f382ff8edb74a24d8a2c872fa8.png',
+        image: 'https://s3.is-ali.tech/3ce276f382ff8edb74a24d8a2c872fa8.png',
         x: 'https://twitter.com',
         url: 'https://www.example.com',
     }
@@ -36,8 +56,7 @@ export default function ProfilePage() {
         dateRange: 'Dec 2022 ‑ Mar 2023',
         description:
             'Developed a graphical process editor using the AntV X6 open source project, enabling staff to create Edge computing algorithms easily with user-friendly atomic operators. Enhanced user experience with drag-and-drop and form interactions, built with VueJS and integrated Ant Design for visual consistency. Gained experience in a production environment using Jenkins and Docker.',
-        image:
-            'https://cdn.builder.io/api/v1/image/assets/TEMP/8ab2db17a88c2ef83dedff0f1ff302bee1c700cdf9a79ff19ff87b303904237c?placeholderIfAbsent=true&apiKey=cf0d30cc7fd245a4886607b2fdd26b2b',
+        image: 'https://cdn.builder.io/api/v1/image/assets/TEMP/8ab2db17a88c2ef83dedff0f1ff302bee1c700cdf9a79ff19ff87b303904237c?placeholderIfAbsent=true&apiKey=cf0d30cc7fd245a4886607b2fdd26b2b',
         type: 'internship',
         project: 'Edge computing platform',
         Heyperlink: 'https://www.example.com',
@@ -137,7 +156,6 @@ export default function ProfilePage() {
                 <SkillsBlock_M {...skillsData} />
                 <ProjectBlock_L {...ProjectData} />
                 <ProjectBlock_M {...ProjectData} />
-
             </div>
         </div>
     )

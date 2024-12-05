@@ -8,8 +8,6 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { User } from '@supabase/supabase-js'
 
-
-
 export function UserInfo({ user }: { user: User }) {
     return (
         <Card>

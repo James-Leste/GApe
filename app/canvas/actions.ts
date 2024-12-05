@@ -31,13 +31,28 @@ export const getBlock = async (canvas_id: string, blockMap: BlockMap) => {
     return newBlockMap
 }
 
+export const getBlockById = async (block_id: string) => {
+    const { data, error } = await supabase
+        .from('blocks')
+        .select('*')
+        .eq('id', block_id)
+    if (error) {
+        console.error('Error fetching blocks:', error)
+        return
+    }
+    if (data && data.length === 1) {
+        return data[0]
+    }
+}
+
 //done
 export const addBlock = async (
     canvas_id: string,
     user_id: string,
     templateId: string,
     content: object,
-    column: number
+    column: number,
+    template_name: string
 ) => {
     const { data, error } = await supabase
         .from('blocks')
@@ -45,15 +60,16 @@ export const addBlock = async (
             canvas_id: canvas_id,
             template_id: templateId,
             content: content,
-            column: 0,
+            column: column,
             user_id: user_id,
+            template_name: template_name,
         })
         .select()
     // return the added block's id
     if (data && data.length === 1) {
         //console.log('id: ' + data[0].id)
         //console.log('column: ' + data[0].column)
-        await insertBlockLocation(canvas_id, data[0].id, 0)
+        await insertBlockLocation(canvas_id, data[0].id, column)
     } else {
         console.error('No data returned from insert operation')
     }
