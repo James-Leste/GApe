@@ -17,6 +17,7 @@ import { User } from '@supabase/supabase-js'
 import { Label } from '@/components/ui/label'
 import {
     addBlock,
+    deleteBlock,
     getBlock,
     getBlockById,
     getBlockMap,
@@ -27,18 +28,13 @@ import {
 import {
     blockColumn,
     BlockMap,
-    Canvas,
-    Template,
     Block,
     ProfileCardProps,
     ProjectCardProps,
     PublicationCardProps,
     ExperienceCardProps,
     EducationCardProps,
-    SkillsCardProps,
 } from '@/types/dbtypes'
-
-import { info_block_data, educationData } from './default'
 
 import {
     EduBlock_L,
@@ -56,10 +52,6 @@ import {
     PublicationBlock_L,
     PublicationBlock_M,
 } from '@/components/blocks/v2/profile/PublicationCard'
-import {
-    SkillsBlock_L,
-    SkillsBlock_M,
-} from '@/components/blocks/v2/profile/SkillsCard'
 
 //import { EduBlock_L, EduBlock_M } from '@/components/blocks/edu-block'
 import {
@@ -170,6 +162,7 @@ export default function App({ canvas_id }: { canvas_id: string }) {
     )
     const [tags, setTags] = useState<string[]>([])
     const [blockId, setBlockId] = useState<string>('')
+    const [columnNumber, setColumnNumber] = useState<number>(-1)
     useEffect(() => {
         const getUser = () => {
             supabase.auth.getUser().then(({ data, error }) => {
@@ -184,8 +177,11 @@ export default function App({ canvas_id }: { canvas_id: string }) {
     }, [])
 
     useEffect(() => {
-        showTemplates()
-    }, [])
+        if (user) {
+            showTemplates()
+        }
+    }, [user])
+
     useEffect(() => {
         showBlock(canvas_id)
         initMap(canvas_id)
@@ -238,6 +234,9 @@ export default function App({ canvas_id }: { canvas_id: string }) {
                                                         setIsEditsheetOpen(true)
                                                         setTags(content.tags)
                                                         setBlockId(block.id)
+                                                        setColumnNumber(
+                                                            block.column
+                                                        )
                                                     }}
                                                     blockData={content}
                                                 ></InfoBlock_L>
@@ -247,7 +246,7 @@ export default function App({ canvas_id }: { canvas_id: string }) {
                                         return {
                                             id: block.id,
                                             component: (
-                                                <InfoBlock_L
+                                                <InfoBlock_M
                                                     onClick={() => {
                                                         setSelectedTemplate(
                                                             Object.keys(content)
@@ -260,7 +259,7 @@ export default function App({ canvas_id }: { canvas_id: string }) {
                                                         setBlockId(block.id)
                                                     }}
                                                     blockData={content}
-                                                ></InfoBlock_L>
+                                                ></InfoBlock_M>
                                             ),
                                         }
                                     }
@@ -282,6 +281,9 @@ export default function App({ canvas_id }: { canvas_id: string }) {
                                                         )
                                                         setIsEditsheetOpen(true)
                                                         setBlockId(block.id)
+                                                        setColumnNumber(
+                                                            block.column
+                                                        )
                                                     }}
                                                     blockData={content}
                                                 ></EduBlock_L>
@@ -301,6 +303,9 @@ export default function App({ canvas_id }: { canvas_id: string }) {
                                                         )
                                                         setIsEditsheetOpen(true)
                                                         setBlockId(block.id)
+                                                        setColumnNumber(
+                                                            block.column
+                                                        )
                                                     }}
                                                     blockData={content}
                                                 ></EduBlock_M>
@@ -325,6 +330,9 @@ export default function App({ canvas_id }: { canvas_id: string }) {
                                                         )
                                                         setIsEditsheetOpen(true)
                                                         setBlockId(block.id)
+                                                        setColumnNumber(
+                                                            block.column
+                                                        )
                                                     }}
                                                     blockData={content}
                                                 ></WorkBlock_L>
@@ -344,9 +352,110 @@ export default function App({ canvas_id }: { canvas_id: string }) {
                                                         )
                                                         setIsEditsheetOpen(true)
                                                         setBlockId(block.id)
+                                                        setColumnNumber(
+                                                            block.column
+                                                        )
                                                     }}
                                                     blockData={content}
                                                 ></WorkBlock_M>
+                                            ),
+                                        }
+                                    }
+                                }
+                                case 'Project': {
+                                    const content: ProjectCardProps =
+                                        block.content as ProjectCardProps
+                                    if (block.isBig) {
+                                        return {
+                                            id: block.id,
+                                            component: (
+                                                <ProjectBlock_L
+                                                    onClick={() => {
+                                                        setSelectedTemplate(
+                                                            Object.keys(content)
+                                                        )
+                                                        setSelectedContent(
+                                                            content
+                                                        )
+                                                        setIsEditsheetOpen(true)
+                                                        setBlockId(block.id)
+                                                        setColumnNumber(
+                                                            block.column
+                                                        )
+                                                    }}
+                                                    blockData={content}
+                                                ></ProjectBlock_L>
+                                            ),
+                                        }
+                                    } else {
+                                        return {
+                                            id: block.id,
+                                            component: (
+                                                <ProjectBlock_M
+                                                    onClick={() => {
+                                                        setSelectedTemplate(
+                                                            Object.keys(content)
+                                                        )
+                                                        setSelectedContent(
+                                                            content
+                                                        )
+                                                        setIsEditsheetOpen(true)
+                                                        setBlockId(block.id)
+                                                        setColumnNumber(
+                                                            block.column
+                                                        )
+                                                    }}
+                                                    blockData={content}
+                                                ></ProjectBlock_M>
+                                            ),
+                                        }
+                                    }
+                                }
+                                case 'Publication': {
+                                    const content: PublicationCardProps =
+                                        block.content as PublicationCardProps
+                                    if (block.isBig) {
+                                        return {
+                                            id: block.id,
+                                            component: (
+                                                <PublicationBlock_L
+                                                    onClick={() => {
+                                                        setSelectedTemplate(
+                                                            Object.keys(content)
+                                                        )
+                                                        setSelectedContent(
+                                                            content
+                                                        )
+                                                        setIsEditsheetOpen(true)
+                                                        setBlockId(block.id)
+                                                        setColumnNumber(
+                                                            block.column
+                                                        )
+                                                    }}
+                                                    blockData={content}
+                                                ></PublicationBlock_L>
+                                            ),
+                                        }
+                                    } else {
+                                        return {
+                                            id: block.id,
+                                            component: (
+                                                <PublicationBlock_M
+                                                    onClick={() => {
+                                                        setSelectedTemplate(
+                                                            Object.keys(content)
+                                                        )
+                                                        setSelectedContent(
+                                                            content
+                                                        )
+                                                        setIsEditsheetOpen(true)
+                                                        setBlockId(block.id)
+                                                        setColumnNumber(
+                                                            block.column
+                                                        )
+                                                    }}
+                                                    blockData={content}
+                                                ></PublicationBlock_M>
                                             ),
                                         }
                                     }
@@ -363,7 +472,7 @@ export default function App({ canvas_id }: { canvas_id: string }) {
                 fetchBlocks(column1.blocks, column1.id),
                 fetchBlocks(column2.blocks, column2.id),
             ])
-            //console.log(columns)
+            console.log(columns)
             setColumns(columns)
         }
     }
@@ -371,8 +480,8 @@ export default function App({ canvas_id }: { canvas_id: string }) {
     // todo add on click functions to each block
     const showTemplates = async () => {
         const dbtemplates = await getTemplates()
-        console.log(dbtemplates)
-        if (dbtemplates) {
+        //console.log(dbtemplates)
+        if (dbtemplates && user) {
             //setTemplates(templates)
             const initTemplates: ItemType[] = []
 
@@ -383,18 +492,15 @@ export default function App({ canvas_id }: { canvas_id: string }) {
                         id: template.id + '-L',
                         component: (
                             <InfoBlock_L
-                                onClick={() => {
-                                    addItem({
-                                        id: (Math.random() + 1)
-                                            .toString(36)
-                                            .substring(7),
-                                        component: (
-                                            <InfoBlock_L
-                                                onClick={() => {}}
-                                                blockData={template.content}
-                                            ></InfoBlock_L>
-                                        ),
-                                    })
+                                onClick={async () => {
+                                    await addBlockState(
+                                        canvas_id,
+                                        user.id,
+                                        template.id,
+                                        template.content,
+                                        template.name,
+                                        true
+                                    )
                                 }}
                                 blockData={template.content}
                             ></InfoBlock_L>
@@ -404,7 +510,16 @@ export default function App({ canvas_id }: { canvas_id: string }) {
                         id: template.id + '-M',
                         component: (
                             <InfoBlock_M
-                                onClick={() => {}}
+                                onClick={async () => {
+                                    await addBlockState(
+                                        canvas_id,
+                                        user.id,
+                                        template.id,
+                                        template.content,
+                                        template.name,
+                                        false
+                                    )
+                                }}
                                 blockData={template.content}
                             ></InfoBlock_M>
                         ),
@@ -415,7 +530,16 @@ export default function App({ canvas_id }: { canvas_id: string }) {
                         id: template.id + '-L',
                         component: (
                             <EduBlock_L
-                                onClick={() => {}}
+                                onClick={async () => {
+                                    await addBlockState(
+                                        canvas_id,
+                                        user.id,
+                                        template.id,
+                                        template.content,
+                                        template.name,
+                                        true
+                                    )
+                                }}
                                 blockData={template.content}
                             ></EduBlock_L>
                         ),
@@ -424,7 +548,16 @@ export default function App({ canvas_id }: { canvas_id: string }) {
                         id: template.id + '-M',
                         component: (
                             <EduBlock_M
-                                onClick={() => {}}
+                                onClick={async () => {
+                                    await addBlockState(
+                                        canvas_id,
+                                        user.id,
+                                        template.id,
+                                        template.content,
+                                        template.name,
+                                        false
+                                    )
+                                }}
                                 blockData={template.content}
                             ></EduBlock_M>
                         ),
@@ -434,7 +567,16 @@ export default function App({ canvas_id }: { canvas_id: string }) {
                         id: template.id + '-L',
                         component: (
                             <WorkBlock_L
-                                onClick={() => {}}
+                                onClick={async () => {
+                                    await addBlockState(
+                                        canvas_id,
+                                        user.id,
+                                        template.id,
+                                        template.content,
+                                        template.name,
+                                        true
+                                    )
+                                }}
                                 blockData={template.content}
                             ></WorkBlock_L>
                         ),
@@ -443,7 +585,16 @@ export default function App({ canvas_id }: { canvas_id: string }) {
                         id: template.id + '-M',
                         component: (
                             <WorkBlock_M
-                                onClick={() => {}}
+                                onClick={async () => {
+                                    await addBlockState(
+                                        canvas_id,
+                                        user.id,
+                                        template.id,
+                                        template.content,
+                                        template.name,
+                                        false
+                                    )
+                                }}
                                 blockData={template.content}
                             ></WorkBlock_M>
                         ),
@@ -453,7 +604,16 @@ export default function App({ canvas_id }: { canvas_id: string }) {
                         id: template.id + '-L',
                         component: (
                             <PublicationBlock_L
-                                onClick={() => {}}
+                                onClick={async () => {
+                                    await addBlockState(
+                                        canvas_id,
+                                        user.id,
+                                        template.id,
+                                        template.content,
+                                        template.name,
+                                        true
+                                    )
+                                }}
                                 blockData={template.content}
                             ></PublicationBlock_L>
                         ),
@@ -462,7 +622,16 @@ export default function App({ canvas_id }: { canvas_id: string }) {
                         id: template.id + '-M',
                         component: (
                             <PublicationBlock_M
-                                onClick={() => {}}
+                                onClick={async () => {
+                                    await addBlockState(
+                                        canvas_id,
+                                        user.id,
+                                        template.id,
+                                        template.content,
+                                        template.name,
+                                        false
+                                    )
+                                }}
                                 blockData={template.content}
                             ></PublicationBlock_M>
                         ),
@@ -472,7 +641,16 @@ export default function App({ canvas_id }: { canvas_id: string }) {
                         id: template.id + '-L',
                         component: (
                             <ProjectBlock_L
-                                onClick={() => {}}
+                                onClick={async () => {
+                                    await addBlockState(
+                                        canvas_id,
+                                        user.id,
+                                        template.id,
+                                        template.content,
+                                        template.name,
+                                        true
+                                    )
+                                }}
                                 blockData={template.content}
                             ></ProjectBlock_L>
                         ),
@@ -481,7 +659,16 @@ export default function App({ canvas_id }: { canvas_id: string }) {
                         id: template.id + '-M',
                         component: (
                             <ProjectBlock_M
-                                onClick={() => {}}
+                                onClick={async () => {
+                                    await addBlockState(
+                                        canvas_id,
+                                        user.id,
+                                        template.id,
+                                        template.content,
+                                        template.name,
+                                        false
+                                    )
+                                }}
                                 blockData={template.content}
                             ></ProjectBlock_M>
                         ),
@@ -531,18 +718,20 @@ export default function App({ canvas_id }: { canvas_id: string }) {
 
     const getShortestColumn = (columns: ItemMap) => {
         let minLength = Infinity
-        let shortestColumn = ''
-
+        let counter = 0
+        let shortestColumnIndex = 0
         for (const column in columns) {
             if (columns[column].length < minLength) {
                 minLength = columns[column].length
-                shortestColumn = column
-            }
-        }
 
-        return shortestColumn
+                shortestColumnIndex = counter
+            }
+            counter++
+        }
+        return shortestColumnIndex
     }
 
+    //decrapated
     const addItem = (item: ItemType) => {
         if (Object.keys(columns).length === 0) {
             console.log('no columns available')
@@ -553,6 +742,26 @@ export default function App({ canvas_id }: { canvas_id: string }) {
                 [leastIndex]: [...(prevColumns[leastIndex] || []), item],
             }))
         }
+    }
+
+    const addBlockState = async (
+        canvas_id: string,
+        user_id: string,
+        template_id: string,
+        content: object,
+        template_name: string,
+        isBig: boolean
+    ) => {
+        await addBlock(
+            canvas_id,
+            user_id,
+            template_id,
+            content,
+            0,
+            template_name,
+            isBig
+        )
+        await initMap(canvas_id)
     }
 
     async function onDragEnd(result: DropResult) {
@@ -602,6 +811,15 @@ export default function App({ canvas_id }: { canvas_id: string }) {
         ])
     }
 
+    const deleteBlockState = async (
+        canvas_id: string,
+        block_id: string,
+        column_number: number
+    ) => {
+        deleteBlock(canvas_id, block_id, column_number)
+        await initMap(canvas_id)
+    }
+
     return (
         <div className='flex h-full'>
             <Sheet
@@ -643,14 +861,7 @@ export default function App({ canvas_id }: { canvas_id: string }) {
                             if (user?.id) {
                                 await updateBlock(blockId, formObject)
                             }
-                            // else {
-                            //     console.error(
-                            //         'User ID is undefined'
-                            //     )
-                            // }
-                            // if (user?.id) {
-                            //     addBlock(item.id, user.id, )
-                            // }
+                            await initMap(canvas_id)
                         }}
                     >
                         {selectedTemplate.map((template_id) => {
@@ -677,19 +888,10 @@ export default function App({ canvas_id }: { canvas_id: string }) {
                                     </div>
                                 )
                             } else {
-                                let content: string = ''
+                                const content: string = (
+                                    selectedContent as Record<string, any>
+                                )?.[template_id]
 
-                                // if (
-                                //     (selectedContent as Record<string, any>)?.[
-                                //         template_id
-                                //     ].length === 0
-                                // ) {
-                                //     content = (
-                                //         selectedContent as Record<string, any>
-                                //     )?.[template_id]
-                                // } else {
-                                //     content = ''
-                                // }
                                 return (
                                     <div
                                         className='grid grid-cols-6 items-center gap-1'
@@ -714,6 +916,21 @@ export default function App({ canvas_id }: { canvas_id: string }) {
                             }
                         })}
                         <SheetFooter>
+                            <SheetClose>
+                                <Button
+                                    type='button'
+                                    onClick={async () => {
+                                        await deleteBlockState(
+                                            canvas_id,
+                                            blockId,
+                                            columnNumber
+                                        )
+                                        await initMap(canvas_id)
+                                    }}
+                                >
+                                    Delete
+                                </Button>
+                            </SheetClose>
                             <SheetClose asChild>
                                 <Button type='submit'>Save changes</Button>
                             </SheetClose>

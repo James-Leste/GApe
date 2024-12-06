@@ -52,7 +52,8 @@ export const addBlock = async (
     templateId: string,
     content: object,
     column: number,
-    template_name: string
+    template_name: string,
+    isBig: boolean
 ) => {
     const { data, error } = await supabase
         .from('blocks')
@@ -63,6 +64,7 @@ export const addBlock = async (
             column: column,
             user_id: user_id,
             template_name: template_name,
+            isBig: isBig,
         })
         .select()
     // return the added block's id
@@ -70,6 +72,7 @@ export const addBlock = async (
         //console.log('id: ' + data[0].id)
         //console.log('column: ' + data[0].column)
         await insertBlockLocation(canvas_id, data[0].id, column)
+        return data[0].id
     } else {
         console.error('No data returned from insert operation')
     }
@@ -177,7 +180,6 @@ export const deleteBlock = async (
         .eq('id', block_id)
         .select('canvas_id')
 
-    // console.log(response.data)
     const { data, error } = await supabase
         .from('blockColumn')
         .select('blocks')
