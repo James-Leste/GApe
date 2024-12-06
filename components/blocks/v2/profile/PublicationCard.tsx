@@ -3,16 +3,19 @@
 import * as React from 'react'
 import { PublicationCardProps } from './types'
 
-export const PublicationBlock_L: React.FC<PublicationCardProps> = ({
-    title,
-    authors,
-    year,
-    type,
-    description,
-    journal,
-}) => {
+export function PublicationBlock_L({
+    onClick,
+    blockData,
+}: {
+    onClick: () => void
+    blockData: PublicationCardProps
+}) {
+    const { title, authors, year, type, description, journal } = blockData
     return (
-        <div className='flex flex-col justify-between py-2 pr-2 pl-3  w-96 h-[236px] bg-white rounded-lg border-t border-r border-b border-l-4 border-solid border-b-slate-400 border-l-slate-400 border-r-slate-400 border-t-slate-400 '>
+        <div
+            onClick={onClick}
+            className='flex flex-col justify-between py-2 pr-2 pl-3  w-96 h-[236px] bg-white rounded-lg hover:border-2 hover:shadow-md hover:border-customeBorder'
+        >
             <div className='flex gap-3.5 items-center w-full'>
                 <div className='flex gap-2 items-center self-stretch my-auto text-xs font-medium leading-loose whitespace-nowrap'>
                     <div className='gap-2.5 leading-4 self-stretch px-1 my-auto rounded-lg border border-solid border-neutral-300 text-neutral-800'>
@@ -34,23 +37,23 @@ export const PublicationBlock_L: React.FC<PublicationCardProps> = ({
                         <path
                             d='M28 6H42V20'
                             stroke='#254d3e'
-                            stroke-width='4'
-                            stroke-linecap='round'
-                            stroke-linejoin='round'
+                            strokeWidth='4'
+                            strokeLinecap='round'
+                            strokeLinejoin='round'
                         />
                         <path
                             d='M42 29.4737V39C42 40.6569 40.6569 42 39 42H9C7.34315 42 6 40.6569 6 39V9C6 7.34315 7.34315 6 9 6L18 6'
                             stroke='#254d3e'
-                            stroke-width='4'
-                            stroke-linecap='round'
-                            stroke-linejoin='round'
+                            strokeWidth='4'
+                            strokeLinecap='round'
+                            strokeLinejoin='round'
                         />
                         <path
                             d='M25.7998 22.1999L41.0998 6.8999'
                             stroke='#254d3e'
-                            stroke-width='4'
-                            stroke-linecap='round'
-                            stroke-linejoin='round'
+                            strokeWidth='4'
+                            strokeLinecap='round'
+                            strokeLinejoin='round'
                         />
                     </svg>
                 </div>
@@ -90,43 +93,43 @@ export const PublicationBlock_L: React.FC<PublicationCardProps> = ({
                                     d='M8 6C8 4.89543 8.89543 4 10 4H38C39.1046 4 40 4.89543 40 6V42C40 43.1046 39.1046 44 38 44H10C8.89543 44 8 43.1046 8 42V6Z'
                                     fill='none'
                                     stroke='#254d3e'
-                                    stroke-width='4'
-                                    stroke-linejoin='round'
+                                    strokeWidth='4'
+                                    strokeLinejoin='round'
                                 />
                                 <path
                                     d='M16 4V44'
                                     stroke='#254d3e'
-                                    stroke-width='4'
-                                    stroke-linecap='round'
-                                    stroke-linejoin='round'
+                                    strokeWidth='4'
+                                    strokeLinecap='round'
+                                    strokeLinejoin='round'
                                 />
                                 <path
                                     d='M24 12H32'
                                     stroke='#254d3e'
-                                    stroke-width='4'
-                                    stroke-linecap='round'
-                                    stroke-linejoin='round'
+                                    strokeWidth='4'
+                                    strokeLinecap='round'
+                                    strokeLinejoin='round'
                                 />
                                 <path
                                     d='M24 20H32'
                                     stroke='#254d3e'
-                                    stroke-width='4'
-                                    stroke-linecap='round'
-                                    stroke-linejoin='round'
+                                    strokeWidth='4'
+                                    strokeLinecap='round'
+                                    strokeLinejoin='round'
                                 />
                                 <path
                                     d='M10 4H22'
                                     stroke='#254d3e'
-                                    stroke-width='4'
-                                    stroke-linecap='round'
-                                    stroke-linejoin='round'
+                                    strokeWidth='4'
+                                    strokeLinecap='round'
+                                    strokeLinejoin='round'
                                 />
                                 <path
                                     d='M10 44H22'
                                     stroke='#254d3e'
-                                    stroke-width='4'
-                                    stroke-linecap='round'
-                                    stroke-linejoin='round'
+                                    strokeWidth='4'
+                                    strokeLinecap='round'
+                                    strokeLinejoin='round'
                                 />
                             </svg>
                             <div className='self-stretch my-auto'>
@@ -139,16 +142,19 @@ export const PublicationBlock_L: React.FC<PublicationCardProps> = ({
         </div>
     )
 }
-export const PublicationBlock_M: React.FC<PublicationCardProps> = ({
-    title,
-    authors,
-    year,
-    type,
-    description,
-    journal,
-}) => {
+export function PublicationBlock_M({
+    onClick,
+    blockData,
+}: {
+    onClick: () => void
+    blockData: PublicationCardProps
+}) {
+    const { title, authors, year, type, journal } = blockData
     return (
-        <div className='flex  flex-col justify-between py-2 pr-2 pl-3 w-96 h-[140px] bg-white rounded-lg border-t border-r border-b border-l-4 border-solid border-b-slate-400 border-l-slate-400 border-r-slate-400 border-t-slate-400'>
+        <div
+            onClick={onClick}
+            className='flex  flex-col justify-between py-2 pr-2 pl-3 w-96 h-[140px] bg-white rounded-lg hover:border-2 hover:shadow-md hover:border-customeBorder'
+        >
             <div className='flex gap-3.5 items-center w-full'>
                 <div className='flex gap-2 items-center self-stretch my-auto text-xs font-medium leading-loose whitespace-nowrap'>
                     <div className='gap-2.5 leading-4 self-stretch px-1 my-auto rounded-lg border border-solid border-neutral-300 text-neutral-800'>
@@ -170,23 +176,23 @@ export const PublicationBlock_M: React.FC<PublicationCardProps> = ({
                         <path
                             d='M28 6H42V20'
                             stroke='#254d3e'
-                            stroke-width='4'
-                            stroke-linecap='round'
-                            stroke-linejoin='round'
+                            strokeWidth='4'
+                            strokeLinecap='round'
+                            strokeLinejoin='round'
                         />
                         <path
                             d='M42 29.4737V39C42 40.6569 40.6569 42 39 42H9C7.34315 42 6 40.6569 6 39V9C6 7.34315 7.34315 6 9 6L18 6'
                             stroke='#254d3e'
-                            stroke-width='4'
-                            stroke-linecap='round'
-                            stroke-linejoin='round'
+                            strokeWidth='4'
+                            strokeLinecap='round'
+                            strokeLinejoin='round'
                         />
                         <path
                             d='M25.7998 22.1999L41.0998 6.8999'
                             stroke='#254d3e'
-                            stroke-width='4'
-                            stroke-linecap='round'
-                            stroke-linejoin='round'
+                            strokeWidth='4'
+                            strokeLinecap='round'
+                            strokeLinejoin='round'
                         />
                     </svg>
                 </div>
@@ -216,43 +222,43 @@ export const PublicationBlock_M: React.FC<PublicationCardProps> = ({
                                     d='M8 6C8 4.89543 8.89543 4 10 4H38C39.1046 4 40 4.89543 40 6V42C40 43.1046 39.1046 44 38 44H10C8.89543 44 8 43.1046 8 42V6Z'
                                     fill='none'
                                     stroke='#254d3e'
-                                    stroke-width='4'
-                                    stroke-linejoin='round'
+                                    strokeWidth='4'
+                                    strokeLinejoin='round'
                                 />
                                 <path
                                     d='M16 4V44'
                                     stroke='#254d3e'
-                                    stroke-width='4'
-                                    stroke-linecap='round'
-                                    stroke-linejoin='round'
+                                    strokeWidth='4'
+                                    strokeLinecap='round'
+                                    strokeLinejoin='round'
                                 />
                                 <path
                                     d='M24 12H32'
                                     stroke='#254d3e'
-                                    stroke-width='4'
-                                    stroke-linecap='round'
-                                    stroke-linejoin='round'
+                                    strokeWidth='4'
+                                    strokeLinecap='round'
+                                    strokeLinejoin='round'
                                 />
                                 <path
                                     d='M24 20H32'
                                     stroke='#254d3e'
-                                    stroke-width='4'
-                                    stroke-linecap='round'
-                                    stroke-linejoin='round'
+                                    strokeWidth='4'
+                                    strokeLinecap='round'
+                                    strokeLinejoin='round'
                                 />
                                 <path
                                     d='M10 4H22'
                                     stroke='#254d3e'
-                                    stroke-width='4'
-                                    stroke-linecap='round'
-                                    stroke-linejoin='round'
+                                    strokeWidth='4'
+                                    strokeLinecap='round'
+                                    strokeLinejoin='round'
                                 />
                                 <path
                                     d='M10 44H22'
                                     stroke='#254d3e'
-                                    stroke-width='4'
-                                    stroke-linecap='round'
-                                    stroke-linejoin='round'
+                                    strokeWidth='4'
+                                    strokeLinecap='round'
+                                    strokeLinejoin='round'
                                 />
                             </svg>
 

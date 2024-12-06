@@ -14,23 +14,58 @@ import { Button } from '@/components/ui/button'
 import { createClient } from '@/utils/supabase/client'
 import { User } from '@supabase/supabase-js'
 
-//import { InfoBlockData } from '@/components/blocks/blockType'
 import { Label } from '@/components/ui/label'
-import { getBlock, getBlockById, getBlockMap, getTemplates } from './actions'
+import {
+    addBlock,
+    getBlock,
+    getBlockById,
+    getBlockMap,
+    getTemplates,
+    updateBlock,
+    updateBlockColumn,
+} from './actions'
 import {
     blockColumn,
     BlockMap,
     Canvas,
-    EduBlockData,
     Template,
     Block,
-    InfoBlockData,
+    ProfileCardProps,
+    ProjectCardProps,
+    PublicationCardProps,
+    ExperienceCardProps,
+    EducationCardProps,
+    SkillsCardProps,
 } from '@/types/dbtypes'
 
-import customSheet, { info_block_data, edu_block_data } from './default'
+import { info_block_data, educationData } from './default'
 
-import { EduBlock_L, EduBlock_M } from '@/components/blocks/edu-block'
-import { InfoBlock_L, InfoBlock_M } from '@/components/blocks/info-block'
+import {
+    EduBlock_L,
+    EduBlock_M,
+} from '@/components/blocks/v2/profile/EducationCard'
+import {
+    WorkBlock_L,
+    WorkBlock_M,
+} from '@/components/blocks/v2/profile/ExperienceCard'
+import {
+    ProjectBlock_L,
+    ProjectBlock_M,
+} from '@/components/blocks/v2/profile/ProjectCard'
+import {
+    PublicationBlock_L,
+    PublicationBlock_M,
+} from '@/components/blocks/v2/profile/PublicationCard'
+import {
+    SkillsBlock_L,
+    SkillsBlock_M,
+} from '@/components/blocks/v2/profile/SkillsCard'
+
+//import { EduBlock_L, EduBlock_M } from '@/components/blocks/edu-block'
+import {
+    InfoBlock_L,
+    InfoBlock_M,
+} from '@/components/blocks/v2/profile/info-block'
 import {
     Sheet,
     SheetClose,
@@ -39,9 +74,11 @@ import {
     SheetFooter,
     SheetHeader,
     SheetTitle,
-    SheetTrigger,
 } from '@/components/ui/sheet'
 import { Input } from '@/components/ui/input'
+import { TagInput } from 'rsuite'
+
+import 'rsuite/TagInput/styles/index.css'
 
 const Parent = styled.div`
     display: flex;
@@ -128,9 +165,11 @@ export default function App({ canvas_id }: { canvas_id: string }) {
     const ordered = useMemo(() => Object.keys(columns), [columns])
     const [isEditsheetOpen, setIsEditsheetOpen] = useState<boolean>(false)
     const [selectedTemplate, setSelectedTemplate] = useState<string[]>([])
-    const [selectedContent, setSelectedContent] = useState<
-        InfoBlockData | EduBlockData | null
-    >(null)
+    const [selectedContent, setSelectedContent] = useState<Record<string, any>>(
+        {}
+    )
+    const [tags, setTags] = useState<string[]>([])
+    const [blockId, setBlockId] = useState<string>('')
     useEffect(() => {
         const getUser = () => {
             supabase.auth.getUser().then(({ data, error }) => {
@@ -146,6 +185,8 @@ export default function App({ canvas_id }: { canvas_id: string }) {
 
     useEffect(() => {
         showTemplates()
+    }, [])
+    useEffect(() => {
         showBlock(canvas_id)
         initMap(canvas_id)
     }, [])
@@ -177,16 +218,17 @@ export default function App({ canvas_id }: { canvas_id: string }) {
                         const data: Block = await getBlockById(block_id)
                         if (data) {
                             const block: Block = data
-                            const content: InfoBlockData =
-                                block.content as InfoBlockData
+
                             switch (block.template_name) {
-                                case 'Info':
+                                case 'Info': {
+                                    const content: ProfileCardProps =
+                                        block.content as ProfileCardProps
                                     if (block.isBig) {
                                         return {
                                             id: block.id,
                                             component: (
                                                 <InfoBlock_L
-                                                    onBlockClick={() => {
+                                                    onClick={() => {
                                                         setSelectedTemplate(
                                                             Object.keys(content)
                                                         )
@@ -194,9 +236,10 @@ export default function App({ canvas_id }: { canvas_id: string }) {
                                                             content
                                                         )
                                                         setIsEditsheetOpen(true)
-                                                        //console.log(content)
+                                                        setTags(content.tags)
+                                                        setBlockId(block.id)
                                                     }}
-                                                    block_data={content}
+                                                    blockData={content}
                                                 ></InfoBlock_L>
                                             ),
                                         }
@@ -204,24 +247,110 @@ export default function App({ canvas_id }: { canvas_id: string }) {
                                         return {
                                             id: block.id,
                                             component: (
-                                                <InfoBlock_M
-                                                    onBlockClick={() => {
+                                                <InfoBlock_L
+                                                    onClick={() => {
                                                         setSelectedTemplate(
-                                                            Object.keys(
-                                                                block.content
-                                                            )
+                                                            Object.keys(content)
                                                         )
                                                         setSelectedContent(
                                                             content
                                                         )
                                                         setIsEditsheetOpen(true)
-                                                        //console.log(content)
+                                                        setTags(content.tags)
+                                                        setBlockId(block.id)
                                                     }}
-                                                    block_data={content}
-                                                ></InfoBlock_M>
+                                                    blockData={content}
+                                                ></InfoBlock_L>
                                             ),
                                         }
                                     }
+                                }
+                                case 'Education': {
+                                    const content: EducationCardProps =
+                                        block.content as EducationCardProps
+                                    if (block.isBig) {
+                                        return {
+                                            id: block.id,
+                                            component: (
+                                                <EduBlock_L
+                                                    onClick={() => {
+                                                        setSelectedTemplate(
+                                                            Object.keys(content)
+                                                        )
+                                                        setSelectedContent(
+                                                            content
+                                                        )
+                                                        setIsEditsheetOpen(true)
+                                                        setBlockId(block.id)
+                                                    }}
+                                                    blockData={content}
+                                                ></EduBlock_L>
+                                            ),
+                                        }
+                                    } else {
+                                        return {
+                                            id: block.id,
+                                            component: (
+                                                <EduBlock_M
+                                                    onClick={() => {
+                                                        setSelectedTemplate(
+                                                            Object.keys(content)
+                                                        )
+                                                        setSelectedContent(
+                                                            content
+                                                        )
+                                                        setIsEditsheetOpen(true)
+                                                        setBlockId(block.id)
+                                                    }}
+                                                    blockData={content}
+                                                ></EduBlock_M>
+                                            ),
+                                        }
+                                    }
+                                }
+                                case 'Work': {
+                                    const content: ExperienceCardProps =
+                                        block.content as ExperienceCardProps
+                                    if (block.isBig) {
+                                        return {
+                                            id: block.id,
+                                            component: (
+                                                <WorkBlock_L
+                                                    onClick={() => {
+                                                        setSelectedTemplate(
+                                                            Object.keys(content)
+                                                        )
+                                                        setSelectedContent(
+                                                            content
+                                                        )
+                                                        setIsEditsheetOpen(true)
+                                                        setBlockId(block.id)
+                                                    }}
+                                                    blockData={content}
+                                                ></WorkBlock_L>
+                                            ),
+                                        }
+                                    } else {
+                                        return {
+                                            id: block.id,
+                                            component: (
+                                                <WorkBlock_M
+                                                    onClick={() => {
+                                                        setSelectedTemplate(
+                                                            Object.keys(content)
+                                                        )
+                                                        setSelectedContent(
+                                                            content
+                                                        )
+                                                        setIsEditsheetOpen(true)
+                                                        setBlockId(block.id)
+                                                    }}
+                                                    blockData={content}
+                                                ></WorkBlock_M>
+                                            ),
+                                        }
+                                    }
+                                }
                             }
                         }
                         return null
@@ -234,13 +363,15 @@ export default function App({ canvas_id }: { canvas_id: string }) {
                 fetchBlocks(column1.blocks, column1.id),
                 fetchBlocks(column2.blocks, column2.id),
             ])
-            console.log(columns)
+            //console.log(columns)
             setColumns(columns)
         }
     }
 
+    // todo add on click functions to each block
     const showTemplates = async () => {
         const dbtemplates = await getTemplates()
+        console.log(dbtemplates)
         if (dbtemplates) {
             //setTemplates(templates)
             const initTemplates: ItemType[] = []
@@ -252,20 +383,20 @@ export default function App({ canvas_id }: { canvas_id: string }) {
                         id: template.id + '-L',
                         component: (
                             <InfoBlock_L
-                                onBlockClick={() => {
+                                onClick={() => {
                                     addItem({
                                         id: (Math.random() + 1)
                                             .toString(36)
                                             .substring(7),
                                         component: (
                                             <InfoBlock_L
-                                                onBlockClick={() => {}}
-                                                block_data={info_block_data}
+                                                onClick={() => {}}
+                                                blockData={template.content}
                                             ></InfoBlock_L>
                                         ),
                                     })
                                 }}
-                                block_data={info_block_data}
+                                blockData={template.content}
                             ></InfoBlock_L>
                         ),
                     })
@@ -273,19 +404,19 @@ export default function App({ canvas_id }: { canvas_id: string }) {
                         id: template.id + '-M',
                         component: (
                             <InfoBlock_M
-                                onBlockClick={() => {}}
-                                block_data={info_block_data}
+                                onClick={() => {}}
+                                blockData={template.content}
                             ></InfoBlock_M>
                         ),
                     })
                 } else if (template.name === 'Education') {
-                    console.log('Adding 2 Edu blocks')
+                    console.log('Adding 2 Project blocks')
                     initTemplates.push({
                         id: template.id + '-L',
                         component: (
                             <EduBlock_L
-                                onBlockClick={() => {}}
-                                block_data={edu_block_data}
+                                onClick={() => {}}
+                                blockData={template.content}
                             ></EduBlock_L>
                         ),
                     })
@@ -293,17 +424,97 @@ export default function App({ canvas_id }: { canvas_id: string }) {
                         id: template.id + '-M',
                         component: (
                             <EduBlock_M
-                                onBlockClick={() => {}}
-                                block_data={edu_block_data}
+                                onClick={() => {}}
+                                blockData={template.content}
                             ></EduBlock_M>
                         ),
                     })
+                } else if (template.name === 'Work') {
+                    initTemplates.push({
+                        id: template.id + '-L',
+                        component: (
+                            <WorkBlock_L
+                                onClick={() => {}}
+                                blockData={template.content}
+                            ></WorkBlock_L>
+                        ),
+                    })
+                    initTemplates.push({
+                        id: template.id + '-M',
+                        component: (
+                            <WorkBlock_M
+                                onClick={() => {}}
+                                blockData={template.content}
+                            ></WorkBlock_M>
+                        ),
+                    })
+                } else if (template.name === 'Publication') {
+                    initTemplates.push({
+                        id: template.id + '-L',
+                        component: (
+                            <PublicationBlock_L
+                                onClick={() => {}}
+                                blockData={template.content}
+                            ></PublicationBlock_L>
+                        ),
+                    })
+                    initTemplates.push({
+                        id: template.id + '-M',
+                        component: (
+                            <PublicationBlock_M
+                                onClick={() => {}}
+                                blockData={template.content}
+                            ></PublicationBlock_M>
+                        ),
+                    })
+                } else if (template.name === 'Project') {
+                    initTemplates.push({
+                        id: template.id + '-L',
+                        component: (
+                            <ProjectBlock_L
+                                onClick={() => {}}
+                                blockData={template.content}
+                            ></ProjectBlock_L>
+                        ),
+                    })
+                    initTemplates.push({
+                        id: template.id + '-M',
+                        component: (
+                            <ProjectBlock_M
+                                onClick={() => {}}
+                                blockData={template.content}
+                            ></ProjectBlock_M>
+                        ),
+                    })
                 }
+                // } else if (template.name === 'Education') {
+                //     console.log('Adding 2 Edu blocks')
+                //     initTemplates.push({
+                //         id: template.id + '-L',
+                //         component: (
+                //             <EduBlock_L
+                //                 onBlockClick={() => {}}
+                //                 block_data={edu_block_data}
+                //             ></EduBlock_L>
+                //         ),
+                //     })
+                //     initTemplates.push({
+                //         id: template.id + '-M',
+                //         component: (
+                //             <EduBlock_M
+                //                 onBlockClick={() => {}}
+                //                 block_data={edu_block_data}
+                //             ></EduBlock_M>
+                //         ),
+                //     })
+                // }
             })
+            console.log(initTemplates)
             setTemplates(initTemplates)
         }
     }
 
+    // get the map mapping the canvas_id to the block_id
     const showBlock = async (canvas_id: string) => {
         const newBlockMap: BlockMap =
             (await getBlock(canvas_id, blocks)) ?? new Map()
@@ -344,7 +555,7 @@ export default function App({ canvas_id }: { canvas_id: string }) {
         }
     }
 
-    function onDragEnd(result: DropResult) {
+    async function onDragEnd(result: DropResult) {
         const { source, destination } = result
 
         if (!destination) {
@@ -375,6 +586,20 @@ export default function App({ canvas_id }: { canvas_id: string }) {
         })
 
         setColumns(newColumns.itemMap)
+
+        const idList1: string[] = newColumns.itemMap[ordered[0]].map(
+            (item) => item.id
+        )
+        const idList2: string[] = newColumns.itemMap[ordered[1]].map(
+            (item) => item.id
+        )
+        console.log(idList1)
+        console.log(idList2)
+
+        await Promise.all([
+            updateBlockColumn(canvas_id, 0, idList1),
+            updateBlockColumn(canvas_id, 1, idList2),
+        ])
     }
 
     return (
@@ -397,22 +622,28 @@ export default function App({ canvas_id }: { canvas_id: string }) {
                         onSubmit={async (e) => {
                             e.preventDefault()
                             const formData = new FormData(e.currentTarget)
+
+                            // Convert FormData to a plain object
                             const formObject = Object.fromEntries(
                                 formData.entries()
-                            )
+                            ) as Record<string, any>
 
-                            console.log(JSON.stringify(formObject, null, 2))
+                            // Process the "tags" field
+                            if (
+                                formObject.tags &&
+                                typeof formObject.tags === 'string'
+                            ) {
+                                formObject.tags = formObject.tags
+                                    .split(',')
+                                    .map((tag: string) => tag.trim())
+                            }
 
-                            // if (user?.id) {
-                            //     await addBlock(
-                            //         canvas.id,
-                            //         user.id,
-                            //         selectedTemplateId,
-                            //         formObject,
-                            //         Number(formObject.column),
-                            //         'Info'
-                            //     )
-                            // } else {
+                            console.log(formObject)
+
+                            if (user?.id) {
+                                await updateBlock(blockId, formObject)
+                            }
+                            // else {
                             //     console.error(
                             //         'User ID is undefined'
                             //     )
@@ -423,33 +654,64 @@ export default function App({ canvas_id }: { canvas_id: string }) {
                         }}
                     >
                         {selectedTemplate.map((template_id) => {
-                            return (
-                                <div
-                                    className='grid grid-cols-6 items-center gap-1'
-                                    key={template_id}
-                                >
-                                    <Label
-                                        htmlFor={template_id}
-                                        className='overflow-hidden col-span-2'
+                            if (template_id.toLocaleLowerCase() === 'tags') {
+                                //console.log(selectedContent[template_id])
+                                return (
+                                    <div
+                                        className='grid grid-cols-6 items-center gap-1'
+                                        key={template_id}
                                     >
-                                        {template_id.toUpperCase()}
-                                    </Label>
-                                    <Input
-                                        id={template_id}
-                                        className='col-span-4'
-                                        type='text'
-                                        name={template_id}
-                                        defaultValue={
-                                            (
-                                                selectedContent as Record<
-                                                    string,
-                                                    any
-                                                >
-                                            )?.[template_id]
-                                        }
-                                    />
-                                </div>
-                            )
+                                        <Label
+                                            htmlFor={template_id}
+                                            className='overflow-hidden col-span-2'
+                                        >
+                                            {template_id.toUpperCase()}
+                                        </Label>
+                                        <TagInput
+                                            name={template_id}
+                                            style={{
+                                                gridColumn: 'span 4',
+                                            }}
+                                            defaultValue={tags}
+                                        />
+                                    </div>
+                                )
+                            } else {
+                                let content: string = ''
+
+                                // if (
+                                //     (selectedContent as Record<string, any>)?.[
+                                //         template_id
+                                //     ].length === 0
+                                // ) {
+                                //     content = (
+                                //         selectedContent as Record<string, any>
+                                //     )?.[template_id]
+                                // } else {
+                                //     content = ''
+                                // }
+                                return (
+                                    <div
+                                        className='grid grid-cols-6 items-center gap-1'
+                                        key={template_id}
+                                    >
+                                        <Label
+                                            htmlFor={template_id}
+                                            className='overflow-hidden col-span-2'
+                                        >
+                                            {template_id.toUpperCase()}
+                                        </Label>
+                                        <Input
+                                            required
+                                            id={template_id}
+                                            className='col-span-4 bg-white'
+                                            type='text'
+                                            name={template_id}
+                                            defaultValue={content}
+                                        />
+                                    </div>
+                                )
+                            }
                         })}
                         <SheetFooter>
                             <SheetClose asChild>
@@ -462,7 +724,7 @@ export default function App({ canvas_id }: { canvas_id: string }) {
 
             <div className='flex-shrink-0 flex-grow bg-gray-200'></div>
             <div className='flex flex-shrink-0 w-[75rem]'>
-                <div className='bg-blue-500 w-[50rem]'>
+                <div className='bg-blue-500 w-[50rem] min-h-[100%]'>
                     <DragDropContext onDragEnd={onDragEnd}>
                         {Object.keys(columns).length != 0 ? (
                             <Parent>
@@ -477,7 +739,7 @@ export default function App({ canvas_id }: { canvas_id: string }) {
                         ) : null}
                     </DragDropContext>
                 </div>
-                <div className='bg-green-500 w-[25rem] h-[calc(100vh-4rem)] overflow-y-auto'>
+                <div className='bg-green-500 w-[25rem] h-[100vh] sticky top-0 overflow-y-auto max-h-[100vh]'>
                     <div>
                         <Label>
                             Click on the component that you would like to use.

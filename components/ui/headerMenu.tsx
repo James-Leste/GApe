@@ -22,9 +22,9 @@ function ToolBar() {
     return (
         <div className='flex justify-between w-full items-center'>
             <div className='flex flex-row gap-1'>
-                <Button variant={'secondary'} size='icon'>
+                {/* <Button variant={'secondary'} size='icon'>
                     <Undo2 className='h-4 w-4' />
-                </Button>
+                </Button> */}
                 {/* <Button variant={'secondary'} size='icon'>
                     <Forward className='h-4 w-4' />
                 </Button> */}
@@ -33,7 +33,7 @@ function ToolBar() {
                 </Button>
             </div>
 
-            <Tabs value='pc'>
+            {/* <Tabs value='pc'>
                 <TabsList className='grid w-full grid-cols-3'>
                     <TabsTrigger value='pc'>
                         <Laptop className='h-4 w-4' />
@@ -45,7 +45,7 @@ function ToolBar() {
                         <Smartphone className='h-4 w-4' />
                     </TabsTrigger>
                 </TabsList>
-            </Tabs>
+            </Tabs> */}
             <div className='flex justify-between gap-2 items-center'>
                 <Button
                     variant={'secondary'}
@@ -77,7 +77,7 @@ export default function HeaderMenu({ children }: HeaderMenuProps) {
                             <a href='/'>GApe</a>
                         </div>
                     </div>
-                    {/* {isCanvasPage && <ToolBar />} */}
+                    {isCanvasPage && <ToolBar />}
                     {isSharePage && (
                         <div className='flex w-full justify-end'>
                             <Share />
@@ -87,15 +87,6 @@ export default function HeaderMenu({ children }: HeaderMenuProps) {
                     <div className='w-10 h-10 flex justify-center mr-8'>
                         {children}
                     </div>
-
-                    {/* <nav className='flex items-center gap-4 text-sm lg:gap-6'>
-                        <a
-                            className='transition-colors hover:text-foreground/80 text-foreground/60'
-                            href='/'
-                        >
-                            Home
-                        </a>
-                    </nav> */}
                 </div>
             </div>
         </header>

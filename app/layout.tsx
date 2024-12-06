@@ -41,7 +41,7 @@ export default function RootLayout({
                     <div className='flex-grow'>{children}</div>
                 </div>
 
-                {/* <Toaster closeButton /> */}
+                <Toaster closeButton />
             </body>
         </html>
     )

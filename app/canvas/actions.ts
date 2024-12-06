@@ -2,7 +2,7 @@
 
 import { createClient } from '@/utils/supabase/client'
 
-import { BlockMap, InfoBlockData, Template } from '@/types/dbtypes'
+import { BlockMap, Template } from '@/types/dbtypes'
 
 const supabase = createClient()
 

@@ -3,26 +3,40 @@
 import * as React from 'react'
 import { EducationCardProps } from './types'
 
-export const EduBlock_L: React.FC<EducationCardProps> = ({
-    institution,
-    location,
-    degree,
-    field,
-    gpa,
-    minor,
-    dateRange,
-    description,
-    logoUrl,
-}) => {
+export function EduBlock_L({
+    onClick,
+    blockData,
+}: {
+    onClick: () => void
+    blockData: EducationCardProps
+}) {
+    const {
+        logoUrl,
+        institution,
+        location,
+        dateRange,
+        description,
+        field,
+        degree,
+        gpa,
+        minor,
+    } = blockData
     return (
-        <div className='flex flex-col justify-between p-2  w-96 h-[236px] bg-white rounded-lg border border-solid border-slate-400 min-h-[140px]'>
+        <div
+            onClick={onClick}
+            className='flex flex-col justify-between p-2  w-96 h-[236px] bg-white rounded-lg border border-solid border-slate-400 min-h-[140px] hover:border-2 hover:shadow-md hover:border-customeBorder'
+        >
             <div className='flex  justify-between items-center w-full'>
                 <div className='flex gap-1 items-center self-stretch my-auto'>
                     <img
                         loading='lazy'
                         src={logoUrl}
                         className='object-contain shrink-0 self-stretch my-auto aspect-[1.36] h-9'
-                        alt={`${institution} logo`}
+                        alt='🏫'
+                        onError={(e) => {
+                            e.currentTarget.src =
+                                'https://ogbwfcmgzyaldlnrwazo.supabase.co/storage/v1/object/sign/Gape/block_template/university.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJHYXBlL2Jsb2NrX3RlbXBsYXRlL3VuaXZlcnNpdHkucG5nIiwiaWF0IjoxNzMzNDc5NzU3LCJleHAiOjQ4NTU1NDM3NTd9.L8IVingUVIiunJxMWTJ_Dl7OfDtdM8Naoa_3fyqgE14&t=2024-12-06T10%3A09%3A17.317Z'
+                        }}
                     />
                     <div className='flex flex-col self-stretch my-auto'>
                         <div className='text-xl font-semibold tracking-normal leading-none text-neutral-800'>
@@ -62,26 +76,40 @@ export const EduBlock_L: React.FC<EducationCardProps> = ({
     )
 }
 
-export const EduBlock_M: React.FC<EducationCardProps> = ({
-    institution,
-    location,
-    degree,
-    field,
-    gpa,
-    minor,
-    dateRange,
-    description,
-    logoUrl,
-}) => {
+export function EduBlock_M({
+    onClick,
+    blockData,
+}: {
+    onClick: () => void
+    blockData: EducationCardProps
+}) {
+    const {
+        logoUrl,
+        institution,
+        location,
+        dateRange,
+        description,
+        field,
+        degree,
+        gpa,
+        minor,
+    } = blockData
     return (
-        <div className='flex flex-col justify-between p-2 w-96 h-[140px] bg-white rounded-lg border border-solid border-slate-400 min-h-[140px]'>
+        <div
+            onClick={onClick}
+            className='flex flex-col justify-between p-2 w-96 h-[140px] bg-white rounded-lg border border-solid border-slate-400 min-h-[140px] hover:border-2 hover:shadow-md hover:border-customeBorder'
+        >
             <div className='flex gap-10 justify-between items-center w-full'>
                 <div className='flex gap-1 items-center self-stretch my-auto'>
                     <img
                         loading='lazy'
                         src={logoUrl}
                         className='object-contain shrink-0 self-stretch my-auto aspect-[1.36] w-[38px]'
-                        alt={`${institution} logo`}
+                        alt='🏫'
+                        onError={(e) => {
+                            e.currentTarget.src =
+                                'https://ogbwfcmgzyaldlnrwazo.supabase.co/storage/v1/object/sign/Gape/block_template/university.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJHYXBlL2Jsb2NrX3RlbXBsYXRlL3VuaXZlcnNpdHkucG5nIiwiaWF0IjoxNzMzNDc5NzU3LCJleHAiOjQ4NTU1NDM3NTd9.L8IVingUVIiunJxMWTJ_Dl7OfDtdM8Naoa_3fyqgE14&t=2024-12-06T10%3A09%3A17.317Z'
+                        }}
                     />
                     <div className='flex flex-col self-stretch my-auto'>
                         <div className='text-base font-semibold tracking-normal leading-none text-neutral-800'>

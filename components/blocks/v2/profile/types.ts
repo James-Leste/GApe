@@ -8,15 +8,13 @@ export interface ProfileCardProps {
     email: string
     location?: string
     imageUrl: string
-    skills?: string[]
+    tags?: string[]
     github: string
     linkedin: string
     image: string
     x: string
     url: string
 }
-
-
 
 export interface EducationCardProps {
     institution: string
