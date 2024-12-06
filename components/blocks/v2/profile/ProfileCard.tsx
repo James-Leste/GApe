@@ -3,17 +3,19 @@
 import * as React from 'react'
 import { ProfileCardProps } from './types'
 
-export const ProfileCard: React.FC<ProfileCardProps> = ({
-    name,
-    title,
-    description,
-    phone,
-    email,
-    imageUrl,
-    skills,
-}) => {
+export function ProfileCard({
+    blockData,
+    onClick,
+}: {
+    blockData: ProfileCardProps
+    onClick: () => void
+}) {
+    const { name, description, phone, email, imageUrl, tags } = blockData
     return (
-        <div className='flex flex-col p-2 w-96 h-[140px] bg-white rounded-lg border border-solid border-slate-300'>
+        <div
+            onClick={onClick}
+            className='flex flex-col p-2 w-96 h-[140px] bg-white rounded-lg border border-solid border-slate-300'
+        >
             <div className='flex gap-1 items-center self-start text-xl font-semibold text-black'>
                 <div className='self-stretch my-auto'>{name}</div>
                 <img
@@ -54,14 +56,14 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({
                     </div>
                 </div>
             </div>
-            {skills && (
+            {tags && (
                 <div className='flex gap-2 mt-4'>
-                    {skills.map((skill, index) => (
+                    {tags.map((tag, index) => (
                         <div
                             key={index}
                             className='overflow-hidden gap-2.5 px-0.5 py-1 bg-green-300 rounded-sm border border-black border-solid'
                         >
-                            {skill}
+                            {tag}
                         </div>
                     ))}
                 </div>
