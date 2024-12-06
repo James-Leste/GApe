@@ -6,8 +6,8 @@ import React, { ReactNode, useEffect, useState } from 'react'
 import { useMemo } from 'react'
 import { DragDropContext, Draggable, Droppable } from '@hello-pangea/dnd'
 import type { DropResult } from '@hello-pangea/dnd'
-import type { ItemMap, ItemType } from './scripts/types'
-import { reorderQuoteMap } from './scripts/reorder'
+import type { ItemMap, ItemType } from '../scripts/types'
+import { reorderQuoteMap } from '../scripts/reorder'
 
 import { Button } from '@/components/ui/button'
 
@@ -24,7 +24,7 @@ import {
     getTemplates,
     updateBlock,
     updateBlockColumn,
-} from './actions'
+} from '../actions'
 import {
     blockColumn,
     BlockMap,
@@ -796,19 +796,19 @@ export default function App({ canvas_id }: { canvas_id: string }) {
 
         setColumns(newColumns.itemMap)
 
-        const idList1: string[] = newColumns.itemMap[ordered[0]].map(
-            (item) => item.id
-        )
-        const idList2: string[] = newColumns.itemMap[ordered[1]].map(
-            (item) => item.id
-        )
-        console.log(idList1)
-        console.log(idList2)
+        // const idList1: string[] = newColumns.itemMap[ordered[0]].map(
+        //     (item) => item.id
+        // )
+        // const idList2: string[] = newColumns.itemMap[ordered[1]].map(
+        //     (item) => item.id
+        // )
+        // console.log(idList1)
+        // console.log(idList2)
 
-        await Promise.all([
-            updateBlockColumn(canvas_id, 0, idList1),
-            updateBlockColumn(canvas_id, 1, idList2),
-        ])
+        // await Promise.all([
+        //     updateBlockColumn(canvas_id, 0, idList1),
+        //     updateBlockColumn(canvas_id, 1, idList2),
+        // ])
     }
 
     const deleteBlockState = async (
@@ -821,161 +821,30 @@ export default function App({ canvas_id }: { canvas_id: string }) {
     }
 
     return (
-        <div className='flex h-full overflow-y-scroll'>
-            <Sheet
-                modal={true}
-                defaultOpen={false}
-                onOpenChange={setIsEditsheetOpen}
-                open={isEditsheetOpen}
-            >
-                <SheetContent className='overflow-y-auto max-h-screen'>
-                    <SheetHeader>
-                        <SheetTitle>Set values</SheetTitle>
-                        <SheetDescription>
-                            Customize your block
-                        </SheetDescription>
-                    </SheetHeader>
-                    <form
-                        className='grid gap-4 py-4'
-                        onSubmit={async (e) => {
-                            e.preventDefault()
-                            const formData = new FormData(e.currentTarget)
-
-                            // Convert FormData to a plain object
-                            const formObject = Object.fromEntries(
-                                formData.entries()
-                            ) as Record<string, any>
-
-                            // Process the "tags" field
-                            if (
-                                formObject.tags &&
-                                typeof formObject.tags === 'string'
-                            ) {
-                                formObject.tags = formObject.tags
-                                    .split(',')
-                                    .map((tag: string) => tag.trim())
-                            }
-
-                            console.log(formObject)
-
-                            if (user?.id) {
-                                await updateBlock(blockId, formObject)
-                            }
-                            await initMap(canvas_id)
-                        }}
-                    >
-                        {selectedTemplate.map((template_id) => {
-                            if (template_id.toLocaleLowerCase() === 'tags') {
-                                //console.log(selectedContent[template_id])
-                                return (
-                                    <div
-                                        className='grid grid-cols-6 items-center gap-1'
-                                        key={template_id}
-                                    >
-                                        <Label
-                                            htmlFor={template_id}
-                                            className='overflow-hidden col-span-2'
-                                        >
-                                            {template_id.toUpperCase()}
-                                        </Label>
-                                        <TagInput
-                                            name={template_id}
-                                            style={{
-                                                gridColumn: 'span 4',
-                                            }}
-                                            defaultValue={tags}
-                                        />
-                                    </div>
-                                )
-                            } else {
-                                const content: string = (
-                                    selectedContent as Record<string, any>
-                                )?.[template_id]
-
-                                return (
-                                    <div
-                                        className='grid grid-cols-6 items-center gap-1'
-                                        key={template_id}
-                                    >
-                                        <Label
-                                            htmlFor={template_id}
-                                            className='overflow-hidden col-span-2'
-                                        >
-                                            {template_id.toUpperCase()}
-                                        </Label>
-                                        <Input
-                                            required
-                                            id={template_id}
-                                            className='col-span-4 bg-white'
-                                            type='text'
-                                            name={template_id}
-                                            defaultValue={content}
-                                        />
-                                    </div>
-                                )
-                            }
-                        })}
-                        <SheetFooter>
-                            <SheetClose>
-                                <Button
-                                    type='button'
-                                    onClick={async () => {
-                                        await deleteBlockState(
-                                            canvas_id,
-                                            blockId,
-                                            columnNumber
-                                        )
-                                        await initMap(canvas_id)
-                                    }}
-                                >
-                                    Delete
-                                </Button>
-                            </SheetClose>
-                            <SheetClose asChild>
-                                <Button type='submit'>Save changes</Button>
-                            </SheetClose>
-                        </SheetFooter>
-                    </form>
-                </SheetContent>
-            </Sheet>
-
-            <div className='flex-shrink-0 flex-grow bg-gray-200'></div>
-            <div className='flex flex-shrink-0 w-[75rem]'>
-                <div className='bg-blue-500 w-[50rem] min-h-[100%]'>
-                    <DragDropContext onDragEnd={onDragEnd}>
-                        {Object.keys(columns).length != 0 ? (
-                            <Parent>
-                                {ordered.map((key: string) => (
-                                    <List
-                                        listId={key}
-                                        items={columns[key]}
-                                        key={key}
-                                    />
-                                ))}
-                            </Parent>
-                        ) : null}
-                    </DragDropContext>
-                </div>
-                <div className='bg-green-500 w-[25rem] h-[100vh] sticky top-0 overflow-y-auto max-h-[100vh]'>
-                    <div>
-                        <Label>
-                            Click on the component that you would like to use.
-                        </Label>
-                    </div>
-
-                    {templates.length === 0 ? (
-                        <div>
-                            <Label>
-                                No templates to choose from? Try refresh
-                            </Label>
-                        </div>
-                    ) : (
-                        templates.map((selection) => (
-                            <div key={selection.id}>{selection.component}</div>
-                        ))
-                    )}
-                </div>
+        <div className='flex flex-col h-full overflow-y-scroll justify-center items-center'>
+            <div>
+                <Label>
+                    Here you could view the masterpiece and play around with it
+                </Label>
+                <Button
+                    className='m-5'
+                    onClick={async () => {
+                        await initMap(canvas_id)
+                    }}
+                >
+                    Reset
+                </Button>
             </div>
+
+            <DragDropContext onDragEnd={onDragEnd}>
+                {Object.keys(columns).length != 0 ? (
+                    <Parent>
+                        {ordered.map((key: string) => (
+                            <List listId={key} items={columns[key]} key={key} />
+                        ))}
+                    </Parent>
+                ) : null}
+            </DragDropContext>
 
             {/* 
 
@@ -1007,8 +876,6 @@ export default function App({ canvas_id }: { canvas_id: string }) {
                 <Button onClick={showdata}>5</Button>
                 <Button>6</Button>
             </div> */}
-
-            <div className='flex-shrink-0 flex-grow bg-gray-200'></div>
         </div>
     )
 }
