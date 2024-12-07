@@ -30,20 +30,21 @@ export async function emailSignup(formData: FormData) {
 
     // type-casting here for convenience
     // in practice, you should validate your inputs
-    const data = {
+    const credentials = {
         email: formData.get('email') as string,
         password: formData.get('password') as string,
     }
 
-    const { error } = await supabase.auth.signUp(data)
+    const { data, error } = await supabase.auth.signUp(credentials)
 
     if (error) {
-        return { success: false, message: error.message }
+        return { success: false, message: error.message, data: null }
     }
 
     return {
         success: true,
-        message: 'Please check your email to confirm your signup.',
+        message: 'User has successfully signed up.',
+        data: data,
     }
 }
 
