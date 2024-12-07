@@ -14,7 +14,7 @@ export function PublicationBlock_L({
     return (
         <div
             onClick={onClick}
-            className='flex flex-col justify-between py-2 pr-2 pl-3  w-96 h-[236px] bg-white border-slate-300 border rounded-lg hover:border-2 hover:shadow-md hover:border-customeBorder'
+            className='flex flex-col  py-2 pr-2 pl-3  w-96 h-[236px] bg-white border-slate-300 border rounded-lg hover:border-2 hover:shadow-md hover:border-customeBorder'
         >
             <div className='flex gap-3.5 items-center w-full'>
                 <div className='flex gap-2 items-center self-stretch my-auto text-xs font-medium leading-loose whitespace-nowrap'>
@@ -41,7 +41,7 @@ export function PublicationBlock_L({
                     WebkitBoxOrient: 'vertical',
                     textOverflow: 'ellipsis',
                 }}
-                className='  overflow-hidden py-1 w-full text-sm leading-tight font-medium  border-t border-b border-solid border-b-gray-300 border-t-gray-300 text-neutral-600'
+                className=' h-full overflow-hidden py-1 w-full text-sm leading-tight font-medium  border-t border-b border-solid border-b-gray-300 border-t-gray-300 text-neutral-600'
             >
                 {description}
             </div>
@@ -121,7 +121,7 @@ export function PublicationBlock_M({
     return (
         <div
             onClick={onClick}
-            className='flex  flex-col justify-between border-slate-300 border py-2 pr-2 pl-3 w-96 h-[140px] bg-white rounded-lg hover:border-2 hover:shadow-md hover:border-customeBorder'
+            className='flex  flex-col  border-slate-300 border py-2 pr-2 pl-3 w-96 h-[140px] bg-white rounded-lg hover:border-2 hover:shadow-md hover:border-customeBorder'
         >
             <div className='flex gap-3.5 items-center w-full'>
                 <div className='flex gap-2 items-center self-stretch my-auto text-xs font-medium leading-loose whitespace-nowrap'>
@@ -133,7 +133,7 @@ export function PublicationBlock_M({
                     </div>
                 </div>
             </div>
-            <div className='flex flex-col mt-1 w-full'>
+            <div className='flex flex-col mt-1 w-full h-full'>
                 <div className='text-sm font-bold leading-5 text-neutral-800'>
                     {title}
                 </div>
