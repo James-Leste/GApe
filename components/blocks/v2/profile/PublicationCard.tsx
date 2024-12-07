@@ -14,7 +14,7 @@ export function PublicationBlock_L({
     return (
         <div
             onClick={onClick}
-            className='flex flex-col justify-between py-2 pr-2 pl-3  w-96 h-[236px] bg-white rounded-lg hover:border-2 hover:shadow-md hover:border-customeBorder'
+            className='flex flex-col justify-between py-2 pr-2 pl-3  w-96 h-[236px] bg-white border-slate-300 border rounded-lg hover:border-2 hover:shadow-md hover:border-customeBorder'
         >
             <div className='flex gap-3.5 items-center w-full'>
                 <div className='flex gap-2 items-center self-stretch my-auto text-xs font-medium leading-loose whitespace-nowrap'>
@@ -121,7 +121,7 @@ export function PublicationBlock_M({
     return (
         <div
             onClick={onClick}
-            className='flex  flex-col justify-between py-2 pr-2 pl-3 w-96 h-[140px] bg-white rounded-lg hover:border-2 hover:shadow-md hover:border-customeBorder'
+            className='flex  flex-col justify-between border-slate-300 border py-2 pr-2 pl-3 w-96 h-[140px] bg-white rounded-lg hover:border-2 hover:shadow-md hover:border-customeBorder'
         >
             <div className='flex gap-3.5 items-center w-full'>
                 <div className='flex gap-2 items-center self-stretch my-auto text-xs font-medium leading-loose whitespace-nowrap'>

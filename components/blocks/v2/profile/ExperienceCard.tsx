@@ -15,7 +15,7 @@ export function WorkBlock_L({
     return (
         <div
             onClick={onClick}
-            className='flex w-96 h-[236px] flex-col justify-between p-2  bg-white rounded-lg border border-solid border-slate-400 min-h-[236px] hover:border-2 hover:shadow-md hover:border-customeBorder'
+            className='flex w-96 h-[236px] flex-col justify-between p-2  bg-white rounded-lg border border-solid border-slate-300 min-h-[236px] hover:border-2 hover:shadow-md hover:border-customeBorder'
         >
             <div className='flex gap-2 justify-between items-center w-full'>
                 <div className='flex gap-2 items-center self-stretch my-auto min-w-[240px]'>
@@ -101,7 +101,7 @@ export function WorkBlock_M({
     return (
         <div
             onClick={onClick}
-            className='flex  flex-col  w-96 h-[140px] justify-between p-2  bg-white rounded-lg border border-solid border-slate-400 hover:border-2 hover:shadow-md hover:border-customeBorder'
+            className='flex  flex-col  w-96 h-[140px] justify-between p-2  bg-white rounded-lg border border-solid border-slate-300 hover:border-2 hover:shadow-md hover:border-customeBorder'
         >
             <div className='flex gap-1 justify-between items-center w-full'>
                 <div className='flex gap-2 items-center self-stretch my-auto '>

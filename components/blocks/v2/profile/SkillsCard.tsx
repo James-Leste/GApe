@@ -40,7 +40,7 @@ export const SkillsBlock_L: React.FC<SkillsCardProps> = ({ categories }) => {
 export const SkillsBlock_M: React.FC<SkillsCardProps> = ({ categories }) => {
       const categoriesForMedium = [categories[0], categories[categories.length - 1]]
     return (
-        <div className='flex flex-col grow gap-2 justify-center px-2 py-2.5  text-xs font-medium leading-loose bg-white rounded-lg border border-solid border-slate-400  w-96 h-[140px]'>
+        <div className='flex flex-col grow gap-2 justify-center px-2 py-2.5  text-xs font-medium leading-loose bg-white rounded-lg border border-solid border-slate-300   w-96 h-[140px]'>
             {categoriesForMedium.map((category, index) => (
                 <div
                     key={index}
