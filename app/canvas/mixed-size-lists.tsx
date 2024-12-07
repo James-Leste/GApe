@@ -1,6 +1,5 @@
 /** @format */
 'use client'
-import { colors } from '@atlaskit/theme'
 import styled from '@emotion/styled'
 import React, { ReactNode, useEffect, useState } from 'react'
 import { useMemo } from 'react'
@@ -8,12 +7,9 @@ import { DragDropContext, Draggable, Droppable } from '@hello-pangea/dnd'
 import type { DropResult } from '@hello-pangea/dnd'
 import type { ItemMap, ItemType } from './scripts/types'
 import { reorderQuoteMap } from './scripts/reorder'
-
 import { Button } from '@/components/ui/button'
-
 import { createClient } from '@/utils/supabase/client'
 import { User } from '@supabase/supabase-js'
-
 import { Label } from '@/components/ui/label'
 import {
     addBlock,
@@ -75,6 +71,7 @@ import 'rsuite/TagInput/styles/index.css'
 const Parent = styled.div`
     display: flex;
     flex-direction: row;
+    gap: 0.5rem;
     justify-content: center;
 `
 
@@ -118,9 +115,10 @@ const StyledList = styled.div<StyledListProps>`
     flex-direction: column;
     aligh-items: center;
     align-content: center;
-    border: 1px solid ${colors.N100};
+    gap: 0.5rem;
+    border-radius: 0.375rem;
     background-color: ${(props) =>
-        props.isDraggingOver ? colors.B100 : 'inherit'};
+        props.isDraggingOver ? 'rgb(237 225 209)' : 'inherit'};
     height: 100%;
     width: 24rem;
 `
@@ -821,14 +819,14 @@ export default function App({ canvas_id }: { canvas_id: string }) {
     }
 
     return (
-        <div className='flex h-full overflow-y-scroll'>
+        <div className='flex  bg-customeBG1 p-4 justify-center'>
             <Sheet
                 modal={true}
                 defaultOpen={false}
                 onOpenChange={setIsEditsheetOpen}
                 open={isEditsheetOpen}
             >
-                <SheetContent className='overflow-y-auto max-h-screen'>
+                <SheetContent className=' max-h-screen'>
                     <SheetHeader>
                         <SheetTitle>Set values</SheetTitle>
                         <SheetDescription>
@@ -939,12 +937,11 @@ export default function App({ canvas_id }: { canvas_id: string }) {
                 </SheetContent>
             </Sheet>
 
-            <div className='flex-shrink-0 flex-grow bg-gray-200'></div>
-            <div className='flex flex-shrink-0 w-[75rem]'>
-                <div className='bg-blue-500 w-[50rem] min-h-[100%]'>
+            <div className='flex  gap-2 '>
+                <div className='bg-white min-w-[48rem] min-h-[100%] p-2  border-2 border-customeBorder rounded-md print:w-ful print:p-0 print:scale-95'>
                     <DragDropContext onDragEnd={onDragEnd}>
                         {Object.keys(columns).length != 0 ? (
-                            <Parent>
+                            <Parent className=''>
                                 {ordered.map((key: string) => (
                                     <List
                                         listId={key}
@@ -956,11 +953,11 @@ export default function App({ canvas_id }: { canvas_id: string }) {
                         ) : null}
                     </DragDropContext>
                 </div>
-                <div className='bg-green-500 w-[25rem] h-[100vh] sticky top-0 overflow-y-auto max-h-[100vh]'>
+                <div className='bg-customeBG2 p-2 border-2 rounded-md border-customeBorder flex flex-col gap-1 h-[calc(100vh-2rem)] overflow-y-auto sticky top-4 print:hidden'>
                     <div>
-                        <Label>
+                        <p className='font-medium text-center py-2 text-customeText2'>
                             Click on the component that you would like to use.
-                        </Label>
+                        </p>
                     </div>
 
                     {templates.length === 0 ? (
@@ -1008,7 +1005,7 @@ export default function App({ canvas_id }: { canvas_id: string }) {
                 <Button>6</Button>
             </div> */}
 
-            <div className='flex-shrink-0 flex-grow bg-gray-200'></div>
+            {/* <div className='flex-shrink-0 flex-grow bg-gray-200'></div> */}
         </div>
     )
 }
