@@ -101,14 +101,14 @@ export function WorkBlock_M({
     return (
         <div
             onClick={onClick}
-            className='flex  flex-col  w-96 h-[140px] justify-between p-2  bg-white rounded-lg border border-solid border-slate-300 hover:border-2 hover:shadow-md hover:border-customeBorder'
+            className='flex  flex-col  w-96 h-[140px] gap-1 p-2  bg-white rounded-lg border border-solid border-slate-300 hover:border-2 hover:shadow-md hover:border-customeBorder'
         >
             <div className='flex gap-1 justify-between items-center w-full'>
                 <div className='flex gap-2 items-center self-stretch my-auto '>
                     <img
                         loading='lazy'
                         src={logoUrl}
-                        className='object-contain shrink-0 self-stretch my-auto aspect-square w-[38px]'
+                        className='object-contain shrink-0 self-stretch my-auto aspect-square w-[38px] h-[38px]'
                         alt='💼'
                         onError={(e) => {
                             e.currentTarget.src =
@@ -116,7 +116,7 @@ export function WorkBlock_M({
                         }}
                     />
                     <div className='flex flex-col self-stretch my-auto'>
-                        <div className='text-xl font-semibold tracking-normal leading-snug text-black'>
+                        <div className='text-lg font-semibold tracking-normal leading-snug text-black'>
                             {company}
                         </div>
                         <div className='flex gap-1.5 items-center text-sm font-medium leading-none text-neutral-700'>
@@ -133,11 +133,11 @@ export function WorkBlock_M({
             <div
                 style={{
                     display: '-webkit-box',
-                    WebkitLineClamp: 2,
+                    WebkitLineClamp: 3,
                     WebkitBoxOrient: 'vertical',
                     textOverflow: 'ellipsis',
                 }}
-                className='  overflow-hidden shrink  self-stretch py-1 w-full text-sm font-medium leading-4 border-t border-b border-solid border-b-gray-300 border-t-gray-300 text-neutral-600'
+                className='h-full  overflow-hidden shrink  self-stretch py-1 w-full text-sm font-medium leading-4 border-t border-b border-solid border-b-gray-300 border-t-gray-300 text-neutral-600'
             >
                 {description}
             </div>
