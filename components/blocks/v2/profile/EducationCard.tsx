@@ -24,7 +24,7 @@ export function EduBlock_L({
     return (
         <div
             onClick={onClick}
-            className='flex flex-col justify-between p-2  w-96 h-[236px] bg-white rounded-lg border border-solid border-slate-400 min-h-[140px] hover:border-2 hover:shadow-md hover:border-customeBorder'
+            className='flex flex-col justify-between p-2  w-96 h-[236px] bg-white rounded-lg border border-solid border-slate-300 min-h-[140px] hover:border-2 hover:shadow-md hover:border-customeBorder'
         >
             <div className='flex  justify-between items-center w-full'>
                 <div className='flex gap-1 items-center self-stretch my-auto'>
@@ -97,7 +97,7 @@ export function EduBlock_M({
     return (
         <div
             onClick={onClick}
-            className='flex flex-col justify-between p-2 w-96 h-[140px] bg-white rounded-lg border border-solid border-slate-400 min-h-[140px] hover:border-2 hover:shadow-md hover:border-customeBorder'
+            className='flex flex-col justify-between p-2 w-96 h-[140px] bg-white rounded-lg border border-solid border-slate-300 min-h-[140px] hover:border-2 hover:shadow-md hover:border-customeBorder'
         >
             <div className='flex gap-10 justify-between items-center w-full'>
                 <div className='flex gap-1 items-center self-stretch my-auto'>

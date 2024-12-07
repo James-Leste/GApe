@@ -25,7 +25,7 @@ export function ProjectBlock_L({
     return (
         <div
             onClick={onClick}
-            className='flex w-96 h-[236px] flex-col justify-between p-2  bg-white rounded-lg border border-solid border-slate-400 min-h-[236px] hover:border-2 hover:shadow-md hover:border-customeBorder'
+            className='flex w-96 h-[236px] flex-col justify-between p-2  bg-white rounded-lg border border-solid border-slate-300 min-h-[236px] hover:border-2 hover:shadow-md hover:border-customeBorder'
         >
             <div className='flex items-center gap-2'>
                 <div className='self-stretch my-auto text-xl font-semibold'>
@@ -136,7 +136,7 @@ export function ProjectBlock_M({
     return (
         <div
             onClick={onClick}
-            className='flex  flex-col  w-96 h-[140px] justify-between p-2  bg-white rounded-lg border border-solid border-slate-400 hover:border-2 hover:shadow-md hover:border-customeBorder'
+            className='flex  flex-col  w-96 h-[140px] justify-between p-2  bg-white rounded-lg border border-solid border-slate-300 hover:border-2 hover:shadow-md hover:border-customeBorder'
         >
             <div className='flex items-center gap-2'>
                 <div className='self-stretch my-auto text-xl font-semibold'>
