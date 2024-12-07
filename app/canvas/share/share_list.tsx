@@ -8,6 +8,9 @@ import { DragDropContext, Draggable, Droppable } from '@hello-pangea/dnd'
 import type { DropResult } from '@hello-pangea/dnd'
 import type { ItemMap, ItemType } from '../scripts/types'
 import { reorderQuoteMap } from '../scripts/reorder'
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
+import { Terminal } from 'lucide-react'
+import { Skeleton } from '@/components/ui/skeleton'
 
 import { Button } from '@/components/ui/button'
 
@@ -76,6 +79,7 @@ const Parent = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: center;
+    gap: 0.5rem;
 `
 
 const StyledItem = styled.div`
@@ -118,9 +122,10 @@ const StyledList = styled.div<StyledListProps>`
     flex-direction: column;
     aligh-items: center;
     align-content: center;
-    border: 1px solid ${colors.N100};
+    gap: 0.5rem;
+    border-radius: 0.375rem;
     background-color: ${(props) =>
-        props.isDraggingOver ? colors.B100 : 'inherit'};
+        props.isDraggingOver ? 'rgb(237 225 209)' : 'inherit'};
     height: 100%;
     width: 24rem;
 `
@@ -821,30 +826,66 @@ export default function App({ canvas_id }: { canvas_id: string }) {
     }
 
     return (
-        <div className='flex flex-col h-full overflow-y-scroll justify-center items-center'>
-            <div>
-                <Label>
-                    Here you could view the masterpiece and play around with it
-                </Label>
-                <Button
-                    className='m-5'
-                    onClick={async () => {
-                        await initMap(canvas_id)
-                    }}
-                >
-                    Reset
-                </Button>
-            </div>
+        <div className='flex flex-col h-full overflow-y-scroll justify-center items-center bg-customeBG1'>
+            <div className='p-2 w-[812px]'>
+                <Alert className=' hover:bg-white border-customeBorder'>
+                    <Terminal className='h-4 w-4' />
+                    <AlertTitle>Heads up!</AlertTitle>
+                    <AlertDescription>
+                        <div className='flex justify-between'>
+                            <p>
+                                Here you could view the masterpiece and play
+                                around with it
+                            </p>
+                            <Button
+                                variant={'ghost'}
+                                onClick={async () => {
+                                    await initMap(canvas_id)
+                                }}
+                            >
+                                Reset
+                            </Button>
+                        </div>
+                    </AlertDescription>
+                </Alert>
 
-            <DragDropContext onDragEnd={onDragEnd}>
-                {Object.keys(columns).length != 0 ? (
-                    <Parent>
-                        {ordered.map((key: string) => (
-                            <List listId={key} items={columns[key]} key={key} />
-                        ))}
-                    </Parent>
-                ) : null}
-            </DragDropContext>
+                <Label></Label>
+            </div>
+            <div className='bg-white p-4 border-2 border-customeBorder rounded-lg'>
+                {Object.keys(columns).length === 0 ? (
+                    <div className='flex gap-3 '>
+                        <div className='flex flex-col gap-2'>
+                            <Skeleton className='h-[236px] w-[384px] rounded-xl' />
+                            <Skeleton className='h-[236px] w-[384px] rounded-xl' />
+                            <Skeleton className='h-[140px] w-[384px] rounded-xl' />
+                            <Skeleton className='h-[236px] w-[384px] rounded-xl' />
+                        </div>
+                        <div className='flex flex-col gap-2'>
+                            <Skeleton className='h-[236px] w-[384px] rounded-xl' />
+                            <Skeleton className='h-[140px] w-[384px] rounded-xl' />
+                            <Skeleton className='h-[140px] w-[384px] rounded-xl' />
+
+                            <Skeleton className='h-[236px] w-[384px] rounded-xl' />
+                        </div>
+                    </div>
+                ) : (
+                    ''
+                )}
+
+                <DragDropContext onDragEnd={onDragEnd}>
+                    {Object.keys(columns).length != 0 ? (
+                        <Parent>
+                            {ordered.map((key: string) => (
+                                <List
+                                    listId={key}
+                                    items={columns[key]}
+                                    key={key}
+                                />
+                            ))}
+                        </Parent>
+                    ) : null}
+                </DragDropContext>
+            </div>
 
             {/* 
 
