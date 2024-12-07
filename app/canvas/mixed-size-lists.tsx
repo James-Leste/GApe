@@ -826,7 +826,7 @@ export default function App({ canvas_id }: { canvas_id: string }) {
                 onOpenChange={setIsEditsheetOpen}
                 open={isEditsheetOpen}
             >
-                <SheetContent className=' max-h-screen'>
+                <SheetContent className='overflow-y-auto max-h-screen'>
                     <SheetHeader>
                         <SheetTitle>Set values</SheetTitle>
                         <SheetDescription>
