@@ -14,6 +14,7 @@ import { usePathname } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import Share from '@/components/ui/sharing'
+import { toast } from 'sonner'
 
 interface HeaderMenuProps {
     children?: React.ReactNode
@@ -28,7 +29,11 @@ function ToolBar() {
                 {/* <Button variant={'secondary'} size='icon'>
                     <Forward className='h-4 w-4' />
                 </Button> */}
-                <Button variant={'secondary'} size='icon'>
+                <Button
+                    onClick={() => toast.success('Saved successfully!')}
+                    variant={'secondary'}
+                    size='icon'
+                >
                     <Save className='h-4 w-4' />
                 </Button>
             </div>
