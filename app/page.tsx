@@ -2,110 +2,109 @@
 'use client'
 
 import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card'
-
-import {
-    HoverCard,
-    HoverCardContent,
-    HoverCardTrigger,
-} from '@/components/ui/hover-card'
-
 import Link from 'next/link'
-
 import { useRouter } from 'next/navigation'
+import { FeatureCard } from "@/components/ui/feature-card"
+import { SizeOption } from "@/components/ui/size-option"
 
-export default function Layout() {
-    const router = useRouter()
-    return (
-        <div className='flex flex-col flex-grow items-center justify-center'>
-            <div className='h-screen w-full flex items-center justify-center py-10'>
-                {/* <header>This is header</header> */}
-                <Card className='shadow-md rounded-3xl h-fit w-fit bg-slate-50 p-5 border-hidden'>
-                    <CardHeader>
-                        <HoverCard openDelay={100}>
-                            <HoverCardTrigger asChild className='mt-5 mb-0'>
-                                <Button
-                                    asChild
-                                    variant={'link'}
-                                    className='text-xl text-secondary-foreground font-bold'
-                                >
-                                    <Link href='https://github.com/James-Leste/GApe'>
-                                        @GApe
-                                    </Link>
-                                </Button>
-                            </HoverCardTrigger>
-                            <HoverCardContent side='top'>
-                                <div className='flex justify-between space-x-4'>
-                                    {/* <Avatar>
-                                        <AvatarImage src='https://github.com/vercel.png' />
-                                        <AvatarFallback>VC</AvatarFallback>
-                                    </Avatar> */}
-                                    <div className='space-y-1'>
-                                        <h4 className='text-xl font-semibold'>
-                                            @GApe
-                                        </h4>
-                                        <p className='text-sm'>
-                                            An Interactive Tool for generating
-                                            One-Page Content
-                                        </p>
-                                        <div className='flex items-center pt-2'>
-                                            <span className='text-xs text-muted-foreground'>
-                                                Joined October 2024
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </HoverCardContent>
-                        </HoverCard>
-                    </CardHeader>
-                    <CardContent>
-                        <div className='flex flex-row item-center justify-center'>
-                            <Button
-                                className='mx-5 border border-solid border-secondary-foreground'
-                                onClick={() => {
-                                    console.log('/authentication/login')
-                                    router.push('/authentication/login')
-                                }}
-                            >
-                                Login
-                            </Button>
+export default function Home() {
+  const router = useRouter();
 
-                            <Button
-                                className='mx-5 border border-solid border-secondary-foreground'
-                                variant={'outline'}
-                                onClick={() => {
-                                    console.log('/authentication/register')
-                                    router.push('/authentication/register')
-                                }}
-                            >
-                                Register
-                            </Button>
-
-                            <Button
-                                className='mx-5 border border-solid border-secondary-foreground'
-                                variant={'outline'}
-                                onClick={() => {
-                                    console.log('/canvas')
-                                    router.push('/canvas')
-                                }}
-                            >
-                                Canvas
-                            </Button>
-                        </div>
-                    </CardContent>
-                    <CardFooter className='flex flex-row content-center justify-start mx-5'>
-                        <a href='#intro' className='text-muted-foreground'>
-                            About
-                        </a>
-                        {/* <p className='text-muted-foreground'>About</p> */}
-                    </CardFooter>
-                </Card>
-            </div>
-            <div className='h-screen w-full flex flex-col items-center justify-center bg-customeBG1'>
-                <h1 id='intro' className='text-customeText2'>
-                    Introduction
-                </h1>
-            </div>
+  return (
+    <div className="min-h-screen bg-[#F5E6D3]">
+      {/* NavBar */}
+      <nav className="flex justify-between items-center p-6 max-w-7xl mx-auto w-full">
+        <Link href="/" className="text-2xl font-mono font-bold text-black">
+          GAPE
+        </Link>
+        <div className="flex gap-4">
+          <Button 
+            variant="outline" 
+            className="bg-[#90EE90] hover:bg-[#90EE90]/90 border-none text-black h-8 px-4"
+            onClick={() => router.push('/canvas')}
+          >
+            Try Now
+          </Button>
+          <Button 
+            variant="outline" 
+            className="bg-[#90EE90] hover:bg-[#90EE90]/90 border-none text-black h-8 px-4"
+            onClick={() => router.push('/authentication/login')}
+          >
+            Login
+          </Button>
+          <Button 
+            variant="outline" 
+            className="bg-[#90EE90] hover:bg-[#90EE90]/90 border-none text-black h-8 px-4"
+            onClick={() => router.push('/authentication/register')}
+          >
+            Register
+          </Button>
         </div>
-    )
+      </nav>
+      
+      <main className="max-w-7xl mx-auto px-4 py-16 space-y-32">
+        {/* Hero Section */}
+        <section className="text-center space-y-6">
+          <h1 className="text-6xl font-mono font-bold text-black tracking-tight leading-tight">
+            Get A Page Easily
+          </h1>
+          <p className="text-gray-500 max-w-2xl mx-auto font-mono text-lg">
+            Create, Customize, And Conquer Your
+            <br />
+            One-Page Designs - Effortlessly.
+          </p>
+        </section>
+
+        {/* Features Section */}
+        <div className="space-y-32">
+          {/* First Feature */}
+          <FeatureCard
+            imageSrc="/images/feature-1.png"
+          />
+          
+          {/* Second Feature */}
+          <div className="space-y-6 text-center">
+            <h2 className="text-2xl font-mono font-bold text-black">
+              Drag, Drop, And Design: Instant
+              <br />
+              Customization At Your Fingertips.
+            </h2>
+            <FeatureCard
+              imageSrc="/images/feature-2.png"
+            />
+          </div>
+
+          {/* Size Options */}
+          <section className="space-y-12">
+            <h2 className="text-2xl font-mono font-bold text-center text-black">
+              Choose From Three Flexible Sizes
+              <br />
+              To Perfectly Fit Your Design Needs.
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-16 max-w-5xl mx-auto">
+              <SizeOption size="S" imageSrc="/images/size-s.png" />
+              <SizeOption size="M" imageSrc="/images/size-m.png" />
+              <SizeOption size="L" imageSrc="/images/size-l.png" />
+            </div>
+          </section>
+        </div>
+      </main>
+
+      {/* Footer */}
+      <footer className="bg-black text-white py-16 mt-32">
+        <div className="max-w-7xl mx-auto px-4 text-center space-y-4">
+          <h2 className="text-2xl font-mono font-bold">Follow Us To Get Update</h2>
+          <a 
+            href="https://Github.Com/James-Leste/GApe" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="font-mono text-white hover:underline"
+          >
+            https://Github.Com/James-Leste/GApe
+          </a>
+        </div>
+      </footer>
+    </div>
+  )
 }
+
