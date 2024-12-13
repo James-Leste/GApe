@@ -3,21 +3,30 @@
 // app/login/page.tsx
 'use client' // Since we're handling form inputs on the client-side
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { emailLogin } from '../actions'
 import { Button } from '@/components/ui/button'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { toast } from 'sonner'
 import { createClient } from '@/utils/supabase/client'
-import { User } from '@supabase/supabase-js'
 
 export default function LoginPage() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const [user, setUser] = useState<User | null>(null)
+    const searchParams = useSearchParams()
 
     const router = useRouter()
+    useEffect(() => {
+        console.log(searchParams.get('success'))
+        if (searchParams.get('success')) {
+            console.log(searchParams.get('success'))
+            setTimeout(() => {
+                toast.success('Successfully verified!')
+            })
+        }
+    }, [searchParams])
+
     function toRegister() {
         router.push('/authentication/register')
     }

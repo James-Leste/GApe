@@ -20,22 +20,16 @@ export default function RegisterPage() {
     async function handleSignup(event: FormData) {
         const response = await emailSignup(event)
 
-        console.log(response.data)
         // const email = event.get('email') as string
         // const emailDomain = email.split('@')[1]
 
         if (response.success && response.data) {
             const user: User | null = response.data.user
-            toast(response.message, {
-                action: {
-                    label: 'Personal Page',
-                    onClick: () => router.push(`/user/${user?.id}`),
-                },
-            })
+            toast(`${response.message} Check your email for verification link!`)
         } else {
             toast.error(response.message)
         }
-        console.log(`${location.origin}/user/${123}`)
+        //console.log(`${location.origin}/user/${123}`)
     }
     return (
         <div className='h-screen grid grid-cols-2 gap-3 items-center justify-center bg-customeBG1 p-4  '>
