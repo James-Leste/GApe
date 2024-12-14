@@ -1,20 +1,12 @@
 /** @format */
 'use client'
-import {
-    Save,
-    Forward,
-    Undo2,
-    Printer,
-    Laptop,
-    Touchpad,
-    Smartphone,
-} from 'lucide-react'
+import { Save, Printer } from 'lucide-react'
 import { usePathname } from 'next/navigation'
 
 import { Button } from '@/components/ui/button'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import Share from '@/components/ui/sharing'
 import { toast } from 'sonner'
+import { PreviewButton } from './previewButton'
 
 interface HeaderMenuProps {
     children?: React.ReactNode
@@ -23,12 +15,6 @@ function ToolBar() {
     return (
         <div className='flex justify-between w-full items-center'>
             <div className='flex flex-row gap-1'>
-                {/* <Button variant={'secondary'} size='icon'>
-                    <Undo2 className='h-4 w-4' />
-                </Button> */}
-                {/* <Button variant={'secondary'} size='icon'>
-                    <Forward className='h-4 w-4' />
-                </Button> */}
                 <Button
                     onClick={() => toast.success('Saved successfully!')}
                     variant={'secondary'}
@@ -37,20 +23,6 @@ function ToolBar() {
                     <Save className='h-4 w-4' />
                 </Button>
             </div>
-
-            {/* <Tabs value='pc'>
-                <TabsList className='grid w-full grid-cols-3'>
-                    <TabsTrigger value='pc'>
-                        <Laptop className='h-4 w-4' />
-                    </TabsTrigger>
-                    <TabsTrigger disabled value='pad'>
-                        <Touchpad className='h-4 w-4' />
-                    </TabsTrigger>
-                    <TabsTrigger disabled value='phone'>
-                        <Smartphone className='h-4 w-4' />
-                    </TabsTrigger>
-                </TabsList>
-            </Tabs> */}
             <div className='flex justify-between gap-2 items-center'>
                 <Button
                     variant={'secondary'}
@@ -60,6 +32,7 @@ function ToolBar() {
                     <Printer className='h-4 w-4' />
                 </Button>
                 <Share />
+                <PreviewButton></PreviewButton>
             </div>
         </div>
     )
