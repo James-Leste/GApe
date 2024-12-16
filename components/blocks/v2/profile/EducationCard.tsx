@@ -2,12 +2,16 @@
 
 import * as React from 'react'
 import { EducationCardProps } from './types'
+import { Trash2, Edit } from 'lucide-react'
+import { Button } from '@/components/ui/button'
 
 export function EduBlock_L({
     onClick,
+    isInList,
     blockData,
 }: {
-    onClick: () => void
+    onClick?: () => void
+    isInList?: boolean
     blockData: EducationCardProps
 }) {
     const {
@@ -23,9 +27,17 @@ export function EduBlock_L({
     } = blockData
     return (
         <div
-            onClick={onClick}
-            className='flex flex-col gap-1 p-2  w-96 h-[236px] bg-white rounded-lg border border-solid border-slate-300 min-h-[140px] hover:border-2 hover:shadow-md hover:border-customeBorder'
+            className='flex relative flex-col gap-1 p-2  w-96 h-[236px] bg-white rounded-lg border border-solid border-slate-300 min-h-[140px] hover:border-2 hover:shadow-md hover:border-customeBorder group'
         >
+            {!isInList && (
+                 <button
+                
+                 onClick={onClick}
+                 className='absolute top-2 right-2 hidden group-hover:block bg-customeBG1 p-1 border border-customeBorder rounded-sm cursor-pointer'
+             >
+                 <Edit className='w-4 h-4 text-customeText2' />
+             </button>)}
+            
             <div className='flex flex-row   w-full'>
                 <div className='flex gap-2  items-center w-full '>
                     <img

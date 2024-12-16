@@ -527,7 +527,8 @@ export default function App({ canvas_id }: { canvas_id: string }) {
                     initTemplates.push({
                         id: template.id + '-L',
                         component: (
-                            <EduBlock_L
+                            <div
+                                className='cursor-pointer'
                                 onClick={async () => {
                                     await addBlockState(
                                         canvas_id,
@@ -538,8 +539,13 @@ export default function App({ canvas_id }: { canvas_id: string }) {
                                         true
                                     )
                                 }}
-                                blockData={template.content}
-                            ></EduBlock_L>
+                            >
+                                <EduBlock_L
+                                isInList={true}
+                                    onClick={() => {}}
+                                    blockData={template.content}
+                                ></EduBlock_L>
+                            </div>
                         ),
                     })
                     initTemplates.push({
