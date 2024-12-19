@@ -22,13 +22,13 @@ npm run dev
 npm run build
 ```
 
-## Interface Previews
+## Example Previews
 
-Todo
+![example_image](readme_images/example.jpg)
 
 ## System Flow
 
-![image](readme_images/systemdiagram.png)
+![flow_chart](readme_images/systemdiagram.png)
 
 ## Contribution
 
